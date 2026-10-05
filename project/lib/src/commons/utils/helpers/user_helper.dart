@@ -10,6 +10,7 @@ import 'package:project/src/config/preferences/preferences.dart';
 import 'package:project/src/models/generic/session_model.dart';
 
 // Commons.
+import 'package:project/src/commons/constants/numbers.dart';
 import 'package:project/src/commons/constants/strings.dart';
 import 'package:project/src/commons/utils/app_localizations.dart';
 import 'package:project/src/commons/utils/page_transition.dart';
@@ -58,9 +59,5 @@ abstract class UserHelper {
   }
 
   // Method that checks if password is valid.
-  static bool passwordIsValid({ required String password }) {
-    //final regex = RegExp('^.{${ Numbers.passwordLengthMin },${ Numbers.passwordLengthMax }}\$');
-    //return regex.hasMatch(password);
-    return password.length == 4;
-  }
+  static bool passwordIsValid({ required String password }) => password.trim().length >= Numbers.passwordLengthMin;
 }

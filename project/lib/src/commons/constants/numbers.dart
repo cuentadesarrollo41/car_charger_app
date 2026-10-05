@@ -12,8 +12,7 @@ class Numbers {
   static const int noLimit = -1;
   static const int noValue = -1;
   static const int one = 1;
-  static const int passwordLengthMin = 4;
-  static const int passwordLengthMax = 8;
+  static const int passwordLengthMin = 6;
   static const int pictureMaxBytes = 5242880; // 5MB in Bytes
   static const int zero = 0;
 
