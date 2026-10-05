@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Commons.
 import 'package:project/src/commons/constants/custom_colors.dart';
@@ -302,10 +303,10 @@ class _InputTextFieldState extends State<InputTextField> {
       : InkWell(
         key: Key('input_text_field_show${ DateTime.now() }'),
         onTap: _onShowHideButtonClicked,
-        child: Icon(
-          obscureText ? Icons.visibility : Icons.visibility_off,
+        child: FaIcon(
+          obscureText ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
           color: widget.iconColor,
-          size: Sizes.font22,
+          size: Sizes.font16,
         ),
       );
   }

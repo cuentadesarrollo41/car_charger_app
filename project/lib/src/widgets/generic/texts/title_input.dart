@@ -45,7 +45,7 @@ class TitleInput extends StatelessWidget {
         ),
 
         TextSpan(
-          text: isMandatory ? Strings.asterisk : Strings.emptyString,
+          text: isMandatory ? ' ${ Strings.asterisk }' : Strings.emptyString,
           style: const TextStyle(
             color: CustomColors.lime
           )

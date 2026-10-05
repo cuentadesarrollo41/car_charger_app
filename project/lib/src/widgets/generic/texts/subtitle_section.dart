@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 // Models.
 import 'package:project/src/models/generic/screen_properties_model.dart';
 
+// Commons.
+import 'package:project/src/commons/constants/custom_colors.dart';
+
 // Widgets.
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
-class TitleSection extends StatelessWidget {
+class SubtitleSection extends StatelessWidget {
   final String text;
   final Color color;
 
-  const TitleSection({
+  const SubtitleSection({
     required this.text,
-    this.color = Colors.white,
+    this.color = CustomColors.textSecondary,
     super.key
   });
 
@@ -22,8 +25,8 @@ class TitleSection extends StatelessWidget {
 
     return TextInter(
       text: text,
-      fontSize: screenProperties.fontBigTitle,
-      fontWeight: FontWeight.w700,
+      fontSize: screenProperties.fontSmall,
+      fontWeight: FontWeight.normal,
       color: color,
     );
   }

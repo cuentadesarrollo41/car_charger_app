@@ -16,7 +16,7 @@ class TextClickable extends StatelessWidget {
     required this.text,
     required this.fontSize,
     required this.onClicked,
-    this.color = Colors.black,
+    this.color = Colors.white,
     this.textAlign = TextAlign.center,
     super.key
   });

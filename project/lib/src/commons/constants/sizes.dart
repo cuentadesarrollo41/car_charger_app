@@ -18,9 +18,9 @@ class Sizes {
   static const double defaultSizeCheckBox = 18;
   static const double defaultSizeRadioButton = 18;
   static const double inputBorderSize = 1;
-  static const double inputHeight = 46;
+  static const double inputHeight = 44;
   static const double liquidPullToRefreshHeight = 100;
-  static const double logoPresentationHeight = 85;
+  static const double logoPresentationHeight = 88;
   static const double menuWidth = 260;
   static const double progressBarHeight = 10;
   static const double thumbnailSize = 85;
