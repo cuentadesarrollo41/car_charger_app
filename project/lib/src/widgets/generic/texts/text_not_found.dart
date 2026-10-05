@@ -9,7 +9,7 @@ import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/commons/utils/app_localizations.dart';
 
 // Widgets.
-import 'package:project/src/widgets/generic/texts/text_neue_haas.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class TextNotFound extends StatelessWidget {
   final String? text;
@@ -33,10 +33,10 @@ class TextNotFound extends StatelessWidget {
       alignment: Alignment.topCenter,
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       margin: EdgeInsets.only(top: topMargin),
-      child: TextNeueHaas(
+      child: TextInter(
         text: text ?? AppLocalizations.of(context)!.translate('results_not_found'),
         fontSize: fontSize ?? screenProperties.fontText,
-        color: CustomColors.grayHomeItem,
+        color: CustomColors.textPlaceholder,
         fontStyle: FontStyle.italic,
         textAlign: TextAlign.center,
       ),

@@ -20,8 +20,8 @@ class PageIndicators extends StatelessWidget {
     this.maxVisibleIndicators = 5,
     this.pageIndicatorHeight = Numbers.noValueDouble,
     this.pageIndicatorWidth = Numbers.noValueDouble,
-    this.activeIndicatorColor = CustomColors.redPrimary,
-    this.inactiveIndicatorColor = CustomColors.grayBackgroundCard,
+    this.activeIndicatorColor = CustomColors.lime,
+    this.inactiveIndicatorColor = CustomColors.backgroundCard,
     super.key
   });
 

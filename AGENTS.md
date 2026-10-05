@@ -20,7 +20,7 @@ helpers); the design and the domain features are still pending.
 | Bundle ID / application ID | `ios/Runner.xcodeproj`, `android/app/build.gradle(.kts)` | ✅ `com.graco.project` |
 | Display name | `CFBundleDisplayName` in `ios/Runner/Info.plist`, `android:label` in `android/app/src/main/AndroidManifest.xml` | ⏳ Still "Project" (iOS) / "project" (Android) — must become GRACO |
 | App icons and splash | `ios/Runner/Assets.xcassets`, `android/app/src/main/res` | ⏳ Flutter defaults |
-| Fonts | `fonts/` and the `fonts:` section in `pubspec.yaml` | ⏳ `fonts/` is empty and `pubspec.yaml` has no `fonts:`, but `main.dart` already uses `NeueHaasDisplay` |
+| Fonts | `fonts/` and the `fonts:` section in `pubspec.yaml` | ✅ Inter 18pt, weights 100–900 + italics |
 | Brand colors | `CustomColors` in `lib/src/commons/constants/custom_colors.dart` | ⏳ Placeholder colors — pending design |
 | Store links | `Urls` in `lib/src/commons/constants/urls.dart` | ⏳ Generic links, no app ID yet |
 | README | `README.md` | ⏳ Default Flutter text |
@@ -36,7 +36,7 @@ Remove leftovers from other projects when found.
 - **State management:** RxDart `BehaviorSubject` — custom BLoC pattern. **Do NOT use `flutter_bloc`.**
 - **HTTP:** `http` package — only through `ApiService` (see Service Pattern)
 - **Storage:** `SharedPreferences` via `Preferences()` singleton
-- **Fonts:** NeueHaasDisplay — always use `TextNeueHaas` widget, never raw `Text`
+- **Fonts:** Inter (static 18pt cuts, weights 100–900 with italics, in `fonts/`) — family name in `Strings.fontFamily`, never as a literal; always use the `TextInter` widget, never raw `Text`
 - **i18n:** Custom JSON-based localisation via `AppLocalizations` — `es` (default) and `en`
 - **Package name:** `project` (all imports start with `package:project/`)
 - **Flutter project root:** `project/` — every path in this document is relative to it (`project/pubspec.yaml`, `project/lib/`, `project/lang/`, …)
@@ -415,7 +415,7 @@ class _XContentState extends State<XContent> with InitialLoadHandler<XContent> {
 
 | Use this | Never use this |
 |---|---|
-| `TextNeueHaas` | `Text` |
+| `TextInter` | `Text` |
 | `ButtonCustom` | `ElevatedButton`, `TextButton`, `OutlinedButton`, `FilledButton` |
 | `InkWellCustom` | `InkWell`, `GestureDetector` |
 | `ScaffoldCustom` | `Scaffold` |
@@ -450,7 +450,7 @@ Before creating a new widget, check `lib/src/widgets/generic/` for an existing o
 | What | Class | File |
 |---|---|---|
 | Colors | `CustomColors` | `lib/src/commons/constants/custom_colors.dart` |
-| Strings, symbols, app name | `Strings` | `lib/src/commons/constants/strings.dart` |
+| Strings, symbols, app name, font family | `Strings` | `lib/src/commons/constants/strings.dart` |
 | Numeric limits, delays, counts | `Numbers` | `lib/src/commons/constants/numbers.dart` |
 | Sizes, margins, font sizes | `Sizes` | `lib/src/commons/constants/sizes.dart` |
 | JSON / API / form field keys | `Fields` | `lib/src/commons/constants/fields.dart` |
@@ -566,7 +566,7 @@ static Future<Map<String, dynamic>> getOne({ required String id, required String
   mapData: (Map<String, dynamic> data) => { Fields.item: UserModel.fromJson(data[Fields.user] ?? {}) }
 );
 
-TextNeueHaas(
+TextInter(
   text: item.name,
   fontSize: screenProperties.fontSmall,
   fontWeight: FontWeight.w600
@@ -583,7 +583,7 @@ static Future<Map<String, dynamic>> getOne({required String id, required String 
 
 ## Strict Rules — Never Break These
 
-1. **Never use `Text(...)`** — always use `TextNeueHaas`
+1. **Never use `Text(...)`** — always use `TextInter`
 2. **Never use `ElevatedButton`, `TextButton`, `OutlinedButton`** — always use `ButtonCustom`
 3. **Never use `InkWell`** — always use `InkWellCustom`
 4. **Never use `Scaffold`** — always use `ScaffoldCustom`

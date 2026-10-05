@@ -24,8 +24,8 @@ class ButtonCustomBordered extends StatelessWidget {
   const ButtonCustomBordered({
     required this.text,
     required this.fontSize,
-    this.borderColor = CustomColors.redPrimary,
-    this.overlayBorderColor = CustomColors.redPrimary80,
+    this.borderColor = CustomColors.lime,
+    this.overlayBorderColor = CustomColors.lime80,
     this.iconDataLeft,
     this.iconDataRight,
     this.iconSize = Sizes.font12,
@@ -39,8 +39,8 @@ class ButtonCustomBordered extends StatelessWidget {
   Widget build(BuildContext context) => ButtonCustom(
     text: text,
     fontSize: fontSize,
-    backgroundColor: Colors.white,
-    overlayColor: Colors.white,
+    backgroundColor: CustomColors.backgroundGhost,
+    overlayColor: CustomColors.backgroundGhost,
     borderColor: borderColor,
     overlayBorderColor: overlayBorderColor,
     iconDataLeft: iconDataLeft,

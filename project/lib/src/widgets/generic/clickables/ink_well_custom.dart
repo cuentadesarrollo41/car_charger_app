@@ -32,7 +32,7 @@ class InkWellCustom extends StatelessWidget {
     hoverColor: onHover == null
       ? Colors.transparent
       : hoverColor == null
-        ? CustomColors.redSecondary80
+        ? CustomColors.lime80
         : hoverColor!,
     focusColor: Colors.transparent,
     splashColor: Colors.transparent,

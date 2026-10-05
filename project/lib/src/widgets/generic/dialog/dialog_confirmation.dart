@@ -14,26 +14,28 @@ import 'package:project/src/widgets/generic/clickables/buttons/button_custom.dar
 import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_black.dart';
 import 'package:project/src/widgets/generic/dialog/dialog_custom.dart';
 import 'package:project/src/widgets/generic/inputs/input_text_field.dart';
-import 'package:project/src/widgets/generic/texts/text_neue_haas.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 import 'package:project/src/widgets/generic/texts/title_page.dart';
 
 class DialogConfirmation extends StatefulWidget {
   final String title;
   final List<TextSpan> texts;
-  final bool hasObservations;
-  final String observationsHint;
+  final String inputTitle;
+  final bool hasInput;
+  final String inputHint;
   final String? cancelText;
   final String? confirmText;
   final bool showCancelButton;
 
-  final void Function(String observations) onConfirmButtonClicked;
+  final void Function(String value) onConfirmButtonClicked;
   final void Function()? onCancelButtonClicked;
 
   const DialogConfirmation({
     required this.title,
     required this.texts,
-    this.hasObservations = false,
-    this.observationsHint = Strings.emptyString,
+    this.inputTitle = Strings.emptyString,
+    this.hasInput = false,
+    this.inputHint = Strings.emptyString,
     this.cancelText,
     this.confirmText,
     this.showCancelButton = true,
@@ -74,7 +76,7 @@ class _DialogConfirmationState extends State<DialogConfirmation> {
 
             if (widget.texts.isNotEmpty) _createText(),
 
-            if (widget.hasObservations) _createObservations(),
+            if (widget.hasInput) _createInput(),
 
             _createButtons()
           ],
@@ -94,33 +96,33 @@ class _DialogConfirmationState extends State<DialogConfirmation> {
     text: TextSpan(
       style: TextStyle(
         fontSize: screenProperties.fontText,
-        fontFamily: 'NeueHaasDisplay',
+        fontFamily: Strings.fontFamily,
         color: Colors.black
       ),
       children: widget.texts
     )
   );
 
-  // Method that creates the observations.
-  Widget _createObservations() => Column(
+  // Method that creates the input.
+  Widget _createInput() => Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     spacing: Sizes.margin8,
     children: [
-      TextNeueHaas(
-        text: AppLocalizations.of(context)!.translate('observations'),
+      TextInter(
+        text: widget.inputTitle,
         fontSize: screenProperties.fontText,
         fontWeight: FontWeight.w600,
       ),
 
       InputTextField(
-        hint: widget.observationsHint,
+        hint: widget.inputHint,
         textInputType: TextInputType.multiline,
         height: 3 * Sizes.inputHeight,
         minLines: 8,
         maxLines: 8,
         fontSize: screenProperties.fontText,
-        borderColor: CustomColors.grayBorder,
+        borderColor: CustomColors.backgroundLine,
         onValueChanged: _onObservationsChanged
       ),
     ],

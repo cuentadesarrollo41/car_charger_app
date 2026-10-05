@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/src/models/generic/screen_properties_model.dart';
 
 // Widgets.
-import 'package:project/src/widgets/generic/texts/text_neue_haas.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class TitleSection extends StatelessWidget {
   final String text;
@@ -20,7 +20,7 @@ class TitleSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final ScreenPropertiesModel screenProperties = ScreenPropertiesModel(context: context);
 
-    return TextNeueHaas(
+    return TextInter(
       text: text,
       fontSize: screenProperties.fontBigTitle,
       fontWeight: FontWeight.w700,

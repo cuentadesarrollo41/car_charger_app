@@ -14,7 +14,7 @@ class ProgressBar extends StatelessWidget {
 
   const ProgressBar({
     this.stream,
-    this.color = CustomColors.redPrimary,
+    this.color = CustomColors.lime,
     super.key
   });
 

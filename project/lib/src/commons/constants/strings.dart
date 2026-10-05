@@ -1,5 +1,6 @@
 class Strings {
   static const String appName = 'GRACO';
+  static const String fontFamily = 'Inter';
   static const String asterisk = '*';
   static const String bar = '|';
   static const String breakLine = '\n';

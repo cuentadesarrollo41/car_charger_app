@@ -81,13 +81,8 @@ class _MyAppState extends State<MyApp> {
         }
 
         return StreamBuilder<SessionModel>(
-          stream: stateBloc.sessionStream.distinct(
-            (SessionModel prev, SessionModel next) =>
-                prev.languageCode == next.languageCode,
-          ), // Listen changes only if language code is updated.
-          builder:
-              (BuildContext context, AsyncSnapshot<SessionModel> snapshot) =>
-                  _createMaterialApp(),
+          stream: stateBloc.sessionStream.distinct((SessionModel prev, SessionModel next) => prev.languageCode == next.languageCode), // Listen changes only if language code is updated.
+          builder: (BuildContext context, AsyncSnapshot<SessionModel> snapshot) => _createMaterialApp(),
         );
       },
     ),
@@ -106,11 +101,11 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: false,
         primaryColor: Colors.white,
         textSelectionTheme: const TextSelectionThemeData(
-          selectionHandleColor: CustomColors.redPrimary,
-          selectionColor: CustomColors.redSecondary,
-          cursorColor: CustomColors.redPrimary,
+          selectionHandleColor: CustomColors.lime,
+          selectionColor: CustomColors.lime80,
+          cursorColor: CustomColors.lime,
         ),
-        fontFamily: 'NeueHaasDisplay',
+        fontFamily: Strings.fontFamily,
       ),
       initialRoute: Routes.splash,
       routes: Routes.getRoutes(),
@@ -118,20 +113,16 @@ class _MyAppState extends State<MyApp> {
 
       // Make sure that the localization data for the proper language is loaded.
       localizationsDelegates: [
-        AppLocalizations
-            .delegate, // A class which loads the translations from JSON files.
-        GlobalMaterialLocalizations
-            .delegate, // Built-in localization of basic text for Material widgets.
-        GlobalCupertinoLocalizations
-            .delegate, // Built-in localization of basic text for Cupertino widgets.
-        GlobalWidgetsLocalizations
-            .delegate, // Built-in localization for text direction LTR/RTL.
+        AppLocalizations.delegate, // A class which loads the translations from JSON files.
+        GlobalMaterialLocalizations.delegate, // Built-in localization of basic text for Material widgets.
+        GlobalCupertinoLocalizations.delegate, // Built-in localization of basic text for Cupertino widgets.
+        GlobalWidgetsLocalizations.delegate, // Built-in localization for text direction LTR/RTL.
       ],
 
       // Returns a locale which will be used by the app.
       locale: session.languageCode.isNotEmpty
-          ? AppLocalizations.getLocaleByLanguageCode(session.languageCode)
-          : null,
+        ? AppLocalizations.getLocaleByLanguageCode(session.languageCode)
+        : null,
       localeListResolutionCallback: _localeListResolutionCallback,
       builder: (BuildContext context, Widget? child) => MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1)),
@@ -141,22 +132,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   // Method that gets the locales.
-  Locale _localeListResolutionCallback(
-    List<Locale>? deviceLocales,
-    Iterable<Locale> supported,
-  ) {
+  Locale _localeListResolutionCallback(List<Locale>? deviceLocales, Iterable<Locale> supported) {
     // Match country + language code.
     if (deviceLocales != null) {
       for (Locale deviceLocale in deviceLocales) {
         for (Locale supportedLocale in supported) {
-          final String deviceCountryCode =
-              (deviceLocale.countryCode ?? Strings.emptyString).toLowerCase();
-          final String supportedCountryCode =
-              (supportedLocale.countryCode ?? Strings.emptyString)
-                  .toLowerCase();
+          final String deviceCountryCode = (deviceLocale.countryCode ?? Strings.emptyString).toLowerCase();
+          final String supportedCountryCode = (supportedLocale.countryCode ?? Strings.emptyString).toLowerCase();
 
-          if (supportedLocale.languageCode == deviceLocale.languageCode &&
-              deviceCountryCode == supportedCountryCode) {
+          if (supportedLocale.languageCode == deviceLocale.languageCode && deviceCountryCode == supportedCountryCode) {
             return supportedLocale;
           }
         }

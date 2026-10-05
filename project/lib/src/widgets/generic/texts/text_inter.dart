@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-class TextNeueHaas extends StatelessWidget {
+// Commons.
+import 'package:project/src/commons/constants/strings.dart';
+
+class TextInter extends StatelessWidget {
   final String text;
   final double fontSize;
   final Color color;
@@ -12,10 +15,10 @@ class TextNeueHaas extends StatelessWidget {
   final TextDecoration? textDecoration;
   final double height;
 
-  const TextNeueHaas({
+  const TextInter({
     required this.text,
     required this.fontSize,
-    this.color = Colors.black,
+    this.color = Colors.white,
     this.fontStyle = FontStyle.normal,
     this.fontWeight = FontWeight.w500,
     this.maxLines,
@@ -30,7 +33,7 @@ class TextNeueHaas extends StatelessWidget {
   Widget build(BuildContext context) => Text(
     text,
     style: TextStyle(
-      fontFamily: 'NeueHaasDisplay',
+      fontFamily: Strings.fontFamily,
       color: color,
       fontSize: fontSize,
       fontStyle: fontStyle,

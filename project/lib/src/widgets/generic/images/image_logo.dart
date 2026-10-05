@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 // Commons.
 import 'package:project/src/commons/constants/strings.dart';
@@ -19,8 +18,8 @@ class ImageLogo extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => SvgPicture.asset(
-    'assets/img/logo/logo_${ isLarge ? 'large' : 'short' }${ color.isEmpty ? Strings.emptyString : '_$color' }.svg',
+  Widget build(BuildContext context) => Image.asset(
+    'assets/img/logo/logo_${ isLarge ? 'large' : 'short' }${ color.isEmpty ? Strings.emptyString : '_$color' }.png',
     height: width == null ? height : null,
     width: width,
     fit: width == null ? BoxFit.fitHeight : BoxFit.fitWidth,

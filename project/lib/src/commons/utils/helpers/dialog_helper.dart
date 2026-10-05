@@ -25,8 +25,8 @@ abstract class DialogHelper {
         child: DialogConfirmation(
           title: auxTitle,
           texts: [ TextSpan(text: auxText) ],
-          hasObservations: false,
-          observationsHint: Strings.emptyString,
+          hasInput: false,
+          inputHint: Strings.emptyString,
           confirmText: positiveName,
           cancelText: negativeName,
           showCancelButton: negativeName != null,
@@ -38,7 +38,7 @@ abstract class DialogHelper {
   }
 
   // Method that shows the progressbar alert dialog.
-  static void showProgressBarAlertDialog({ required BuildContext context, required Stream stream, Color color = CustomColors.redPrimary }) => showDialog(
+  static void showProgressBarAlertDialog({ required BuildContext context, required Stream stream, Color color = CustomColors.lime }) => showDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) => PopScope(

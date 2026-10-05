@@ -9,7 +9,7 @@ class LoaderDots extends StatefulWidget {
   final Color color;
 
   const LoaderDots({
-    this.color = CustomColors.redPrimary,
+    this.color = CustomColors.lime,
     super.key
   });
 

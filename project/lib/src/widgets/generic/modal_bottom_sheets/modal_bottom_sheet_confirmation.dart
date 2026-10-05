@@ -74,7 +74,7 @@ class _ModalBottomSheetConfirmationState extends State<ModalBottomSheetConfirmat
     text: TextSpan(
       style: TextStyle(
         fontSize: screenProperties.fontText,
-        fontFamily: 'NeueHaasDisplay',
+        fontFamily: Strings.fontFamily,
         color: Colors.black
       ),
       children: widget.texts

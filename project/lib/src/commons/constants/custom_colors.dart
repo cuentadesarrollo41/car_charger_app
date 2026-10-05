@@ -4,30 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:project/src/commons/constants/strings.dart';
 
 class CustomColors {
-  static const Color blackMenu = Color.fromRGBO(0, 0, 0, 0.6);                    // #00000099
+  static const Color black = Color.fromRGBO(16, 18, 20, 1.0);                   // #101214
 
-  static const Color gray = Color.fromRGBO(106, 122, 137, 1.0);                   // #edf2f8cf
-  static const Color grayBackground = Color.fromRGBO(249, 249, 249, 1.0);         // #f9f9f9
-  static const Color grayBackgroundCard = Color.fromRGBO(239, 239, 239, 1.0);     // #EFEFEFFF
-  static const Color grayBlue = Color.fromRGBO(144, 159, 172, 1.0);               // #909fac
-  static const Color grayHomeItem = Color.fromRGBO(102, 102, 102, 1.0);           // ##666666
-  static const Color grayBorder = Color.fromRGBO(239, 239, 239, 1.0);             // #e9e9e9
-  static const Color grayLight = Color.fromRGBO(235, 238, 240, 1.0);              // #ebeef0
-  static const Color grayLightest = Color.fromRGBO(243, 245, 246, 1.0);           // #F3F5F6
+  static const Color backgroundCard = Color.fromRGBO(28, 32, 35, 1.0);          // #1C2023
+  static const Color backgroundGhost = Color.fromRGBO(255, 255, 255, 0.06);     // #FFFFFF0F
+  static const Color backgroundInput = Color.fromRGBO(40, 46, 47, 1.0);         // #202526
+  static const Color backgroundLine = Color.fromRGBO(255, 255, 255, 0.11);      // #FFFFFF1C
+  static const Color backgroundProgressBar = Color.fromRGBO(28, 32, 35, 1.0);   // #1C2023
 
-  static const Color green = Color.fromRGBO(13, 107, 44, 1.0);                    // #F3F5F6
-  static const Color greenLight = Color.fromRGBO(222, 240, 229, 1.0);             // #F3F5F6
+  static const Color lime = Color.fromRGBO(168, 255, 0, 1.0);                   // #A8FF00
+  static const Color lime80 = Color.fromRGBO(168, 255, 0, 0.8);                 // #A8FF00 -> 80%
+  static const Color limeDark = Color.fromRGBO(122, 204, 0, 1.0);               // #7ACC00
 
-  static const Color redPrimary = Color.fromRGBO(253, 100, 75, 1.0);              // #FD644BFF
-  static const Color redPrimary80 = Color.fromRGBO(253, 100, 75, 0.8);            // #FD644BFF -> 80%
-  static const Color redSecondary = Color.fromRGBO(254, 217, 211, 1.0);           // #FED9D3FF
-  static const Color redSecondary80 = Color.fromRGBO(254, 217, 211, 0.8);         // #FED9D3FF
-  static const Color redContainer = Color.fromRGBO(254, 217, 211, 0.95);          // #FED9D3F2 -> 95%
-  static const Color redHoverList = Color.fromRGBO(255, 237, 235, 1.0);           // #FDD5CEFF%
-  static const Color redWhite = Color.fromRGBO(255, 230, 230, 1.0);               // #ffe6e6
+  static const Color orange = Color.fromRGBO(255, 189, 74, 1.0);                // #FFBD4A
 
-  static const Color backgroundBottomSheet = Color.fromRGBO(255, 255, 255, 0.44); // FFFFFF70
-  static const Color subtitleGray = Color.fromRGBO(155, 155, 155, 1.0);           // 666666FF
+  static const Color red = Color.fromRGBO(255, 93, 101, 1.0);                   // #FF5D65
+  static const Color red80 = Color.fromRGBO(255, 93, 101, 0.8);                 // #FF5D65 -> 80%
+  static const Color redDark = Color.fromRGBO(202, 78, 85, 1.0);                // #CA4E55 -> 80%
+
+  static const Color textPlaceholder = Color.fromRGBO(115, 124, 121, 1.0);      // #737C79
+  static const Color textSecondary = Color.fromRGBO(154, 163, 161, 1.0);        // #9AA3A1
+
+  static const Color white80 = Color.fromRGBO(154, 163, 161, 0.8);              // #9AA3A1CC
 
   // Transform hexadecimal code to color.
   static Color hexCodeToColor(String hexCode) {

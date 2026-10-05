@@ -11,7 +11,7 @@ import 'package:project/src/commons/constants/sizes.dart';
 // Widgets.
 import 'package:project/src/widgets/generic/containers/card/card_container.dart';
 import 'package:project/src/widgets/generic/list/item_list.dart';
-import 'package:project/src/widgets/generic/texts/text_neue_haas.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class ItemListAccess extends StatefulWidget {
   final int index;
@@ -71,7 +71,7 @@ class _ItemListAccessState extends State<ItemListAccess> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(Sizes.borderRadius10),
             border: Border.all(
-              color: widget.isSelected ? CustomColors.redPrimary : Colors.white,
+              color: widget.isSelected ? CustomColors.lime : Colors.white,
               width: Sizes.defaultBorderSize
             )
           ),
@@ -101,7 +101,7 @@ class _ItemListAccessState extends State<ItemListAccess> {
       crossAxisAlignment: CrossAxisAlignment.center,
       spacing: Sizes.margin16,
       children: [
-        _createIcon(widget.leftIconData, CustomColors.redPrimary, Sizes.font20),
+        _createIcon(widget.leftIconData, CustomColors.lime, Sizes.font20),
 
         Expanded(child: widget.content ?? _createText()),
 
@@ -119,7 +119,7 @@ class _ItemListAccessState extends State<ItemListAccess> {
   );
 
   // Method that creates the text.
-  Widget _createText() => TextNeueHaas(
+  Widget _createText() => TextInter(
     text: widget.text,
     fontSize: screenProperties.fontSmall,
     color: Colors.black,

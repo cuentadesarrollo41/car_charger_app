@@ -29,7 +29,7 @@ class WebImage extends StatelessWidget {
     this.boxFit = BoxFit.cover,
     this.errorIconData = FontAwesomeIcons.image,
     this.errorIconSize = Sizes.font24,
-    this.errorIconColor = CustomColors.redPrimary,
+    this.errorIconColor = CustomColors.lime,
     this.alignment = Alignment.centerLeft,
     super.key
   });

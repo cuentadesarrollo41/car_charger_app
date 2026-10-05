@@ -15,7 +15,7 @@ abstract class Utils {
   // Dialog.
   // ***************************************************************************
   static void showAlertDialog({ required BuildContext context, required String? title, required String? text, required String positiveName, String? negativeName, required dynamic positiveAction, required dynamic negativeAction }) => DialogHelper.showAlertDialog(context: context, title: title, text: text, positiveName: positiveName, negativeName: negativeName, positiveAction: positiveAction, negativeAction: negativeAction);
-  static void showProgressBarAlertDialog({ required BuildContext context, required Stream stream, Color color = CustomColors.redPrimary }) => DialogHelper.showProgressBarAlertDialog(context: context, stream: stream, color: color);
+  static void showProgressBarAlertDialog({ required BuildContext context, required Stream stream, Color color = CustomColors.lime }) => DialogHelper.showProgressBarAlertDialog(context: context, stream: stream, color: color);
   static dynamic showModalBottomSheetCustom({ required BuildContext context, required Widget child }) async => DialogHelper.showModalBottomSheetCustom(context: context, child: child);
   static void showSnackBar({ required BuildContext context, required String text }) => DialogHelper.showSnackBar(context: context, text: text);
 

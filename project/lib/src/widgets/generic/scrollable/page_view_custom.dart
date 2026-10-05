@@ -30,8 +30,8 @@ class PageViewCustom extends StatefulWidget {
     this.delayAutoScroll = 2000,
     this.pageIndicatorHeight = Numbers.noValueDouble,
     this.pageIndicatorWidth = Numbers.noValueDouble,
-    this.activeIndicatorColor = CustomColors.redPrimary,
-    this.inactiveIndicatorColor = CustomColors.grayBackgroundCard,
+    this.activeIndicatorColor = CustomColors.lime,
+    this.inactiveIndicatorColor = CustomColors.backgroundCard,
     required this.height,
     super.key
   });

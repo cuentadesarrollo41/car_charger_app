@@ -37,7 +37,7 @@ class FutureLoadingDataContent extends StatefulWidget {
   const FutureLoadingDataContent({
     required this.hasLoaded,
     required this.loadingText,
-    this.progressBarColor = CustomColors.redPrimary,
+    this.progressBarColor = CustomColors.lime,
     this.allowedRouteNames = const <String> [],
     required this.createLoadedContent,
     required this.changeLoadingText,

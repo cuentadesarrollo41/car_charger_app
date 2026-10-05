@@ -58,8 +58,6 @@ class _ScaffoldCustomState extends State<ScaffoldCustom> {
 
     return Stack(
       children: [
-        _createBackground(),
-
         if (widget.showBackgroundLogo) _createBackgroundLogo(),
 
         _createScaffold(),
@@ -72,20 +70,6 @@ class _ScaffoldCustomState extends State<ScaffoldCustom> {
     stateBloc = BlocProvider.stateBloc(context);
     screenProperties = ScreenPropertiesModel(context: context);
   }
-
-  // Method that creates the background.
-  Widget _createBackground() => Container(
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-        colors: [
-          CustomColors.redSecondary,
-          CustomColors.redPrimary,
-        ],
-      ),
-    ),
-  );
 
   // Method that creates the background logo.
   Widget _createBackgroundLogo() => Positioned(
@@ -105,7 +89,7 @@ class _ScaffoldCustomState extends State<ScaffoldCustom> {
   Widget _createScaffold() => Scaffold(
     key: widget.scaffoldKey,
     appBar: widget.appBar,
-    backgroundColor: Colors.transparent,
+    backgroundColor: CustomColors.black,
     // resizeToAvoidBottomInset: false, // => Used in order to remove bottom space when opening keyboard.
     body: widget.contentIsList
       ? SingleChildScrollView(

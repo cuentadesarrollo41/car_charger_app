@@ -9,7 +9,7 @@ import 'package:project/src/commons/constants/strings.dart';
 import 'package:project/src/commons/utils/currency.dart';
 
 // Widgets.
-import 'package:project/src/widgets/generic/texts/text_neue_haas.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class InputTextField extends StatefulWidget {
   final String hint;
@@ -57,12 +57,12 @@ class InputTextField extends StatefulWidget {
     this.obscureText = false,
     this.initialText = Strings.emptyString,
     this.borderRadius = Sizes.borderRadius10,
-    this.borderColor = Colors.white,
+    this.borderColor = CustomColors.lime,
     this.borderSize = Sizes.inputBorderSize,
-    this.backgroundColor = Colors.white,
-    this.hintColor = CustomColors.grayHomeItem,
-    this.textColor = Colors.black,
-    this.iconColor = CustomColors.redPrimary,
+    this.backgroundColor = CustomColors.backgroundInput,
+    this.hintColor = CustomColors.textPlaceholder,
+    this.textColor = Colors.white,
+    this.iconColor = Colors.white,
     required this.fontSize,
     this.iconSize = Sizes.font18,
     this.iconData,
@@ -151,7 +151,7 @@ class _InputTextFieldState extends State<InputTextField> {
       style: TextStyle(
         color: widget.textColor,
         fontSize: widget.fontSize,
-        fontFamily: 'NeueHaasDisplay'
+        fontFamily: Strings.fontFamily
       ),
       decoration: InputDecoration(
         border: InputBorder.none,
@@ -183,7 +183,7 @@ class _InputTextFieldState extends State<InputTextField> {
     style: TextStyle(
       color: widget.textColor,
       fontSize: widget.fontSize,
-      fontFamily: 'NeueHaasDisplay'
+      fontFamily: Strings.fontFamily
     ),
     decoration: InputDecoration(
       hintText: widget.hint,
@@ -193,7 +193,7 @@ class _InputTextFieldState extends State<InputTextField> {
       ),
       isDense: true,
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      label: TextNeueHaas(
+      label: TextInter(
         text: widget.label,
         fontSize: widget.fontSize,
         color: widget.textColor,
@@ -202,7 +202,7 @@ class _InputTextFieldState extends State<InputTextField> {
         borderSide: BorderSide(color: widget.borderColor, width: widget.borderSize),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: CustomColors.redPrimary, width: widget.borderSize * 2),
+        borderSide: BorderSide(color: Colors.white, width: widget.borderSize * 2),
       ),
       prefixIcon: _createPrefixIcon(),
       suffixIcon: _createSuffixIcon(),

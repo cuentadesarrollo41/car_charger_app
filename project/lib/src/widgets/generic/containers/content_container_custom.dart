@@ -8,7 +8,7 @@ import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/commons/constants/strings.dart';
 import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
-import 'package:project/src/widgets/generic/texts/text_neue_haas.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/texts/title_page.dart';
@@ -97,7 +97,7 @@ class _ContentContainerCustomState extends State<ContentContainerCustom> {
   // Method that creates the subtitle.
   Widget _createSubtitle() => Padding(
     padding: const EdgeInsets.symmetric(horizontal: Sizes.margin22),
-    child: TextNeueHaas(
+    child: TextInter(
       text: widget.subtitle,
       fontSize: screenProperties.fontText,
       color: Colors.black,
@@ -115,7 +115,7 @@ class _ContentContainerCustomState extends State<ContentContainerCustom> {
         right: Sizes.margin16,
       ),
       decoration: BoxDecoration(
-        color: widget.isWhite ? Colors.white : CustomColors.backgroundBottomSheet,
+        color: widget.isWhite ? Colors.white : CustomColors.black,
         borderRadius: BorderRadius.vertical(top: Radius.circular(Sizes.borderRadius20)),
       ),
       child: widget.isListView

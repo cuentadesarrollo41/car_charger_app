@@ -8,7 +8,7 @@ import 'package:project/src/commons/constants/sizes.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
-import 'package:project/src/widgets/generic/texts/text_neue_haas.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class ButtonCustom extends StatefulWidget {
   final String text;
@@ -43,10 +43,10 @@ class ButtonCustom extends StatefulWidget {
     this.height = Sizes.buttonHeight,
     this.width,
     this.borderRadius = Sizes.borderRadius30,
-    this.backgroundColor = CustomColors.redPrimary,
-    this.borderColor = CustomColors.redPrimary,
-    this.overlayColor = CustomColors.redPrimary80,
-    this.overlayBorderColor = CustomColors.redPrimary80,
+    this.backgroundColor = CustomColors.lime,
+    this.borderColor = CustomColors.lime,
+    this.overlayColor = CustomColors.lime80,
+    this.overlayBorderColor = CustomColors.lime80,
     this.borderSize = Sizes.inputBorderSize,
     this.textColor = Colors.white,
     this.overlayTextColor = Colors.white,
@@ -133,7 +133,7 @@ class _ButtonCustomState extends State<ButtonCustom> {
           SizedBox(width: widget.iconAssetLeft == null ? 0 : Sizes.margin16),
 
           Flexible(
-            child: TextNeueHaas(
+            child: TextInter(
               text: widget.text,
               fontSize: widget.fontSize,
               fontWeight: widget.fontWeight,

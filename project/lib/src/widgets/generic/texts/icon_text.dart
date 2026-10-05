@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 
 // Widgets.
-import 'package:project/src/widgets/generic/texts/text_neue_haas.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class IconText extends StatelessWidget {
   final FaIconData iconData;
@@ -45,7 +45,7 @@ class IconText extends StatelessWidget {
       SizedBox(width: spacing),
 
       Flexible(
-        child: TextNeueHaas(
+        child: TextInter(
           text: text,
           fontSize: fontSize,
           color: textColor,

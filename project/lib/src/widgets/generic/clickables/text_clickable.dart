@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
-import 'package:project/src/widgets/generic/texts/text_neue_haas.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class TextClickable extends StatelessWidget {
   final String text;
@@ -24,7 +24,7 @@ class TextClickable extends StatelessWidget {
   @override
   Widget build(BuildContext context) => InkWellCustom(
     onTap: onClicked,
-    child: TextNeueHaas(
+    child: TextInter(
       text: text,
       fontSize: fontSize,
       fontWeight: FontWeight.w700,

@@ -24,7 +24,6 @@ import 'package:project/src/pages/index.dart';
 // Widgets.
 import 'package:project/src/widgets/generic/containers/scaffold_custom.dart';
 import 'package:project/src/widgets/generic/images/image_logo.dart';
-import 'package:project/src/widgets/generic/loaders/loader_dots.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -148,12 +147,11 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   // Method that creates the content front.
   Widget _createContentFront() => Container(
-    height: screenProperties.size.height * 0.4,
     width: double.infinity,
+    height: double.infinity,
     alignment: Alignment.center,
     child: ImageLogo(
-      height: Sizes.logoPresentationHeight,
-      color: 'black',
+      height: Sizes.logoPresentationHeight
     ),
   );
 
@@ -164,7 +162,6 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   Widget _createLoader() => Container(
     margin: const EdgeInsets.only(bottom: Sizes.appBarHeight),
     alignment: Alignment.bottomCenter,
-    child: LoaderDots(color: CustomColors.redPrimary)
   );
 
   // Method that loads the package info.
@@ -175,6 +172,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   // Method that loads the page.
   void _loadPage() async {
+    return;
     if (await HelperAppUpdate.checkIsOutdated(context: context) || !mounted) {
       return;
     }

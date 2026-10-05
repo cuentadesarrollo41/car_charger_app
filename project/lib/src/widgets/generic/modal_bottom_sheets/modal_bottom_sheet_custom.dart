@@ -79,7 +79,7 @@ class _ModalBottomSheetCustomState extends State<ModalBottomSheetCustom> {
       height: 6,
       width: 70,
       decoration: BoxDecoration(
-        color: CustomColors.grayBorder,
+        color: CustomColors.backgroundLine,
         borderRadius: BorderRadius.circular(Sizes.borderRadius20),
       ),
     ),
@@ -107,7 +107,7 @@ class _ModalBottomSheetCustomState extends State<ModalBottomSheetCustom> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: CustomColors.grayBorder
+        color: CustomColors.backgroundLine
       ),
       child: FaIcon(
         FontAwesomeIcons.xmark,
