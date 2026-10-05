@@ -45,8 +45,10 @@ class Backend {
   // Auth.
   static const String login = 'api/v1/public/users/login';
   static const String logout = 'api/v1/public/users/logout';
+  static const String recoverPassword = 'api/v1/public/users/password/recover';
+  static const String signUp = 'api/v1/public/users/register';
 
   // Users.
-  static const String getUser = 'api/v1/private/users';
-  static const String updatePassword = 'api/v1/private/users/password';
+  static const String getOwnUser = 'api/v1/private/users/own';
+  static const String updatePassword = 'api/v1/private/users/password/update';
 }

@@ -17,9 +17,8 @@ abstract class InitialCommonCalls {
     }
 
     return isConnected && (refresh || stateBloc.session.allowRefresh())
-      ? UserService.getOne(
+      ? UserService.getOwnUser(
         token: stateBloc.session.token,
-        id: stateBloc.session.user.id,
         language: stateBloc.session.languageCode,
       )
       : {
