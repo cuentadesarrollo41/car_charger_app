@@ -4,7 +4,7 @@ class Numbers {
   static const int delaySearcher = 500;
   static const int delayScroll = 400;
   static const int delayWaitScroll = 100;
-  static const int delaySplash = 2000;
+  static const int delaySplash = 2800;
   static const int delaySnackBar = 2000;
   static const int firstPage = 1;
   static const int firstYear = 1900;

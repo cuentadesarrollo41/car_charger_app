@@ -3,6 +3,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 // Bloc.
 import 'package:project/src/bloc/bloc_provider.dart';
+
+// Helpers.
 import 'package:project/src/helpers/helper_app_update.dart';
 
 // Models.
@@ -22,11 +24,14 @@ import 'package:project/src/commons/utils/utils.dart';
 import 'package:project/src/pages/index.dart';
 
 // Widgets.
+import 'package:project/src/widgets/generic/containers/graco_stripe.dart';
 import 'package:project/src/widgets/generic/containers/scaffold_custom.dart';
 import 'package:project/src/widgets/generic/images/image_logo.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({super.key});
+  const SplashPage({
+    super.key
+  });
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -41,6 +46,9 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   late AnimationController fadeController;
   late Animation<double> fadeAnimation;
+
+  late AnimationController logoController;
+  late Animation<double> logoScaleAnimation;
 
   @override
   void initState() {
@@ -57,12 +65,22 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       curve: Curves.easeIn,
     );
 
+    logoController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: Numbers.delaySplash)
+    );
+
+    logoScaleAnimation = Tween<double>(begin: 0.8, end: 1.0)
+      .animate(CurvedAnimation(parent: logoController, curve: Cubic(0.2, 0.75, 0.2, 1.0)));
+
     super.initState();
   }
 
   @override
   void dispose() {
     fadeController.dispose();
+    logoController.dispose();
+
     super.dispose();
   }
 
@@ -119,6 +137,10 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
           fadeController.forward();
         }
 
+        if (!logoController.isAnimating && !logoController.isCompleted) {
+          logoController.forward();
+        }
+
         Future.delayed(const Duration(milliseconds: Numbers.delaySplash), () => _loadPage());
 
         return _createLoadedContent();
@@ -145,18 +167,42 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     ),
   );
 
+  // Method that creates the content back.
+  Widget _createContentBack() => SizedBox.expand(
+    child: Stack(
+      children: [
+        Positioned(
+          left: -150,
+          top: 50,
+          child: GracoStripe(
+            colors: const [ CustomColors.lime78, CustomColors.lime36, Colors.transparent, Colors.transparent ],
+            stops: [ 0.0, 0.35, 0.75, 1.0 ]
+          )
+        ),
+        Positioned(
+          right: -150,
+          bottom: 102,
+          child: GracoStripe(
+            colors: const [ Colors.transparent, Colors.transparent, CustomColors.lime36, CustomColors.lime78 ],
+            stops: [ 0.0, 0.25, 0.65, 1.0 ]
+          )
+        )
+      ]
+    )
+  );
+
   // Method that creates the content front.
   Widget _createContentFront() => Container(
     width: double.infinity,
     height: double.infinity,
     alignment: Alignment.center,
-    child: ImageLogo(
-      height: Sizes.logoPresentationHeight
-    ),
+    child: ScaleTransition(
+      scale: logoScaleAnimation,
+      child: const ImageLogo(
+        height: Sizes.logoPresentationHeight
+      )
+    )
   );
-
-  // Method that creates the content back.
-  Widget _createContentBack() => Container();
 
   // Method that creates the loader.
   Widget _createLoader() => Container(
@@ -172,7 +218,6 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   // Method that loads the page.
   void _loadPage() async {
-    return;
     if (await HelperAppUpdate.checkIsOutdated(context: context) || !mounted) {
       return;
     }

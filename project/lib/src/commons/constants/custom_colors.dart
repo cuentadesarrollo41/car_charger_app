@@ -13,6 +13,8 @@ class CustomColors {
   static const Color backgroundProgressBar = Color.fromRGBO(28, 32, 35, 1.0);   // #1C2023
 
   static const Color lime = Color.fromRGBO(168, 255, 0, 1.0);                   // #A8FF00
+  static const Color lime36 = Color.fromRGBO(168, 255, 0, 0.36);                // #A8FF00 -> 36%
+  static const Color lime78 = Color.fromRGBO(168, 255, 0, 0.78);                // #A8FF00 -> 78%
   static const Color lime80 = Color.fromRGBO(168, 255, 0, 0.8);                 // #A8FF00 -> 80%
   static const Color limeDark = Color.fromRGBO(122, 204, 0, 1.0);               // #7ACC00
 
