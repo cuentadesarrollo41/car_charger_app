@@ -1,9 +1,12 @@
 import 'package:rxdart/rxdart.dart';
 
+// Bloc.
+import 'package:project/src/bloc/mixins/field_errors_mixin.dart';
+
 // Commons.
 import 'package:project/src/commons/constants/strings.dart';
 
-class SignUpBloc {
+class SignUpBloc with FieldErrorsMixin {
   final _emailController = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();
   final _loadingTextController = BehaviorSubject<String>();
@@ -28,6 +31,7 @@ class SignUpBloc {
     _emailController.close();
     _passwordController.close();
     _loadingTextController.close();
+    disposeFieldErrors();
   }
 
   // Reset fields.
@@ -35,6 +39,7 @@ class SignUpBloc {
     changeEmail(Strings.emptyString);
     changePassword(Strings.emptyString);
     changeLoadingText(Strings.emptyString);
+    resetFieldErrors();
   }
 
   // Check if bloc is initialized.

@@ -54,7 +54,7 @@ abstract class HelperForgotPassword {
       return Fields.email;
     }
 
-    forgotPasswordBloc.resetFieldError();
+    forgotPasswordBloc.resetFieldErrors();
 
     return Strings.emptyString;
   }

@@ -68,6 +68,7 @@ abstract class Utils {
   // User.
   // ***************************************************************************
   static void logout({ required BuildContext context }) async => UserHelper.logout(context: context);
+  static void startSession({ required BuildContext context, required String token }) => UserHelper.startSession(context: context, token: token);
   static bool userIsAuthenticated() => UserHelper.userIsAuthenticated();
   static bool passwordIsValid({ required String password }) => UserHelper.passwordIsValid(password: password);
 

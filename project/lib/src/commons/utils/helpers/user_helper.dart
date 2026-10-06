@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 // Bloc.
 import 'package:project/src/bloc/bloc_provider.dart';
@@ -8,8 +9,10 @@ import 'package:project/src/config/preferences/preferences.dart';
 
 // Models.
 import 'package:project/src/models/generic/session_model.dart';
+import 'package:project/src/models/user_model.dart';
 
 // Commons.
+import 'package:project/src/commons/constants/fields.dart';
 import 'package:project/src/commons/constants/numbers.dart';
 import 'package:project/src/commons/constants/strings.dart';
 import 'package:project/src/commons/utils/app_localizations.dart';
@@ -50,6 +53,22 @@ abstract class UserHelper {
     }
 
     Utils.navigatorPushAndRemoveUntil(context: context, type: PageTransitionType.rightToLeft, child: const LoginPage(), routeName: Routes.login);
+  }
+
+  // Method that starts the session with the token received after login / sign up and goes to the main page.
+  static void startSession({ required BuildContext context, required String token }) {
+    final StateBloc stateBloc = BlocProvider.stateBloc(context);
+
+    final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+
+    stateBloc.updateSession(SessionModel(
+      token: token,
+      languageCode: stateBloc.session.languageCode,
+      user: UserModel(id: decodedToken[Fields.data][Fields.id]),
+      updateUserLastDate: DateTime(Numbers.firstYear)
+    ));
+
+    Utils.navigatorPushAndRemoveUntil(context: context, type: PageTransitionType.fade, child: const MainPage(), routeName: Routes.main);
   }
 
   // Method that checks if user is authenticated.

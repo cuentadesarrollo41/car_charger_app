@@ -17,23 +17,23 @@ import 'package:project/src/commons/constants/strings.dart';
 import 'package:project/src/commons/utils/app_localizations.dart';
 import 'package:project/src/commons/utils/utils.dart';
 
-abstract class HelperLogin {
-  // Method that is called when the user clicks the login button.
-  static void onLoginButtonClicked({ required BuildContext context, required Map<String, FocusNode> focusNodes }) {
-    final LoginBloc loginBloc = BlocProvider.loginBloc(context);
+abstract class HelperSignUp {
+  // Method that is called when the user clicks the sign up button.
+  static void onSignUpButtonClicked({ required BuildContext context, required Map<String, FocusNode> focusNodes }) {
+    final SignUpBloc signUpBloc = BlocProvider.signUpBloc(context);
     final StateBloc stateBloc = BlocProvider.stateBloc(context);
 
     ActionHelper.exec(
       context: context,
-      getLoadingText: () => loginBloc.loadingText,
-      setLoadingText: loginBloc.changeLoadingText,
-      loadingTextStream: loginBloc.loadingTextStream,
+      getLoadingText: () => signUpBloc.loadingText,
+      setLoadingText: signUpBloc.changeLoadingText,
+      loadingTextStream: signUpBloc.loadingTextStream,
       validateInlineFields: () => validateFields(context: context),
       focusNodes: focusNodes,
       loadingKey: 'loading',
-      call: () => AuthService.login(
-        email: loginBloc.email.trim(),
-        password: loginBloc.password,
+      call: () => AuthService.signUp(
+        email: signUpBloc.email.trim(),
+        password: signUpBloc.password,
         language: stateBloc.session.languageCode
       ),
       onSuccess: (Map<String, dynamic> response) => Utils.startSession(context: context, token: response[Fields.token])
@@ -42,30 +42,30 @@ abstract class HelperLogin {
 
   // Method that validates the fields. Sets the first error in the bloc and returns its field (empty if valid).
   static String validateFields({ required BuildContext context }) {
-    final LoginBloc loginBloc = BlocProvider.loginBloc(context);
+    final SignUpBloc signUpBloc = BlocProvider.signUpBloc(context);
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
-    if (loginBloc.email.trim().isEmpty) {
-      loginBloc.setFieldError(Fields.email, localizations.translate('error_login_email_validation'));
+    if (signUpBloc.email.trim().isEmpty) {
+      signUpBloc.setFieldError(Fields.email, localizations.translate('error_sign_up_email_validation'));
       return Fields.email;
     }
 
-    if (!EmailValidator.validate(loginBloc.email.trim())) {
-      loginBloc.setFieldError(Fields.email, localizations.translate('error_login_email_format_validation'));
+    if (!EmailValidator.validate(signUpBloc.email.trim())) {
+      signUpBloc.setFieldError(Fields.email, localizations.translate('error_sign_up_email_format_validation'));
       return Fields.email;
     }
 
-    if (loginBloc.password.isEmpty) {
-      loginBloc.setFieldError(Fields.password, localizations.translate('error_login_password_validation'));
+    if (signUpBloc.password.isEmpty) {
+      signUpBloc.setFieldError(Fields.password, localizations.translate('error_sign_up_password_validation'));
       return Fields.password;
     }
 
-    if (!Utils.passwordIsValid(password: loginBloc.password)) {
-      loginBloc.setFieldError(Fields.password, localizations.translate('error_login_password_format_validation').replaceFirst(Strings.replaceCode, Numbers.passwordLengthMin.toString()));
+    if (!Utils.passwordIsValid(password: signUpBloc.password)) {
+      signUpBloc.setFieldError(Fields.password, localizations.translate('error_sign_up_password_format_validation').replaceFirst(Strings.replaceCode, Numbers.passwordLengthMin.toString()));
       return Fields.password;
     }
 
-    loginBloc.resetFieldErrors();
+    signUpBloc.resetFieldErrors();
 
     return Strings.emptyString;
   }

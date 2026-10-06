@@ -158,9 +158,5 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   // ***************************************************************************
   // On change listeners.
   // ***************************************************************************
-  // Method that is called when the user changes the email.
-  void _onEmailChanged(String value) {
-    forgotPasswordBloc.changeEmail(value);
-    forgotPasswordBloc.clearFieldError(Fields.email);
-  }
+  void _onEmailChanged(String value) => forgotPasswordBloc.changeFieldValue(Fields.email, forgotPasswordBloc.changeEmail, value);
 }

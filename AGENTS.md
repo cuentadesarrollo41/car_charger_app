@@ -55,6 +55,7 @@ project/
         state_bloc.dart             # Global app state
         public/                     # Unauthenticated BLoCs (login_bloc.dart)
         private/                    # Authenticated BLoCs (main_bloc.dart, [feature]/)
+        mixins/                     # BLoC mixins (FieldErrorsMixin for form BLoCs)
       config/
         preferences/preferences.dart
         permissions/
@@ -145,6 +146,7 @@ class XBloc {
 - Access everywhere as: `BlocProvider.xBloc(context)`
 - Unauthenticated BLoCs → `lib/src/bloc/public/`
 - Authenticated BLoCs → `lib/src/bloc/private/[feature]/`
+- BLoCs with a form add `with FieldErrorsMixin` (see Form Validation)
 
 ---
 
@@ -364,6 +366,7 @@ class _XPageState extends State<XPage> with PageHandler<XPage> {
 - `updateRefreshDateTime()` → trigger data reload (called on every reload)
 - UI builder methods are private and named `_createXxx()`
 - Register new pages in `lib/src/pages/index.dart` and their route in `Routes`
+- Objects that must be disposed (`FocusNode`, `TextEditingController`, `TapGestureRecognizer`, `AnimationController`…) are created in `initState()` and disposed in `dispose()`, never created inside builders
 
 ---
 
@@ -415,7 +418,9 @@ class _XContentState extends State<XContent> with InitialLoadHandler<XContent> {
 
 - Errors are shown **inline**, below the input, via the `errorText` of `InputTextField` / `TitledInputTextField` — never in a dialog
 - Validate in field order and show only the **first** error; move the focus to that input (`focusNode`); clear a field's error when its value changes
-- Errors live in the BLoC as `fieldErrors` (`Map<String, String>` keyed by `Fields.xxx`), set with `setFieldError` and removed with `clearFieldError`
+- Form BLoCs use `with FieldErrorsMixin` (`lib/src/bloc/mixins/field_errors_mixin.dart`), which provides `fieldErrors` / `fieldErrorsStream` (`Map<String, String>` keyed by `Fields.xxx`), `setFieldError`, `clearFieldError`, `resetFieldErrors` and `changeFieldValue`. Call `resetFieldErrors()` in the BLoC's `reset()` and `disposeFieldErrors()` in its `dispose()`; never redeclare a field-errors controller in a BLoC
+- Inputs call a change listener in the page (`onValueChanged: _onEmailChanged`). Listeners live in the page's "On change listeners" section, are one-liners using `changeFieldValue` (updates the value and clears the field's error) and have no comment: `void _onEmailChanged(String value) => loginBloc.changeFieldValue(Fields.email, loginBloc.changeEmail, value);`. It works for any widget value type (`changeFieldValue<T>`)
+- Inputs read their error from the BLoC inside a `StreamBuilder` on `fieldErrorsStream`: `errorText: bloc.fieldErrors[Fields.x] ?? Strings.emptyString`
 - Validation and the submit action live in a `HelperX` class (e.g. `HelperLogin`) placed next to the screen that uses it (see Helpers location). The helper's `validateFields` sets the first error in the BLoC and returns its field; pass it to `ActionHelper.exec` as `validateInlineFields`, together with `focusNodes`, so `ActionHelper` hides the keyboard, focuses the failing input and stops. `ActionHelper.validateFields` (optional) is only for the rare cases where an error must be shown in a dialog
 - Error texts come from existing translation keys: `error_<screen>_<field>_validation` (e.g. `error_login_email_validation`)
 
@@ -565,6 +570,7 @@ import 'package:project/src/widgets/...';
 - **Closing parenthesis:** on its own line, aligned with the start of the call, when the call spans multiple lines
 - **Closure parameters:** always typed — `(Map<String, dynamic> data) => …`, never `(data) => …`
 - **`const`:** add wherever the compiler allows it
+- **Comments:** every method has a `// Method that …` comment above it, except the change listeners (`_onXChanged`) in the "On change listeners" section, which have none
 
 **Correct:**
 ```dart

@@ -220,14 +220,6 @@ class _LoginPageState extends State<LoginPage> {
   // ***************************************************************************
   // On change listeners.
   // ***************************************************************************
-  void _onEmailChanged(String value) {
-    loginBloc.changeEmail(value);
-    loginBloc.clearFieldError(Fields.email);
-  }
-
-  // Method that is called when the user changes the password.
-  void _onPasswordChanged(String value) {
-    loginBloc.changePassword(value);
-    loginBloc.clearFieldError(Fields.password);
-  }
+  void _onEmailChanged(String value) => loginBloc.changeFieldValue(Fields.email, loginBloc.changeEmail, value);
+  void _onPasswordChanged(String value) => loginBloc.changeFieldValue(Fields.password, loginBloc.changePassword, value);
 }
