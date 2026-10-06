@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 // Commons.
@@ -17,10 +19,9 @@ abstract class DialogHelper {
     final String auxTitle = title ?? AppLocalizations.of(context)!.translate('error_generic');
     final String auxText = text ?? AppLocalizations.of(context)!.translate('error_generic_text');
 
-    showDialog(
+    _showBlurredDialog(
       context: context,
-      barrierDismissible: false,
-      builder: (BuildContext ctx) => PopScope(
+      builder: (BuildContext context) => PopScope(
         canPop: false,
         child: DialogConfirmation(
           title: auxTitle,
@@ -30,17 +31,16 @@ abstract class DialogHelper {
           confirmText: positiveName,
           cancelText: negativeName,
           showCancelButton: negativeName != null,
-          onConfirmButtonClicked: (_) => positiveAction(ctx),
-          onCancelButtonClicked: negativeAction != null ? () => negativeAction(ctx) : null,
+          onConfirmButtonClicked: (String value) => positiveAction(context),
+          onCancelButtonClicked: negativeAction != null ? () => negativeAction(context) : null,
         )
       )
     );
   }
 
   // Method that shows the progressbar alert dialog.
-  static void showProgressBarAlertDialog({ required BuildContext context, required Stream stream, Color color = CustomColors.lime }) => showDialog(
+  static void showProgressBarAlertDialog({ required BuildContext context, required Stream stream, Color color = CustomColors.lime }) => _showBlurredDialog(
     context: context,
-    barrierDismissible: false,
     builder: (BuildContext context) => PopScope(
       canPop: false,
       child: ProgressBar(
@@ -67,6 +67,25 @@ abstract class DialogHelper {
     SnackBar(
       content: Text(text),
       duration: const Duration(milliseconds: Numbers.delaySnackBar),
+    )
+  );
+
+  // Method that shows a dialog with a blurred background.
+  static Future<T?> _showBlurredDialog<T>({ required BuildContext context, required Widget Function(BuildContext context) builder }) => showGeneralDialog<T>(
+    context: context,
+    barrierDismissible: false,
+    barrierColor: Colors.black54,
+    transitionDuration: const Duration(milliseconds: Numbers.durationDialogAnimation),
+    pageBuilder: (BuildContext ctx, Animation<double> animation, Animation<double> secondaryAnimation) => builder(ctx),
+    transitionBuilder: (BuildContext ctx, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) => BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaX: Numbers.dialogBlurSigma * animation.value,
+        sigmaY: Numbers.dialogBlurSigma * animation.value
+      ),
+      child: FadeTransition(
+        opacity: animation,
+        child: child
+      )
     )
   );
 }

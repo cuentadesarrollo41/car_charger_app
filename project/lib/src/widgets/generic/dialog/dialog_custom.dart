@@ -17,7 +17,7 @@ class DialogCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Material(
-    color: Colors.black.withValues(alpha: 0.3),
+    color: Colors.transparent,
     child: Center(
       child: Container(
         margin: const EdgeInsets.all(Sizes.margin24),

@@ -30,7 +30,7 @@ import 'package:project/src/pages/index.dart';
 abstract class HelperLogin {
   // Method that is called when the user clicks the login button.
   static void onLoginButtonClicked({ required BuildContext context, required Map<String, FocusNode> focusNodes }) {
-    FocusManager.instance.primaryFocus?.unfocus();
+    Utils.unfocus();
 
     final String field = validateFields(context: context);
 
@@ -93,7 +93,7 @@ abstract class HelperLogin {
   static void _onLoginSuccess({ required BuildContext context, required Map<String, dynamic> response }) {
     final StateBloc stateBloc = BlocProvider.stateBloc(context);
 
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(response[Fields.token]);
+    final Map<String, dynamic> decodedToken = JwtDecoder.decode(response[Fields.token]);
 
     stateBloc.updateSession(SessionModel(
       token: response[Fields.token],

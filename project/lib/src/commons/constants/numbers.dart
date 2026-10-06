@@ -6,6 +6,7 @@ class Numbers {
   static const int delayWaitScroll = 100;
   static const int delaySplash = 2800;
   static const int delaySnackBar = 2000;
+  static const int durationDialogAnimation = 200; // Milliseconds - same as Flutter's default dialog transition.
   static const int firstPage = 1;
   static const int firstYear = 1900;
   static const int maxTimeDifferenceRefreshUser = 5;
@@ -19,6 +20,7 @@ class Numbers {
   static const int intFalse = 0;
   static const int intTrue = 1;
 
+  static const double dialogBlurSigma = 3;
   static const double noValueDouble = -1;
   static const double liquidPullToRefreshAnimSpeed = 4.0;
 }
