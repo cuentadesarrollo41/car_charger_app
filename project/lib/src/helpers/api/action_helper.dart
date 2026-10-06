@@ -15,7 +15,9 @@ abstract class ActionHelper {
     required String Function() getLoadingText,
     required void Function(String) setLoadingText,
     required Stream<String> loadingTextStream,
-    required String Function() validateFields,
+    String Function()? validateFields, // Returns an error message shown in a dialog (empty if valid).
+    String Function()? validateInlineFields, // Returns the field with the first inline error (empty if valid).
+    Map<String, FocusNode> focusNodes = const {},
     required Future<Map<String, dynamic>> Function() call,
     required String loadingKey,
     String? successTextKey,
@@ -31,7 +33,20 @@ abstract class ActionHelper {
       return;
     }
 
-    final String validationError = validateFields();
+    // Inline validation: the error text is already set in the bloc by the caller.
+    if (validateInlineFields != null) {
+      Utils.unfocus();
+
+      final String field = validateInlineFields();
+
+      if (field.isNotEmpty) {
+        focusNodes[field]?.requestFocus();
+        return;
+      }
+    }
+
+    // Dialog validation.
+    final String validationError = validateFields?.call() ?? Strings.emptyString;
 
     if (validationError.isNotEmpty) {
       return Utils.showAlertDialog(
@@ -104,10 +119,12 @@ abstract class ActionHelper {
     }
 
     if (useSnackBar) {
-      Utils.showSnackBar(
+      await Utils.showSnackBar(
         context: context,
         text: AppLocalizations.of(context)!.translate(successTextKey),
+        onDismiss: onSuccess == null ? null : () => onSuccess.call(response)
       );
+
       return onSuccess?.call(response);
     }
 

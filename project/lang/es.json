@@ -66,6 +66,8 @@
   "_errors": "|----------------------------------------------------------------------------------|",
   "error_connection": "Error de conexión",
   "error_connection_text": "Conéctate a internet para continuar.",
+  "error_forgot_password_email_validation": "Introduce el email.",
+  "error_forgot_password_email_format_validation": "Introduce un email válido.",
   "error_generic": "Se ha producido un error",
   "error_generic_text": "Hubo un problema al conectar con el servidor. Inténtalo de nuevo.",
   "error_login_password_validation": "Introduce la contraseña.",

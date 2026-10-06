@@ -12,6 +12,7 @@ import 'package:project/src/commons/utils/app_localizations.dart';
 // Widgets.
 import 'package:project/src/widgets/generic/dialog/dialog_confirmation.dart';
 import 'package:project/src/widgets/generic/loaders/progress_bar.dart';
+import 'package:project/src/widgets/generic/snack_bar/snack_bar_custom.dart';
 
 abstract class DialogHelper {
   // Method that shows an alert dialog.
@@ -62,30 +63,67 @@ abstract class DialogHelper {
     builder: (BuildContext context) => child,
   );
 
-  // Method that shows a snackBar.
-  static void showSnackBar({ required BuildContext context, required String text }) => ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(text),
-      duration: const Duration(milliseconds: Numbers.delaySnackBar),
-    )
-  );
+  // Method that shows a snackBar (auto-closing success card at the bottom).
+  static Future<void> showSnackBar({ required BuildContext context, required String text, required void Function()? onDismiss }) async {
+    BuildContext? snackBarContext;
+    bool isOpened = true;
+
+    final Future<void> snackBar = _showBlurredDialog<void>(
+      context: context,
+      slideFromBottom: true,
+      builder: (BuildContext context) {
+        snackBarContext = context;
+
+        return SafeArea(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Dismissible(
+              key: ValueKey<String>(text),
+              direction: DismissDirection.down,
+              resizeDuration: null,
+              onDismissed: (DismissDirection direction) {
+                Navigator.pop(context);
+                onDismiss?.call();
+              },
+              child: SnackBarCustom(text: text)
+            )
+          )
+        );
+      }
+    ).then((void _) {
+      isOpened = false;
+    });
+
+    await Future.delayed(const Duration(milliseconds: Numbers.delaySnackBar));
+
+    if (isOpened && snackBarContext != null && snackBarContext!.mounted) {
+      Navigator.pop(snackBarContext!);
+    }
+
+    await snackBar;
+  }
 
   // Method that shows a dialog with a blurred background.
-  static Future<T?> _showBlurredDialog<T>({ required BuildContext context, required Widget Function(BuildContext context) builder }) => showGeneralDialog<T>(
+  static Future<T?> _showBlurredDialog<T>({ required BuildContext context, required Widget Function(BuildContext context) builder, bool slideFromBottom = false }) => showGeneralDialog<T>(
     context: context,
     barrierDismissible: false,
     barrierColor: Colors.black54,
     transitionDuration: const Duration(milliseconds: Numbers.durationDialogAnimation),
-    pageBuilder: (BuildContext ctx, Animation<double> animation, Animation<double> secondaryAnimation) => builder(ctx),
-    transitionBuilder: (BuildContext ctx, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) => BackdropFilter(
+    pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => builder(context),
+    transitionBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) => BackdropFilter(
       filter: ImageFilter.blur(
         sigmaX: Numbers.dialogBlurSigma * animation.value,
         sigmaY: Numbers.dialogBlurSigma * animation.value
       ),
-      child: FadeTransition(
-        opacity: animation,
-        child: child
-      )
+      child: slideFromBottom
+        ? SlideTransition(
+          position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(CurvedAnimation(parent: animation, curve: Curves.easeOut)),
+          child: child
+        )
+        : FadeTransition(
+          opacity: animation,
+          child: child
+        )
     )
   );
 }

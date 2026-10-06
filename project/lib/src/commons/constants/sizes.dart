@@ -21,6 +21,7 @@ class Sizes {
   static const double inputBorderSize = 1;
   static const double inputHeight = 44;
   static const double liquidPullToRefreshHeight = 100;
+  static const double logoAppBarHeight = 50;
   static const double logoPresentationHeight = 88;
   static const double menuWidth = 260;
   static const double progressBarHeight = 10;
@@ -55,6 +56,7 @@ class Sizes {
   static const double margin40 = 40;
   static const double margin48 = 48;
   static const double margin52 = 52;
+  static const double margin54 = 54;
 
   static const double hamburgerMenuScreenWidth = 975;
   static const double maxWidthScreenPhone = 450;

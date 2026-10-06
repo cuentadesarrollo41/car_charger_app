@@ -30,16 +30,6 @@ import 'package:project/src/pages/index.dart';
 abstract class HelperLogin {
   // Method that is called when the user clicks the login button.
   static void onLoginButtonClicked({ required BuildContext context, required Map<String, FocusNode> focusNodes }) {
-    Utils.unfocus();
-
-    final String field = validateFields(context: context);
-
-    if (field.isNotEmpty) {
-      focusNodes[field]?.requestFocus();
-
-      return;
-    }
-
     final LoginBloc loginBloc = BlocProvider.loginBloc(context);
     final StateBloc stateBloc = BlocProvider.stateBloc(context);
 
@@ -48,7 +38,8 @@ abstract class HelperLogin {
       getLoadingText: () => loginBloc.loadingText,
       setLoadingText: loginBloc.changeLoadingText,
       loadingTextStream: loginBloc.loadingTextStream,
-      validateFields: () => Strings.emptyString, // Fields are validated inline before.
+      validateInlineFields: () => validateFields(context: context),
+      focusNodes: focusNodes,
       loadingKey: 'loading',
       call: () => AuthService.login(
         email: loginBloc.email.trim(),

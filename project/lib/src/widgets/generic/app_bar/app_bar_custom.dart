@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:project/src/commons/constants/custom_colors.dart';
 
 // Models.
 import 'package:project/src/models/generic/screen_properties_model.dart';
@@ -22,7 +23,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSize {
 
   AppBarCustom({
     this.scaffoldKey,
-    this.showMenu = true,
+    this.showMenu = false,
     this.endDrawerIsOpenedStream,
     this.onPendingTasksButtonClicked,
     this.onBackButtonClicked,
@@ -127,16 +128,20 @@ class _AppBarContentState extends State<_AppBarContent> with SingleTickerProvide
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      if (widget.onBackButtonClicked != null) _createBackButton(),
-      SizedBox(width: widget.onBackButtonClicked == null ? Sizes.margin20 : 0),
+      const SizedBox(width: Sizes.margin24),
 
-      _createLogo(),
+      if (widget.onBackButtonClicked != null) _createBackButton(),
       const SizedBox(width: Sizes.margin10),
 
       const Spacer(),
 
+      _createLogo(),
+
+      const Spacer(),
+
+      SizedBox(width: widget.onBackButtonClicked == null ? Sizes.margin34 : 73),
+
       if (widget.showMenu) _createMenuIconButton(),
-      SizedBox(width: widget.showMenu ? Sizes.margin20 : 0),
     ],
   );
 
@@ -144,22 +149,28 @@ class _AppBarContentState extends State<_AppBarContent> with SingleTickerProvide
   Widget _createBackButton() => InkWellCustom(
     onTap: widget.onBackButtonClicked!,
     child: Container(
-      height: Sizes.appBarHeight - 2 * Sizes.margin8,
-      margin: const EdgeInsets.symmetric(horizontal: Sizes.margin8),
-      padding: const EdgeInsets.symmetric(horizontal: Sizes.margin12),
+      height: Sizes.appBarHeight,
+      padding: const EdgeInsets.symmetric(horizontal: Sizes.margin13),
       alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: CustomColors.backgroundGhost,
+        border: Border.all(
+          width: Sizes.defaultBorderSize,
+          color: CustomColors.backgroundLine
+        )
+      ),
       child: FaIcon(
         FontAwesomeIcons.chevronLeft,
-        size: Sizes.font16,
-        color: Colors.black,
+        size: Sizes.font14,
+        color: Colors.white,
       )
     ),
   );
 
   // Method that creates the logo.
   Widget _createLogo() => ImageLogo(
-    height: 28,
-    color: 'black',
+    height: Sizes.logoAppBarHeight,
   );
 
   // Method that creates the menu icon button.
