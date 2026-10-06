@@ -3,7 +3,7 @@ import 'package:project/src/commons/constants/fields.dart';
 import 'package:project/src/commons/constants/strings.dart';
 
 class Backend {
-  static const String baseUrl = ''; // TODO: set API base URL (dev)
+  static const String baseUrl = 'https://graco.api.blimburtechnologies.dev'; // TODO: set API base URL (dev)
   //static const String baseUrl = ''; // TODO: set API base URL (prod)
   static const String get = 'GET';
   static const String post = 'POST';

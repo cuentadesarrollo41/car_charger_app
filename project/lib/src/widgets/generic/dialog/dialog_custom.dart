@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/src/models/generic/screen_properties_model.dart';
 
 // Commons.
+import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 
 class DialogCustom extends StatelessWidget {
@@ -16,14 +17,18 @@ class DialogCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Material(
-    color: Colors.transparent,
+    color: Colors.black.withValues(alpha: 0.3),
     child: Center(
       child: Container(
-        margin: const EdgeInsets.all(Sizes.margin32),
+        margin: const EdgeInsets.all(Sizes.margin24),
         padding: const EdgeInsets.all(Sizes.margin24),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(Sizes.borderRadius10),
+          color: CustomColors.backgroundCard,
+          border: BoxBorder.all(
+            width: Sizes.defaultBorderSize,
+            color: CustomColors.backgroundLine
+          ),
+          borderRadius: BorderRadius.circular(Sizes.borderRadius20),
         ),
         width: ScreenPropertiesModel(context: context).isPhone ? double.infinity : Sizes.maxWidthScreenPhone - 2 * Sizes.margin20,
         child: child

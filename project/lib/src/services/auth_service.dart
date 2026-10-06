@@ -21,7 +21,7 @@ abstract class AuthService {
     method: Backend.post,
     endpoint: Backend.recoverPassword,
     language: language,
-    body: { Fields.email: email },
+    body: { Fields.email: email }
   );
 
   // Method that registers the user.

@@ -12,6 +12,7 @@ class Sizes {
   static const double bulletSecondarySize = 8;
   static const double buttonWidthItem = 240;
   static const double buttonHeight = 42;
+  static const double buttonHeightDialog = 38;
   static const double defaultBorderSize = 2;
   static const double defaultElevation = 2;
   static const double defaultBottomMargin = 60;

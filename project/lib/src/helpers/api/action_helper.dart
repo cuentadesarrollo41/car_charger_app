@@ -56,7 +56,7 @@ abstract class ActionHelper {
         context: context,
         title: AppLocalizations.of(context)!.translate('error_connection'),
         text: AppLocalizations.of(context)!.translate('error_connection_text'),
-        positiveName: AppLocalizations.of(context)!.translate('ok'),
+        positiveName: AppLocalizations.of(context)!.translate('continue'),
         negativeName: null,
         positiveAction: Navigator.pop,
         negativeAction: null,
@@ -115,7 +115,7 @@ abstract class ActionHelper {
       context: context,
       title: AppLocalizations.of(context)!.translate(successTitleKey),
       text: AppLocalizations.of(context)!.translate(successTextKey),
-      positiveName: AppLocalizations.of(context)!.translate('ok'),
+      positiveName: AppLocalizations.of(context)!.translate('continue'),
       negativeName: null,
       positiveAction: (BuildContext auxContext) {
         Navigator.pop(auxContext);

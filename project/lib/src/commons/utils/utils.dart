@@ -75,4 +75,10 @@ abstract class Utils {
   // Bottom sheet.
   // ***************************************************************************
   static Future<void> showCustomModalBottomSheet({ required BuildContext context, required Widget bottomSheet, void Function(Map<String, dynamic> response)? onSuccess, void Function()? onCancel }) => BottomSheetHelper.showCustomModalBottomSheet(context: context, bottomSheet: bottomSheet, onSuccess: onSuccess, onCancel: onCancel);
+
+  // ***************************************************************************
+  // Focus.
+  // ***************************************************************************
+  static void disposeFocusNodes({ required Iterable<FocusNode> focusNodes }) => FocusHelper.disposeFocusNodes(focusNodes: focusNodes);
+  static void unfocus() => FocusHelper.unfocus();
 }

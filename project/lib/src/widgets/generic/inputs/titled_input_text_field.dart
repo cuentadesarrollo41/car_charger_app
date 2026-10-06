@@ -43,6 +43,8 @@ class TitledInputTextField extends StatelessWidget {
   final bool isPrice;
   final bool isDouble;
   final int? maxLength;
+  final String errorText;
+  final FocusNode? focusNode;
   final Widget Function()? createTitleLeftWidget;
   final Widget Function()? createTitleRightWidget;
 
@@ -81,6 +83,8 @@ class TitledInputTextField extends StatelessWidget {
     this.isPrice = false,
     this.isDouble = false,
     this.maxLength,
+    this.errorText = Strings.emptyString,
+    this.focusNode,
     this.createTitleLeftWidget,
     this.createTitleRightWidget,
     this.onItemClicked,
@@ -155,6 +159,8 @@ class TitledInputTextField extends StatelessWidget {
     isPrice: isPrice,
     isDouble: isDouble,
     maxLength: maxLength,
+    errorText: errorText,
+    focusNode: focusNode,
     onValueChanged: onValueChanged,
   );
 

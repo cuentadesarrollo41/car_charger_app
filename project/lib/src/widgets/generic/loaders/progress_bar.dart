@@ -7,6 +7,7 @@ import 'package:project/src/models/generic/screen_properties_model.dart';
 import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/widgets/generic/dialog/dialog_custom.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class ProgressBar extends StatelessWidget {
   final Stream? stream;
@@ -30,10 +31,17 @@ class ProgressBar extends StatelessWidget {
 
       return DialogCustom(
         child: Row(
+          spacing: Sizes.margin24,
           children: [
             CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(color)),
-            const SizedBox(width: Sizes.margin24),
-            Expanded(child: Text(snapshot.data, style: TextStyle(fontSize: screenProperties.fontSmall, color: Colors.black, fontWeight: FontWeight.normal))),
+
+            Expanded(
+              child: TextInter(
+                text: snapshot.data,
+                fontSize: screenProperties.fontSmall,
+                fontWeight: FontWeight.normal
+              )
+            ),
           ],
         )
       );

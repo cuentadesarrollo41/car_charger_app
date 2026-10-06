@@ -10,7 +10,7 @@ import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/commons/utils/app_localizations.dart';
 
 // Widgets.
-import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_black.dart';
+import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_ghost.dart';
 import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
 import 'package:project/src/widgets/generic/texts/title_page.dart';
 
@@ -134,7 +134,7 @@ class _ModalBottomSheetCustomState extends State<ModalBottomSheetCustom> {
   );
 
   // Method that creates the close button.
-  Widget _createCloseButton() => ButtonColoredBlack(
+  Widget _createCloseButton() => ButtonColoredGhost(
     text: AppLocalizations.of(context)!.translate('close'),
     fontSize: screenProperties.fontSmall,
     mainAxisSize: MainAxisSize.max,

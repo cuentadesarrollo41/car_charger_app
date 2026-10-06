@@ -7,7 +7,11 @@ import 'package:project/src/bloc/bloc_provider.dart';
 // Models.
 import 'package:project/src/models/generic/screen_properties_model.dart';
 
+// Helpers.
+import './helpers/index.dart';
+
 // Commons.
+import 'package:project/src/commons/constants/fields.dart';
 import 'package:project/src/commons/constants/numbers.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/commons/constants/strings.dart';
@@ -44,11 +48,21 @@ class _LoginPageState extends State<LoginPage> {
 
   late bool hasLoaded;
 
+  late Map<String, FocusNode> focusNodes;
+
   @override
   void initState() {
     hasLoaded = false;
 
+    focusNodes = { Fields.email: FocusNode(), Fields.password: FocusNode() };
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    Utils.disposeFocusNodes(focusNodes: focusNodes.values);
+    super.dispose();
   }
 
   @override
@@ -119,10 +133,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       const SizedBox(height: Sizes.margin30),
 
-      _createInput('email', AppLocalizations.of(context)!.translate('email_hint'), TextInputType.emailAddress, false, _onEmailChanged),
-      const SizedBox(height: Sizes.margin16),
-
-      _createInput('password', AppLocalizations.of(context)!.translate('password_hint').replaceFirst(Strings.replaceCode, Numbers.passwordLengthMin.toString()), TextInputType.text, true, _onPasswordChanged),
+      _createInputs(),
       const SizedBox(height: Sizes.margin16),
 
       _createRecoverPasswordLink(),
@@ -132,17 +143,34 @@ class _LoginPageState extends State<LoginPage> {
     ],
   );
 
+  // Method that creates the inputs.
+  Widget _createInputs() => StreamBuilder<Map<String, String>>(
+    stream: loginBloc.fieldErrorsStream,
+    builder: (BuildContext context, AsyncSnapshot<Map<String, String>> snapshot) => Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _createInput('email', Fields.email, AppLocalizations.of(context)!.translate('email_hint'), TextInputType.emailAddress, false, _onEmailChanged),
+        const SizedBox(height: Sizes.margin16),
+
+        _createInput('password', Fields.password, AppLocalizations.of(context)!.translate('password_hint').replaceFirst(Strings.replaceCode, Numbers.passwordLengthMin.toString()), TextInputType.text, true, _onPasswordChanged)
+      ],
+    ),
+  );
+
   // Method that creates an input.
-  Widget _createInput(String titleKey, String hint, TextInputType textInputType, bool isPassword, void Function(String value) onChanged) => TitledInputTextField(
+  Widget _createInput(String titleKey, String field, String hint, TextInputType textInputType, bool isPassword, void Function(String value) onChanged) => TitledInputTextField(
     title: AppLocalizations.of(context)!.translate(titleKey),
     hint: hint,
     initialText: Strings.emptyString,
     titleFontSize: screenProperties.fontExtraSmall,
-    fontSize: screenProperties.fontExtraSmall,
+    fontSize: screenProperties.fontSmall,
     isMandatory: true,
     textInputType: textInputType,
     allowShowText: isPassword,
     obscureText: isPassword,
+    errorText: loginBloc.fieldErrors[field] ?? Strings.emptyString,
+    focusNode: focusNodes[field],
     onValueChanged: onChanged
   );
 
@@ -181,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
   // On clicked.
   // ***************************************************************************
   // Method that is called when the user clicks the login button.
-  void _onLoginButtonClicked() {} // TODO. => HelperLogin.onLoginButtonClicked(context);
+  void _onLoginButtonClicked() => HelperLogin.onLoginButtonClicked(context: context, focusNodes: focusNodes);
 
   // Method that is called when the user clicks the recover password link.
   void _onRecoverPasswordTextClicked() => Utils.navigatorPush(context: context, child: ForgotPasswordPage(), routeName: Routes.forgotPassword);
@@ -192,6 +220,14 @@ class _LoginPageState extends State<LoginPage> {
   // ***************************************************************************
   // On change listeners.
   // ***************************************************************************
-  void _onEmailChanged(String value) => loginBloc.changeEmail(value);
-  void _onPasswordChanged(String value) => loginBloc.changePassword(value);
+  void _onEmailChanged(String value) {
+    loginBloc.changeEmail(value);
+    loginBloc.clearFieldError(Fields.email);
+  }
+
+  // Method that is called when the user changes the password.
+  void _onPasswordChanged(String value) {
+    loginBloc.changePassword(value);
+    loginBloc.clearFieldError(Fields.password);
+  }
 }

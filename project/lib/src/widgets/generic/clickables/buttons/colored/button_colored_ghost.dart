@@ -8,7 +8,7 @@ import 'package:project/src/commons/constants/sizes.dart';
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/buttons/button_custom.dart';
 
-class ButtonColoredBlack extends StatelessWidget {
+class ButtonColoredGhost extends StatelessWidget {
   final double height;
   final String text;
   final double fontSize;
@@ -22,7 +22,7 @@ class ButtonColoredBlack extends StatelessWidget {
 
   final void Function()? onClicked;
 
-  const ButtonColoredBlack({
+  const ButtonColoredGhost({
     this.height = Sizes.buttonHeight,
     required this.text,
     required this.fontSize,
@@ -42,10 +42,12 @@ class ButtonColoredBlack extends StatelessWidget {
     height: height,
     text: text,
     fontSize: fontSize,
-    backgroundColor: Colors.black,
-    borderColor: CustomColors.black,
-    overlayColor: Colors.black,
+    backgroundColor: CustomColors.backgroundGhost,
+    borderColor: CustomColors.backgroundGhost,
+    overlayColor: CustomColors.black,
     overlayBorderColor: CustomColors.black,
+    textColor: Colors.white,
+    overlayTextColor: Colors.white,
     mainAxisSize: mainAxisSize,
     iconAssetLeft: iconAssetLeft,
     iconAssetRight: iconAssetRight,

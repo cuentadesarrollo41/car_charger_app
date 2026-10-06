@@ -29,7 +29,6 @@ class Fields {
   static const String startDate = 'startDate';
   static const String state = 'state';
   static const String statusCode = 'statusCode';
-  static const String surname = 'surname';
   static const String text = 'text';
   static const String title = 'title';
   static const String token = 'token';

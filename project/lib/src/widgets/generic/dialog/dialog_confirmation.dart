@@ -11,7 +11,7 @@ import 'package:project/src/commons/utils/app_localizations.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/buttons/button_custom.dart';
-import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_black.dart';
+import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_ghost.dart';
 import 'package:project/src/widgets/generic/dialog/dialog_custom.dart';
 import 'package:project/src/widgets/generic/inputs/input_text_field.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
@@ -68,16 +68,18 @@ class _DialogConfirmationState extends State<DialogConfirmation> {
       child: DialogCustom(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          spacing: Sizes.margin20,
           children: [
             TitlePage(text: widget.title),
 
+            if (widget.texts.isNotEmpty) const SizedBox(height: Sizes.margin4),
             if (widget.texts.isNotEmpty) _createText(),
 
+            if (widget.hasInput) const SizedBox(height: Sizes.margin20),
             if (widget.hasInput) _createInput(),
 
+            const SizedBox(height: Sizes.margin20),
             _createButtons()
           ],
         )
@@ -92,12 +94,11 @@ class _DialogConfirmationState extends State<DialogConfirmation> {
 
   // Method that creates the text.
   Widget _createText() => RichText(
-    textAlign: TextAlign.center,
     text: TextSpan(
       style: TextStyle(
-        fontSize: screenProperties.fontText,
+        fontSize: screenProperties.fontSmall,
         fontFamily: Strings.fontFamily,
-        color: Colors.black
+        color: CustomColors.textSecondary
       ),
       children: widget.texts
     )
@@ -132,24 +133,23 @@ class _DialogConfirmationState extends State<DialogConfirmation> {
   Widget _createButtons() => Padding(
     padding: const EdgeInsets.only(top: Sizes.margin8),
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: Sizes.margin16,
       children: [
-        if (widget.showCancelButton) Expanded(
-          child: ButtonColoredBlack(
-            text: widget.cancelText ?? AppLocalizations.of(context)!.translate('cancel'),
-            fontSize: screenProperties.fontSmall,
-            onClicked: _onCancelButtonClicked
-          )
+        if (widget.showCancelButton) ButtonColoredGhost(
+          text: widget.cancelText ?? AppLocalizations.of(context)!.translate('cancel'),
+          fontSize: screenProperties.fontExtraSmall,
+          height: Sizes.buttonHeightDialog,
+          onClicked: _onCancelButtonClicked
         ),
 
-        Expanded(
-          child: ButtonCustom(
-            text: widget.confirmText ?? AppLocalizations.of(context)!.translate('confirm'),
-            fontSize: screenProperties.fontSmall,
-            onClicked: () => widget.onConfirmButtonClicked(observations)
-          )
+        ButtonCustom(
+          text: widget.confirmText ?? AppLocalizations.of(context)!.translate('confirm'),
+          fontSize: screenProperties.fontExtraSmall,
+          mainAxisSize: MainAxisSize.min,
+          height: Sizes.buttonHeightDialog,
+          onClicked: () => widget.onConfirmButtonClicked(observations)
         ),
       ],
     ),

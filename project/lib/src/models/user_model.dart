@@ -12,7 +12,7 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 class UserModel {
   String id;
   String name;
-  String surname;
+  String email;
   String password;
   String state;
   DateTime creationDate;
@@ -21,7 +21,7 @@ class UserModel {
   UserModel({
     this.id = Strings.emptyString,
     this.name = Strings.emptyString,
-    this.surname = Strings.emptyString,
+    this.email = Strings.emptyString,
     this.password = Strings.emptyString,
     this.state = States.ok,
     DateTime? creationDate,
@@ -34,7 +34,7 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json[Fields.id] ?? Strings.emptyString,
     name: json[Fields.name] ?? Strings.emptyString,
-    surname: json[Fields.surname] ?? Strings.emptyString,
+    email: json[Fields.email] ?? Strings.emptyString,
     password: json[Fields.password] ?? Strings.emptyString,
     state: json[Fields.state] ?? States.ok,
     creationDate: json[Fields.creationDate] == null ? DateTime.now() : DateTime.parse(json[Fields.creationDate]),
@@ -44,7 +44,7 @@ class UserModel {
   Map<String, dynamic> toJson() => {
     Fields.id: id,
     Fields.name: name,
-    Fields.surname: surname,
+    Fields.email: email,
     Fields.password: password,
     Fields.state: state,
     Fields.creationDate: creationDate.toString(),

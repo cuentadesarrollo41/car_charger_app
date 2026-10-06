@@ -48,8 +48,10 @@ class InputTextField extends StatefulWidget {
   final bool isDouble;
   final int? maxLength;
   final String label;
+  final String errorText;
 
   final TextEditingController? controller;
+  final FocusNode? focusNode;
 
   final void Function()? onExtraIconClicked;
   final void Function()? onTapOutside;
@@ -93,6 +95,8 @@ class InputTextField extends StatefulWidget {
     this.isDouble = false,
     this.maxLength,
     this.label = Strings.emptyString,
+    this.errorText = Strings.emptyString,
+    this.focusNode,
     super.key
   });
 
@@ -105,15 +109,15 @@ class _InputTextFieldState extends State<InputTextField> {
 
   late bool obscureText;
 
-  late FocusNode focusNode;
+  late FocusNode internalFocusNode;
 
   @override
   void initState() {
     controller = widget.controller ?? TextEditingController(text: widget.initialText);
     obscureText = widget.obscureText;
 
-    focusNode = FocusNode();
-    focusNode.addListener(() => setState(() {}));
+    internalFocusNode = widget.focusNode ?? FocusNode();
+    internalFocusNode.addListener(() => setState(() {}));
 
     super.initState();
   }
@@ -124,216 +128,216 @@ class _InputTextFieldState extends State<InputTextField> {
       controller.dispose();
     }
 
-    focusNode.dispose();
+    if (widget.focusNode == null) {
+      internalFocusNode.dispose();
+    }
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.label.isEmpty
-      ? _createBoxedInput()
-      : _createLabeledInput();
-  }
-
-  // Method that creates the boxed input.
-  Widget _createBoxedInput() {
-    return Container(
-      height: widget.height,
-      padding: EdgeInsets.only(
-        left: widget.iconData == null && widget.iconAsset == null
-          ? (widget.leftPadding == null ? Sizes.margin12 : widget.leftPadding!)
-          : Sizes.margin2,
-        right: widget.rightPadding == null
-          ? widget.onExtraIconClicked == null ? Sizes.margin12 : 0
-          : widget.rightPadding!,
-      ),
-      decoration: BoxDecoration(
-        color: widget.backgroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(widget.borderRadiusTopLeft),
-          topRight: Radius.circular(widget.borderRadiusTopRight),
-          bottomLeft: Radius.circular(widget.borderRadiusBottomLeft),
-          bottomRight: Radius.circular(widget.borderRadiusBottomRight),
-        ),
-        border: Border.all(
-          //color: focusNode.hasFocus ? CustomColors.lime : widget.borderColor,
-          color: widget.borderColor,
-          width: Sizes.inputBorderSize,
-        )
-      ),
-      alignment: Alignment.centerLeft,
-      child: TextField(
-        enabled: widget.enabled,
-        controller: controller,
-        focusNode: focusNode,
-        style: TextStyle(
-          color: widget.textColor,
-          fontSize: widget.fontSize,
-          fontFamily: Strings.fontFamily,
-          fontWeight: FontWeight.w500
-        ),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: widget.hint,
-          hintStyle: TextStyle(
-            color: widget.hintColor,
-            fontSize: widget.fontSize,
-          ),
-          isDense: true,
-          prefixIcon: _createPrefixIcon(),
-          suffixIcon: _createSuffixIcon(),
-          contentPadding: EdgeInsets.symmetric(vertical: Sizes.margin12),
-          counterText: Strings.emptyString,
-        ),
-        keyboardType: widget.textInputType,
-        obscureText: obscureText,
-        minLines: widget.minLines,
-        maxLines: widget.maxLines,
-        maxLength: widget.maxLength,
-        inputFormatters: widget.inputFormatters,
-        onTapOutside: _onTapOutside,
-        onChanged: (String? value) => _onValueChanged(value!),
-      )
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      spacing: Sizes.margin3,
+      children: [
+        widget.label.isEmpty ? _createBoxedInput() : _createLabeledInput(),
+        if (widget.errorText.isNotEmpty) _createErrorText()
+      ]
     );
   }
 
-  // Method that creates the labeled input.
-  Widget _createLabeledInput() {
-    return TextField(
+  // Method that creates the error text.
+  Widget _createErrorText() => TextInter(
+    text: widget.errorText,
+    fontSize: widget.fontSize - 2,
+    color: CustomColors.lime
+  );
+
+  // Method that creates the boxed input.
+  Widget _createBoxedInput() => Container(
+    height: widget.height,
+    padding: EdgeInsets.only(
+      left: widget.iconData == null && widget.iconAsset == null
+        ? (widget.leftPadding == null ? Sizes.margin12 : widget.leftPadding!)
+        : Sizes.margin2,
+      right: widget.rightPadding == null
+        ? widget.onExtraIconClicked == null ? Sizes.margin12 : 0
+        : widget.rightPadding!,
+    ),
+    decoration: BoxDecoration(
+      color: widget.backgroundColor,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(widget.borderRadiusTopLeft),
+        topRight: Radius.circular(widget.borderRadiusTopRight),
+        bottomLeft: Radius.circular(widget.borderRadiusBottomLeft),
+        bottomRight: Radius.circular(widget.borderRadiusBottomRight),
+      ),
+      border: Border.all(
+        //color: focusNode.hasFocus ? CustomColors.lime : widget.borderColor,
+        color: widget.borderColor,
+        width: Sizes.inputBorderSize,
+      )
+    ),
+    alignment: Alignment.centerLeft,
+    child: TextField(
       enabled: widget.enabled,
       controller: controller,
-      focusNode: focusNode,
+      focusNode: internalFocusNode,
       style: TextStyle(
         color: widget.textColor,
         fontSize: widget.fontSize,
-        fontFamily: Strings.fontFamily
+        fontFamily: Strings.fontFamily,
+        fontWeight: FontWeight.w500
       ),
       decoration: InputDecoration(
+        border: InputBorder.none,
         hintText: widget.hint,
         hintStyle: TextStyle(
           color: widget.hintColor,
           fontSize: widget.fontSize,
         ),
         isDense: true,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        label: TextInter(
-          text: widget.label,
-          fontSize: widget.fontSize,
-          color: widget.textColor,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: widget.borderColor,
-            width: widget.borderSize
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: CustomColors.backgroundLine,
-            width: widget.borderSize * 2
-          ),
-        ),
         prefixIcon: _createPrefixIcon(),
         suffixIcon: _createSuffixIcon(),
+        contentPadding: EdgeInsets.symmetric(vertical: Sizes.margin12),
+        counterText: Strings.emptyString,
       ),
       keyboardType: widget.textInputType,
       obscureText: obscureText,
       minLines: widget.minLines,
       maxLines: widget.maxLines,
       maxLength: widget.maxLength,
-
       inputFormatters: widget.inputFormatters,
       onTapOutside: _onTapOutside,
       onChanged: (String? value) => _onValueChanged(value!),
-    );
-  }
+    )
+  );
+
+  // Method that creates the labeled input.
+  Widget _createLabeledInput() => TextField(
+    enabled: widget.enabled,
+    controller: controller,
+    focusNode: internalFocusNode,
+    style: TextStyle(
+      color: widget.textColor,
+      fontSize: widget.fontSize,
+      fontFamily: Strings.fontFamily
+    ),
+    decoration: InputDecoration(
+      hintText: widget.hint,
+      hintStyle: TextStyle(
+        color: widget.hintColor,
+        fontSize: widget.fontSize,
+      ),
+      isDense: true,
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      label: TextInter(
+        text: widget.label,
+        fontSize: widget.fontSize,
+        color: widget.textColor,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: widget.borderColor,
+          width: widget.borderSize
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: CustomColors.backgroundLine,
+          width: widget.borderSize * 2
+        ),
+      ),
+      prefixIcon: _createPrefixIcon(),
+      suffixIcon: _createSuffixIcon(),
+    ),
+    keyboardType: widget.textInputType,
+    obscureText: obscureText,
+    minLines: widget.minLines,
+    maxLines: widget.maxLines,
+    maxLength: widget.maxLength,
+    inputFormatters: widget.inputFormatters,
+    onTapOutside: _onTapOutside,
+    onChanged: (String? value) => _onValueChanged(value!),
+  );
 
   // Method that creates the prefix icon.
-  Widget? _createPrefixIcon() {
-    return widget.iconData == null
-      ? widget.iconAsset == null ? null
-        : Image(
-          image: AssetImage(widget.iconAsset!),
-          width: widget.iconSize,
-        )
-      : Icon(
-        widget.iconData,
-        color: widget.iconColor,
-        size: widget.iconSize,
-      );
-  }
+  Widget? _createPrefixIcon() => widget.iconData == null
+    ? widget.iconAsset == null ? null
+      : Image(
+        image: AssetImage(widget.iconAsset!),
+        width: widget.iconSize,
+      )
+    : Icon(
+      widget.iconData,
+      color: widget.iconColor,
+      size: widget.iconSize,
+    );
 
   // Method that creates the suffix icon.
-  Widget? _createSuffixIcon() {
-    return widget.hasClearButton && controller.text.isNotEmpty || widget.allowShowText && controller.text.isNotEmpty || widget.extraIconData != null || widget.extraIconAsset != null
-      ? Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (widget.hasClearButton && controller.text.isNotEmpty) _createClearButton()!,
-          if (widget.allowShowText && controller.text.isNotEmpty) _createShowTextButton()!,
-          if (widget.extraIconData != null || widget.extraIconAsset != null) _createExtraIcon()!,
-          SizedBox(width: widget.label.isEmpty ? 0 : widget.rightPadding ?? Sizes.margin12)
-        ],
-      )
-      : null;
-  }
+  Widget? _createSuffixIcon() => widget.hasClearButton && controller.text.isNotEmpty || widget.allowShowText && controller.text.isNotEmpty || widget.extraIconData != null || widget.extraIconAsset != null
+    ? Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (widget.hasClearButton && controller.text.isNotEmpty) _createClearButton()!,
+        if (widget.allowShowText && controller.text.isNotEmpty) _createShowTextButton()!,
+        if (widget.extraIconData != null || widget.extraIconAsset != null) _createExtraIcon()!,
+        SizedBox(width: widget.label.isEmpty ? 0 : widget.rightPadding ?? Sizes.margin12)
+      ],
+    )
+    : null;
 
   // Method that creates the clear button.
-  Widget? _createClearButton() {
-    return !widget.hasClearButton || controller.text.isEmpty
-      ? null
-      : InkWell(
-        key: Key('input_text_field_clear${ DateTime.now() }'),
-        onTap: _onClearButtonClicked,
-        child: Icon(
-          Icons.cancel,
-          color: widget.iconColor,
-          size: Sizes.font20,
-        ),
-      );
-  }
+  Widget? _createClearButton() => !widget.hasClearButton || controller.text.isEmpty
+    ? null
+    : InkWell(
+      key: Key('input_text_field_clear${ DateTime.now() }'),
+      onTap: _onClearButtonClicked,
+      child: Icon(
+        Icons.cancel,
+        color: widget.iconColor,
+        size: Sizes.font20,
+      ),
+    );
 
   // Method that creates the show text button.
-  Widget? _createShowTextButton() {
-    return !widget.allowShowText || controller.text.isEmpty
-      ? Container()
-      : InkWell(
-        key: Key('input_text_field_show${ DateTime.now() }'),
-        onTap: _onShowHideButtonClicked,
-        child: FaIcon(
-          obscureText ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
-          color: widget.iconColor,
-          size: Sizes.font16,
-        ),
-      );
-  }
+  Widget? _createShowTextButton() => !widget.allowShowText || controller.text.isEmpty
+    ? Container()
+    : InkWell(
+      key: Key('input_text_field_show${ DateTime.now() }'),
+      onTap: _onShowHideButtonClicked,
+      child: FaIcon(
+        obscureText ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
+        color: widget.iconColor,
+        size: Sizes.font16,
+      ),
+    );
 
   // Method that creates the extra icon.
-  Widget? _createExtraIcon() {
-    return widget.extraIconData == null && widget.extraIconAsset == null
-      ? Container()
-      : InkWell(
-        key: Key('input_text_field_extra${ DateTime.now() }'),
-        onTap: widget.onExtraIconClicked,
-        child: Container(
-          padding: const EdgeInsets.only(left: Sizes.margin10),
-          alignment: Alignment.center,
-          child: widget.extraIconData == null
-            ? Image(
-              image: AssetImage(widget.extraIconAsset!),
-              width: widget.extraIconAssetWidth!,
-            )
-            : Icon(
-              widget.extraIconData,
-              color: widget.iconColor,
-              size: Sizes.font22,
-            ),
-        ),
-      );
-  }
+  Widget? _createExtraIcon() => widget.extraIconData == null && widget.extraIconAsset == null
+    ? Container()
+    : InkWell(
+      key: Key('input_text_field_extra${ DateTime.now() }'),
+      onTap: widget.onExtraIconClicked,
+      child: Container(
+        padding: const EdgeInsets.only(left: Sizes.margin10),
+        alignment: Alignment.center,
+        child: widget.extraIconData == null
+          ? Image(
+            image: AssetImage(widget.extraIconAsset!),
+            width: widget.extraIconAssetWidth!,
+          )
+          : Icon(
+            widget.extraIconData,
+            color: widget.iconColor,
+            size: Sizes.font22,
+          ),
+      ),
+    );
 
   // Method that is called when the user changes the value.
   void _onValueChanged(String value) {
@@ -385,7 +389,7 @@ class _InputTextFieldState extends State<InputTextField> {
     widget.onValueChanged(Strings.emptyString);
     setState(() {});
 
-    focusNode.requestFocus();
+    internalFocusNode.requestFocus();
   }
 
   // Method that is called when the user clicks the show/hide button.

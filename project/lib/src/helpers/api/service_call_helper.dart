@@ -29,7 +29,7 @@ abstract class ServiceCallHelper {
           context: context,
           title: response[Fields.title],
           text: response[Fields.text],
-          positiveName: AppLocalizations.of(context)!.translate('ok'),
+          positiveName: AppLocalizations.of(context)!.translate('continue'),
           negativeName: null,
           positiveAction: Navigator.pop,
           negativeAction: null,

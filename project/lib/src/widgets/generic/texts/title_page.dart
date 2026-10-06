@@ -12,7 +12,7 @@ class TitlePage extends StatelessWidget {
 
   const TitlePage({
     required this.text,
-    this.color = Colors.black,
+    this.color = Colors.white,
     super.key
   });
 

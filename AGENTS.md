@@ -411,6 +411,16 @@ class _XContentState extends State<XContent> with InitialLoadHandler<XContent> {
 
 ---
 
+## Form Validation
+
+- Errors are shown **inline**, below the input, via the `errorText` of `InputTextField` / `TitledInputTextField` — never in a dialog
+- Validate in field order and show only the **first** error; move the focus to that input (`focusNode`); clear a field's error when its value changes
+- Errors live in the BLoC as `fieldErrors` (`Map<String, String>` keyed by `Fields.xxx`), set with `setFieldError` and removed with `clearFieldError`
+- Validation and the submit action live in a `HelperX` class (e.g. `HelperLogin`) in `lib/src/helpers/`. Once inline validation passes, the call goes through `ActionHelper.exec` with `validateFields: () => Strings.emptyString`, because there is nothing left to report in a dialog
+- Error texts come from existing translation keys: `error_<screen>_<field>_validation` (e.g. `error_login_email_validation`)
+
+---
+
 ## Widgets — Always Use Custom Widgets
 
 | Use this | Never use this |
