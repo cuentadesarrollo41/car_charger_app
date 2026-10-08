@@ -1,6 +1,7 @@
 class Fields {
   static const String bytes = 'bytes';
   static const String callDeletion = 'callDeletion';
+  static const String chargers = 'chargers';
   static const String checkLatestVersionUnderscore = 'check_latest_version';
   static const String count = 'count';
   static const String country = 'country';

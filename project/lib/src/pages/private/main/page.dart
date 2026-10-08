@@ -28,7 +28,9 @@ import 'package:project/src/widgets/generic/containers/scaffold_custom.dart';
 import 'package:project/src/widgets/generic/modal_bottom_sheets/modal_bottom_sheet_confirmation.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  const MainPage({
+    super.key
+  });
 
   @override
   State<MainPage> createState() => _MainPageState();
