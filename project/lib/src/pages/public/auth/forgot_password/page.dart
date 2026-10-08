@@ -11,6 +11,7 @@ import 'package:project/src/models/generic/screen_properties_model.dart';
 import './helpers/index.dart';
 
 // Commons.
+import 'package:project/src/commons/constants/app_bar_modes.dart';
 import 'package:project/src/commons/constants/fields.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/commons/constants/strings.dart';
@@ -64,6 +65,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
     return ScaffoldCustom(
       appBar: AppBarCustom(
+        appBarMode: AppBarModes.public,
         onBackButtonClicked: _onBackButtonClicked
       ),
       showBackgroundLogo: false,

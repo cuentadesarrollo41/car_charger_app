@@ -23,8 +23,8 @@ class SectionIntroductionTexts extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     spacing: Sizes.margin4,
     children: [
-      TitleSection(text: title),
-      SubtitleSection(text: subtitle)
+      if (title.isNotEmpty) TitleSection(text: title),
+      if (subtitle.isNotEmpty) SubtitleSection(text: subtitle)
     ],
   );
 }

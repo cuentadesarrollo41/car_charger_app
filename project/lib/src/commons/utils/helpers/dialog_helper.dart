@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 // Commons.
 import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/numbers.dart';
-import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/commons/constants/strings.dart';
 import 'package:project/src/commons/utils/app_localizations.dart';
 
@@ -49,18 +48,6 @@ abstract class DialogHelper {
         color: color
       )
     )
-  );
-
-  // Method that shows a modal bottom sheet.
-  static dynamic showModalBottomSheetCustom({ required BuildContext context, required Widget child }) async => showModalBottomSheet(
-    context: context,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(Sizes.borderRadius20)
-      ),
-    ),
-    backgroundColor: Colors.white,
-    builder: (BuildContext context) => child,
   );
 
   // Method that shows a snackBar (auto-closing success card at the bottom).

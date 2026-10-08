@@ -6,7 +6,7 @@ class Sizes {
   static const double borderRadius20 = 20;
   static const double borderRadius30 = 30;
   static const double borderRadiusPdf = 13;
-  static const double bottomBarHeight = 64;
+  static const double bottomBarHeight = 60;
   static const double bottomSheetMaxHeight = 160;
   static const double bulletPrimarySize = 12;
   static const double bulletSecondarySize = 8;

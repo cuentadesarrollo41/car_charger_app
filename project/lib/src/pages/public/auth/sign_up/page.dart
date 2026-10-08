@@ -12,6 +12,7 @@ import 'package:project/src/models/generic/screen_properties_model.dart';
 import './helpers/index.dart';
 
 // Commons.
+import 'package:project/src/commons/constants/app_bar_modes.dart';
 import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/fields.dart';
 import 'package:project/src/commons/constants/numbers.dart';
@@ -83,6 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
     return ScaffoldCustom(
       appBar: AppBarCustom(
+        appBarMode: AppBarModes.public,
         onBackButtonClicked: _onBackButtonClicked
       ),
       showBackgroundLogo: false,
@@ -212,9 +214,9 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _createTerms() => KeyboardVisibilityBuilder(
     child: SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(
-          left: Sizes.margin24,
-          right: Sizes.margin24,
+        padding: EdgeInsets.only(
+          left: screenProperties.paddingCardHorizontal,
+          right: screenProperties.paddingCardHorizontal,
           bottom: Sizes.margin10,
         ),
         child: RichTextCustom(

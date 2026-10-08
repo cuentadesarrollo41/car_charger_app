@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Models.
 import 'package:project/src/models/generic/screen_properties_model.dart';
@@ -11,8 +10,7 @@ import 'package:project/src/commons/utils/app_localizations.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_ghost.dart';
-import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
-import 'package:project/src/widgets/generic/texts/title_page.dart';
+import 'package:project/src/widgets/generic/texts/title_section.dart';
 
 class ModalBottomSheetCustom extends StatefulWidget {
   final String title;
@@ -47,17 +45,23 @@ class _ModalBottomSheetCustomState extends State<ModalBottomSheetCustom> {
         bottom: false,
         child: Container(
           width: double.infinity,
-          color: Colors.white,
-          padding: const EdgeInsets.only(top: Sizes.margin20),
+          color: CustomColors.backgroundCard,
+          padding: EdgeInsets.only(
+            left: screenProperties.paddingCardHorizontal,
+            top: Sizes.margin16,
+            right: screenProperties.paddingCardHorizontal,
+            bottom: Sizes.margin32
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              _createLine(),
+              _createHandle(),
               const SizedBox(height: Sizes.margin16),
 
-              _createTitle(),
+              TitleSection(text: widget.title),
+              const SizedBox(height: Sizes.margin4),
 
               Flexible(child: _createContent()),
             ],
@@ -73,64 +77,29 @@ class _ModalBottomSheetCustomState extends State<ModalBottomSheetCustom> {
   }
 
   // Method that creates the line.
-  Widget _createLine() => Align(
+  Widget _createHandle() => Align(
     alignment: Alignment.center,
     child: Container(
-      height: 6,
-      width: 70,
+      width: Sizes.margin52,
+      height: Sizes.margin6,
       decoration: BoxDecoration(
         color: CustomColors.backgroundLine,
-        borderRadius: BorderRadius.circular(Sizes.borderRadius20),
-      ),
-    ),
-  );
-
-  // Method that creates the title.
-  Widget _createTitle() => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: Sizes.margin20),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      spacing: Sizes.margin20,
-      children: [
-        Expanded(child: TitlePage(text: widget.title)),
-        _createCloseIcon()
-      ],
-    ),
-  );
-
-  // Method that creates the close icon.
-  Widget _createCloseIcon() => InkWellCustom(
-    onTap: _onCloseButtonClicked,
-    child: Container(
-      padding: const EdgeInsets.all(Sizes.margin10),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: CustomColors.backgroundLine
-      ),
-      child: FaIcon(
-        FontAwesomeIcons.xmark,
-        size: Sizes.font14,
-        color: Colors.black,
+        borderRadius: BorderRadius.circular(Sizes.borderRadius5)
       )
     ),
   );
 
   // Method that creates the content.
-  Widget _createContent() => Container(
-    padding: const EdgeInsets.all(Sizes.margin20),
-    child: ListView(
-      physics: const BouncingScrollPhysics(),
-      shrinkWrap: true,
-      controller: widget.scrollController,
-      children: [
-        ...widget.children,
-        SizedBox(height: widget.closeButtonTopMargin),
+  Widget _createContent() => ListView(
+    physics: const BouncingScrollPhysics(),
+    shrinkWrap: true,
+    controller: widget.scrollController,
+    children: [
+      ...widget.children,
+      SizedBox(height: widget.closeButtonTopMargin),
 
-        widget.bottomButtons ?? _createCloseButton(),
-      ]
-    )
+      widget.bottomButtons ?? _createCloseButton(),
+    ]
   );
 
   // Method that creates the close button.

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Commons.
 import 'package:project/src/commons/constants/sizes.dart';
+import 'package:project/src/commons/constants/custom_colors.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/buttons/button_custom.dart';
@@ -41,10 +42,10 @@ class ButtonColoredGreen extends StatelessWidget {
     height: height,
     text: text,
     fontSize: fontSize,
-    backgroundColor: Colors.green,
-    borderColor: Colors.greenAccent,
-    overlayColor: Colors.green,
-    overlayBorderColor: Colors.greenAccent,
+    backgroundColor: CustomColors.lime,
+    borderColor: CustomColors.lime,
+    overlayColor: CustomColors.limeDark,
+    overlayBorderColor: CustomColors.limeDark,
     mainAxisSize: mainAxisSize,
     iconAssetLeft: iconAssetLeft,
     iconAssetRight: iconAssetRight,

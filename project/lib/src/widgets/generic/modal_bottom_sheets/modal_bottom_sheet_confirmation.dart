@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:project/src/models/generic/screen_properties_model.dart';
 
 // Commons.
+import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/commons/constants/strings.dart';
 import 'package:project/src/commons/utils/app_localizations.dart';
 
 // Widgets.
+import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_ghost.dart';
 import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_green.dart';
 import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_red.dart';
 import 'package:project/src/widgets/generic/modal_bottom_sheets/modal_bottom_sheet_custom.dart';
@@ -16,19 +18,23 @@ import 'package:project/src/widgets/generic/modal_bottom_sheets/modal_bottom_she
 class ModalBottomSheetConfirmation extends StatefulWidget {
   final String title;
   final List<TextSpan> texts;
-  final String? confirmationButtonText;
-  final String? cancelButtonText;
+  final String? primaryButtonText;
+  final String? secondaryButtonText;
+  final Color primaryButtonColor;
+  final Color secondaryButtonColor;
 
-  final void Function()? onConfirmButtonClicked;
-  final void Function()? onCancelButtonClicked;
+  final void Function()? onPrimaryButtonClicked;
+  final void Function()? onSecondaryButtonClicked;
 
   const ModalBottomSheetConfirmation({
     required this.title,
     required this.texts,
-    this.confirmationButtonText,
-    this.cancelButtonText,
-    required this.onConfirmButtonClicked,
-    required this.onCancelButtonClicked,
+    this.primaryButtonText,
+    this.secondaryButtonText,
+    this.primaryButtonColor = CustomColors.lime,
+    this.secondaryButtonColor = CustomColors.backgroundGhost,
+    required this.onPrimaryButtonClicked,
+    required this.onSecondaryButtonClicked,
     super.key
   });
 
@@ -54,6 +60,7 @@ class _ModalBottomSheetConfirmationState extends State<ModalBottomSheetConfirmat
     return ModalBottomSheetCustom(
       title: widget.title,
       closeButtonTopMargin: 0,
+      bottomButtons: Container(),
       children: [
         _createText(),
         const SizedBox(height: Sizes.margin32),
@@ -70,12 +77,11 @@ class _ModalBottomSheetConfirmationState extends State<ModalBottomSheetConfirmat
 
   // Method that creates the text.
   Widget _createText() => RichText(
-    textAlign: TextAlign.center,
     text: TextSpan(
       style: TextStyle(
         fontSize: screenProperties.fontText,
         fontFamily: Strings.fontFamily,
-        color: Colors.black
+        color: CustomColors.textSecondary
       ),
       children: widget.texts
     )
@@ -85,24 +91,44 @@ class _ModalBottomSheetConfirmationState extends State<ModalBottomSheetConfirmat
   Widget _createStateButtons() => Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
-    spacing: Sizes.margin8,
+    spacing: Sizes.margin16,
     children: [
-      if (widget.onConfirmButtonClicked != null) _createConfirmationButton(),
-      if (widget.onCancelButtonClicked != null) _createCancelButton(),
+      if (widget.onPrimaryButtonClicked != null) _createButton(widget.primaryButtonColor, widget.primaryButtonText ?? AppLocalizations.of(context)!.translate('state_ok'), widget.onPrimaryButtonClicked),
+      if (widget.onSecondaryButtonClicked != null) _createButton(widget.secondaryButtonColor, widget.secondaryButtonText ?? AppLocalizations.of(context)!.translate('state_ko'), widget.onSecondaryButtonClicked),
     ],
   );
 
-  // Method that creates the confirmation button.
-  Widget _createConfirmationButton() => ButtonColoredGreen(
-    text: widget.confirmationButtonText ?? AppLocalizations.of(context)!.translate('state_ok'),
+  // Method that creates a button.
+  Widget _createButton(Color color, String text, void Function()? onClicked) {
+    switch (color) {
+      case CustomColors.lime: return _createLimeButton(text, onClicked);
+      case CustomColors.backgroundGhost: return _createGhostButton(text, onClicked);
+      case CustomColors.redDark: return _createRedButton(text, onClicked);
+      default: return Container();
+    }
+  }
+
+  // Method that creates the lime button.
+  Widget _createLimeButton(String text, void Function()? onClicked) => ButtonColoredGreen(
+    text: text,
     fontSize: screenProperties.fontSmall,
-    onClicked: widget.onConfirmButtonClicked
+    mainAxisSize: MainAxisSize.max,
+    onClicked: onClicked
   );
 
-  // Method that creates the cancel button.
-  Widget _createCancelButton() => ButtonColoredRed(
-    text: widget.cancelButtonText ?? AppLocalizations.of(context)!.translate('state_ko'),
+  // Method that creates the ghost button.
+  Widget _createGhostButton(String text, void Function()? onClicked) => ButtonColoredGhost(
+    text: text,
     fontSize: screenProperties.fontSmall,
-    onClicked: widget.onCancelButtonClicked
+    mainAxisSize: MainAxisSize.max,
+    onClicked: onClicked
+  );
+
+  // Method that creates the red button.
+  Widget _createRedButton(String text, void Function()? onClicked) => ButtonColoredRed(
+    text: text,
+    fontSize: screenProperties.fontSmall,
+    mainAxisSize: MainAxisSize.max,
+    onClicked: onClicked
   );
 }

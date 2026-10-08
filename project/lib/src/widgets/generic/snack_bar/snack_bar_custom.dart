@@ -21,10 +21,15 @@ class SnackBarCustom extends StatelessWidget {
     child: Container(
       width: double.infinity,
       margin: const EdgeInsets.fromLTRB(Sizes.margin7, 0, Sizes.margin7, Sizes.margin20),
-      padding: const EdgeInsets.fromLTRB(Sizes.margin16, Sizes.margin16, Sizes.margin16, Sizes.margin32),
+      padding: const EdgeInsets.only(
+        left: Sizes.margin16,
+        top: Sizes.margin16,
+        right: Sizes.margin16,
+        bottom: Sizes.margin32
+      ),
       decoration: BoxDecoration(
         color: CustomColors.backgroundCard,
-        borderRadius: BorderRadius.circular(Sizes.borderRadius20),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(Sizes.borderRadius20)),
         border: Border.all(color: CustomColors.backgroundLine, width: Sizes.inputBorderSize)
       ),
       child: Column(
@@ -49,8 +54,8 @@ class SnackBarCustom extends StatelessWidget {
 
   // Method that creates the handle of the card.
   Widget _createHandle() => Container(
-    width: Sizes.margin40,
-    height: Sizes.margin4,
+    width: Sizes.margin52,
+    height: Sizes.margin6,
     decoration: BoxDecoration(
       color: CustomColors.backgroundLine,
       borderRadius: BorderRadius.circular(Sizes.borderRadius5)

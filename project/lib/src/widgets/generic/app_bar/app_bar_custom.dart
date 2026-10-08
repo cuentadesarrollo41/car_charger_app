@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:project/src/commons/constants/custom_colors.dart';
 
 // Models.
 import 'package:project/src/models/generic/screen_properties_model.dart';
 
 // Commons.
+import 'package:project/src/commons/constants/app_bar_modes.dart';
+import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 
 // Widgets.
@@ -17,16 +18,18 @@ class AppBarCustom extends StatelessWidget implements PreferredSize {
   final GlobalKey<ScaffoldState>? scaffoldKey;
   final bool showMenu;
   final Stream<bool>? endDrawerIsOpenedStream;
+  final String appBarMode;
 
-  final void Function()? onPendingTasksButtonClicked;
   final void Function()? onBackButtonClicked;
+  final void Function()? onProfileButtonClicked;
 
   AppBarCustom({
     this.scaffoldKey,
     this.showMenu = false,
     this.endDrawerIsOpenedStream,
-    this.onPendingTasksButtonClicked,
+    required this.appBarMode,
     this.onBackButtonClicked,
+    this.onProfileButtonClicked,
     super.key
   }) : preferredSize = Size.fromHeight(Sizes.appBarHeight);
 
@@ -40,8 +43,9 @@ class AppBarCustom extends StatelessWidget implements PreferredSize {
     scaffoldKey: scaffoldKey,
     showMenu: showMenu,
     endDrawerIsOpenedStream: endDrawerIsOpenedStream,
+    appBarMode: appBarMode,
     onBackButtonClicked: onBackButtonClicked,
-    onPendingTasksButtonClicked: onPendingTasksButtonClicked,
+    onProfileButtonClicked: onProfileButtonClicked,
   );
 }
 
@@ -49,16 +53,18 @@ class _AppBarContent extends StatefulWidget {
   final GlobalKey<ScaffoldState>? scaffoldKey;
   final bool showMenu;
   final Stream<bool>? endDrawerIsOpenedStream;
+  final String appBarMode;
 
-  final void Function()? onPendingTasksButtonClicked;
   final void Function()? onBackButtonClicked;
+  final void Function()? onProfileButtonClicked;
 
   const _AppBarContent({
     this.scaffoldKey,
     this.showMenu = true,
     this.endDrawerIsOpenedStream,
-    this.onPendingTasksButtonClicked,
+    required this.appBarMode,
     this.onBackButtonClicked,
+    this.onProfileButtonClicked,
   });
 
   @override
@@ -128,30 +134,47 @@ class _AppBarContentState extends State<_AppBarContent> with SingleTickerProvide
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      const SizedBox(width: Sizes.margin24),
+      SizedBox(width: screenProperties.paddingCardHorizontal),
 
-      if (widget.onBackButtonClicked != null) _createBackButton(),
-      const SizedBox(width: Sizes.margin10),
+      ...widget.appBarMode == AppBarModes.main ? _createMainAppBar()
+        : widget.appBarMode == AppBarModes.public ? _createPublicAppBar()
+        : widget.appBarMode == AppBarModes.text ? _createTextAppBar()
+        : [ ],
 
-      const Spacer(),
-
-      _createLogo(),
-
-      const Spacer(),
-
-      SizedBox(width: widget.onBackButtonClicked == null ? Sizes.margin34 : 73),
-
-      if (widget.showMenu) _createMenuIconButton(),
-    ],
+      SizedBox(width: screenProperties.paddingCardHorizontal),
+    ]
   );
 
-  // Method that creates the back button.
-  Widget _createBackButton() => InkWellCustom(
-    onTap: widget.onBackButtonClicked!,
+  // Method that creates the public app bar.
+  List <Widget> _createPublicAppBar() => [
+    _createIconButton(FontAwesomeIcons.chevronLeft, widget.onBackButtonClicked),
+    const SizedBox(width: Sizes.margin10),
+
+    const Spacer(),
+    _createLogo(),
+    const Spacer(),
+
+    SizedBox(width: 49),
+  ];
+
+  // Method that creates the main bar.
+  List <Widget> _createMainAppBar() => [
+    _createLogo(),
+    const Spacer(),
+
+    _createIconButton(FontAwesomeIcons.solidUser, widget.onProfileButtonClicked),
+  ];
+
+  // Method that creates the text app bar.
+  List <Widget> _createTextAppBar() => [];
+
+  // Method that creates an icon button.
+  Widget _createIconButton(FaIconData icon, void Function()? onClicked) => InkWellCustom(
+    onTap: onClicked,
     child: Container(
       height: Sizes.appBarHeight,
       padding: const EdgeInsets.symmetric(horizontal: Sizes.margin13),
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: CustomColors.backgroundGhost,
@@ -161,7 +184,7 @@ class _AppBarContentState extends State<_AppBarContent> with SingleTickerProvide
         )
       ),
       child: FaIcon(
-        FontAwesomeIcons.chevronLeft,
+        icon,
         size: Sizes.font14,
         color: Colors.white,
       )
@@ -174,7 +197,7 @@ class _AppBarContentState extends State<_AppBarContent> with SingleTickerProvide
   );
 
   // Method that creates the menu icon button.
-  Widget _createMenuIconButton() => IconButton(
+  /*Widget _createMenuIconButton() => IconButton(
     highlightColor: Colors.transparent,
     splashColor: Colors.transparent,
     icon: AnimatedIcon(
@@ -183,17 +206,17 @@ class _AppBarContentState extends State<_AppBarContent> with SingleTickerProvide
       progress: animationController,
     ),
     onPressed: _onMenuButtonClicked
-  );
+  );*/
 
   // ***************************************************************************
   // On clicked.
   // ***************************************************************************
   // Method that is called when the user clicks the menu button.
-  void _onMenuButtonClicked() {
+  /*void _onMenuButtonClicked() {
     if (widget.scaffoldKey == null) {
       return;
     }
 
     widget.scaffoldKey!.currentState!.openEndDrawer();
-  }
+  }*/
 }

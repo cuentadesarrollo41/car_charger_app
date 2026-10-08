@@ -19,15 +19,6 @@ import 'package:project/src/commons/utils/app_localizations.dart';
 import 'package:project/src/commons/utils/route_tracker.dart';
 import 'package:project/src/commons/utils/routes.dart';
 
-// System UI style: light icons on the dark app.
-const SystemUiOverlayStyle _systemUiOverlayStyle = SystemUiOverlayStyle(
-  statusBarColor: Colors.transparent,
-  statusBarIconBrightness: Brightness.light,
-  statusBarBrightness: Brightness.dark,
-  systemNavigationBarColor: CustomColors.black,
-  systemNavigationBarIconBrightness: Brightness.light
-);
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -178,3 +169,12 @@ class _MyAppState extends State<MyApp> {
     return supported.first;
   }
 }
+
+// System UI style: light icons on the dark app.
+const SystemUiOverlayStyle _systemUiOverlayStyle = SystemUiOverlayStyle(
+  statusBarColor: Colors.transparent,
+  statusBarIconBrightness: Brightness.light,
+  statusBarBrightness: Brightness.dark,
+  systemNavigationBarColor: CustomColors.black,
+  systemNavigationBarIconBrightness: Brightness.light
+);

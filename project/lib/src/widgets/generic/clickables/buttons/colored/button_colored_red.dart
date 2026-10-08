@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Commons.
+import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 
 // Widgets.
@@ -41,10 +42,12 @@ class ButtonColoredRed extends StatelessWidget {
     height: height,
     text: text,
     fontSize: fontSize,
-    backgroundColor: Colors.red,
-    borderColor: Colors.redAccent,
-    overlayColor: Colors.red,
-    overlayBorderColor: Colors.redAccent,
+    backgroundColor: CustomColors.redDark,
+    borderColor: CustomColors.redDark,
+    overlayColor: CustomColors.red,
+    overlayBorderColor: CustomColors.red,
+    textColor: Colors.white,
+    overlayTextColor: Colors.white,
     mainAxisSize: mainAxisSize,
     iconAssetLeft: iconAssetLeft,
     iconAssetRight: iconAssetRight,

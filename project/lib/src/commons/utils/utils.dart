@@ -16,8 +16,12 @@ abstract class Utils {
   // ***************************************************************************
   static void showAlertDialog({ required BuildContext context, required String? title, required String? text, required String positiveName, String? negativeName, required dynamic positiveAction, required dynamic negativeAction }) => DialogHelper.showAlertDialog(context: context, title: title, text: text, positiveName: positiveName, negativeName: negativeName, positiveAction: positiveAction, negativeAction: negativeAction);
   static void showProgressBarAlertDialog({ required BuildContext context, required Stream stream, Color color = CustomColors.lime }) => DialogHelper.showProgressBarAlertDialog(context: context, stream: stream, color: color);
-  static dynamic showModalBottomSheetCustom({ required BuildContext context, required Widget child }) async => DialogHelper.showModalBottomSheetCustom(context: context, child: child);
   static Future<void> showSnackBar({ required BuildContext context, required String text, required void Function()? onDismiss }) => DialogHelper.showSnackBar(context: context, text: text, onDismiss: onDismiss);
+
+  // ***************************************************************************
+  // Bottom sheet.
+  // ***************************************************************************
+  static Future<void> showModalBottomSheetCustom({ required BuildContext context, required Widget bottomSheet, void Function(Map<String, dynamic> response)? onSuccess, void Function()? onCancel }) => BottomSheetHelper.showModalBottomSheetCustom(context: context, bottomSheet: bottomSheet, onSuccess: onSuccess, onCancel: onCancel);
 
   // ***************************************************************************
   // Connectivity.
@@ -71,11 +75,6 @@ abstract class Utils {
   static void startSession({ required BuildContext context, required String token }) => UserHelper.startSession(context: context, token: token);
   static bool userIsAuthenticated() => UserHelper.userIsAuthenticated();
   static bool passwordIsValid({ required String password }) => UserHelper.passwordIsValid(password: password);
-
-  // ***************************************************************************
-  // Bottom sheet.
-  // ***************************************************************************
-  static Future<void> showCustomModalBottomSheet({ required BuildContext context, required Widget bottomSheet, void Function(Map<String, dynamic> response)? onSuccess, void Function()? onCancel }) => BottomSheetHelper.showCustomModalBottomSheet(context: context, bottomSheet: bottomSheet, onSuccess: onSuccess, onCancel: onCancel);
 
   // ***************************************************************************
   // Focus.

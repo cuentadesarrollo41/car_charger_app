@@ -10,6 +10,7 @@ class ScreenPropertiesModel {
   bool isMonitor;
   bool hasHamburgerMenu;
 
+  double fontSmallest;
   double fontExtraSmall;
   double fontSmall;
   double fontText;
@@ -28,6 +29,7 @@ class ScreenPropertiesModel {
       isTablet = false,
       isMonitor = false,
       hasHamburgerMenu = false,
+      fontSmallest = 0,
       fontExtraSmall = 0,
       fontSmall = 0,
       fontText = 0,
@@ -42,6 +44,7 @@ class ScreenPropertiesModel {
     isTablet = Utils.screenIsTablet(context: context);
     isMonitor = Utils.screenIsMonitor(context: context);
     hasHamburgerMenu = Utils.screenHasHamburgerMenu(context: context);
+    fontSmallest = isMonitor ? Sizes.font14 : Sizes.font12;
     fontExtraSmall = isMonitor ? Sizes.font15 : Sizes.font14;
     fontSmall = isMonitor ? Sizes.font16 : Sizes.font15;
     fontText = isMonitor ? Sizes.font19 : Sizes.font17;

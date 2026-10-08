@@ -7,11 +7,10 @@ import 'package:project/src/models/generic/screen_properties_model.dart';
 import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/commons/constants/strings.dart';
-import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
-import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 // Widgets.
-import 'package:project/src/widgets/generic/texts/title_page.dart';
+import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
+import 'package:project/src/widgets/generic/texts/section_introduction_texts.dart';
 
 class ContentContainerCustom extends StatefulWidget {
   final String title;
@@ -53,8 +52,8 @@ class _ContentContainerCustomState extends State<ContentContainerCustom> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-         _createHeader(),
-          const SizedBox(height: Sizes.margin12),
+         if (widget.title.isNotEmpty || widget.subtitle.isNotEmpty) _createHeader(),
+          SizedBox(height: widget.title.isNotEmpty || widget.subtitle.isNotEmpty ? Sizes.margin12 : 0),
 
           Expanded(child: _createContainer()),
         ],
@@ -70,37 +69,9 @@ class _ContentContainerCustomState extends State<ContentContainerCustom> {
   // Method that creates the header.
   Widget _createHeader() => InkWellCustom(
     onTap: widget.onTitleClicked,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _createTitle(),
-        if (widget.subtitle.isNotEmpty) _createSubtitle(),
-      ],
-    ),
-  );
-
-  // Method that creates the title.
-  Widget _createTitle() => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: Sizes.margin20),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: Sizes.margin16,
-      children: [
-        Flexible(child: TitlePage(text: widget.title)),
-        if (widget.titleExtraWidget != null) widget.titleExtraWidget!
-      ],
-    ),
-  );
-
-  // Method that creates the subtitle.
-  Widget _createSubtitle() => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: Sizes.margin22),
-    child: TextInter(
-      text: widget.subtitle,
-      fontSize: screenProperties.fontText,
-      color: Colors.black,
+    child: SectionIntroductionTexts(
+      title: widget.title,
+      subtitle: widget.subtitle
     )
   );
 

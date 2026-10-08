@@ -6,42 +6,42 @@ import 'package:project/src/commons/constants/strings.dart';
 import 'package:project/src/commons/constants/tabs.dart';
 
 class MainBloc {
-  final _tabController = BehaviorSubject<String>();
-  final _titleController = BehaviorSubject<String>();
+  final _tabController = BehaviorSubject<int>();
   final _tabsExtraContentController = BehaviorSubject<Widget?>();
+  final _refreshDateTimeController = BehaviorSubject<DateTime>();
   final _loadingTextController = BehaviorSubject<String>();
 
   // Get values from Stream.
-  Stream<String> get tabStream => _tabController.stream;
-  Stream<String> get titleStream => _titleController.stream;
+  Stream<int> get tabStream => _tabController.stream;
   Stream<Widget?> get tabsExtraContentStream => _tabsExtraContentController.stream;
+  Stream<DateTime> get refreshDateTimeStream => _refreshDateTimeController.stream;
   Stream<String> get loadingTextStream => _loadingTextController.stream;
 
   // Set values to Stream.
-  Function(String) get changeTab => _tabController.sink.add;
-  Function(String) get changeTitle => _titleController.sink.add;
+  Function(int) get changeTab => _tabController.sink.add;
   Function(Widget?) get changeTabsExtraContent => _tabsExtraContentController.sink.add;
+  Function(DateTime) get changeRefreshDateTime => _refreshDateTimeController.sink.add;
   Function(String) get changeLoadingText => _loadingTextController.sink.add;
 
   // Get last values of the streams.
-  String get tab => _tabController.value;
-  String get title => _titleController.value;
+  int get tab => _tabController.value;
   Widget? get tabsExtraContent => _tabsExtraContentController.value;
+  DateTime get refreshDateTime => _refreshDateTimeController.value;
   String get loadingText => _loadingTextController.value;
 
   // Close Stream Controllers.
   void dispose() {
     _tabController.close();
-    _titleController.close();
     _tabsExtraContentController.close();
+    _refreshDateTimeController.close();
     _loadingTextController.close();
   }
 
   // Reset fields.
-  void reset(String title) {
+  void reset() {
     changeTab(Tabs.home);
-    changeTitle(title);
     changeTabsExtraContent(null);
+    changeRefreshDateTime(DateTime.now());
     changeLoadingText(Strings.emptyString);
   }
 
