@@ -29,7 +29,7 @@ abstract class HelperForgotPassword {
       validateInlineFields: () => validateFields(context: context),
       focusNodes: focusNodes,
       loadingKey: 'loading',
-      successTextKey: 'success_password_recover',
+      successTextKey: 'success_password_recovered',
       useSnackBar: true,
       call: () => AuthService.recoverPassword(
         email: forgotPasswordBloc.email.trim(),

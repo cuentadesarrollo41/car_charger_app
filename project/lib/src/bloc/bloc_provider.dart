@@ -21,6 +21,7 @@ class BlocProvider extends InheritedWidget {
   final HistoryBloc _historyBloc = HistoryBloc();
   final LoginBloc _loginBloc = LoginBloc();
   final MainBloc _mainBloc = MainBloc();
+  final MyProfileBloc _myProfileBloc = MyProfileBloc();
   final SignUpBloc _signUpBloc = SignUpBloc();
   final StateBloc _stateBloc = StateBloc();
 
@@ -31,6 +32,7 @@ class BlocProvider extends InheritedWidget {
   static HistoryBloc historyBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._historyBloc;
   static LoginBloc loginBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._loginBloc;
   static MainBloc mainBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._mainBloc;
+  static MyProfileBloc myProfileBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._myProfileBloc;
   static SignUpBloc signUpBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._signUpBloc;
   static StateBloc stateBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._stateBloc;
 }

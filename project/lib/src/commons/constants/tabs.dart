@@ -5,12 +5,18 @@ class Tabs {
   static const int history = 2;
   static const int settings = 3;
 
+  // My profile.
+  static const int editName = 1;
+  static const int editPassword = 2;
+
   static const List<int> defaultList = [
     home,
     charging,
     history,
     settings,
   ];
+
   static const List<int> bottomTabs = [ home, charging, history, settings ];
+  static const List<int> myProfileTabs = [ home, editName, editPassword ];
   static const List<String> bottomTabsKeys = [ 'home', 'charging', 'history', 'settings' ];
 }
