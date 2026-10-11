@@ -15,7 +15,7 @@ import 'package:project/src/widgets/generic/clickables/buttons/colored/button_co
 import 'package:project/src/widgets/generic/dialog/dialog_custom.dart';
 import 'package:project/src/widgets/generic/inputs/input_text_field.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
-import 'package:project/src/widgets/generic/texts/title_page.dart';
+import 'package:project/src/widgets/generic/texts/title_section.dart';
 
 class DialogConfirmation extends StatefulWidget {
   final String title;
@@ -71,7 +71,7 @@ class _DialogConfirmationState extends State<DialogConfirmation> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            TitlePage(text: widget.title),
+            TitleSection(text: widget.title),
 
             if (widget.texts.isNotEmpty) const SizedBox(height: Sizes.margin4),
             if (widget.texts.isNotEmpty) _createText(),

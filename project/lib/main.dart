@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 // Bloc.
 import 'package:project/src/bloc/bloc_provider.dart';
@@ -97,45 +98,53 @@ class _MyAppState extends State<MyApp> {
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: _systemUiOverlayStyle,
-      child: MaterialApp(
-        title: Strings.appName,
-        navigatorObservers: [routeTracker],
-        navigatorKey: navigatorKey,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: false,
-          primaryColor: Colors.white,
-          textSelectionTheme: const TextSelectionThemeData(
-            selectionHandleColor: CustomColors.lime,
-            selectionColor: CustomColors.lime80,
-            cursorColor: CustomColors.lime,
-          ),
-          fontFamily: Strings.fontFamily,
-          appBarTheme: const AppBarTheme(
-            systemOverlayStyle: _systemUiOverlayStyle
-          ),
+      child: SkeletonizerConfig(
+        data: SkeletonizerConfigData(
+          effectResolver: (Brightness brightness) => const ShimmerEffect(
+            baseColor: CustomColors.backgroundCard,
+            highlightColor: CustomColors.backgroundInput
+          )
         ),
-        initialRoute: Routes.splash,
-        routes: Routes.getRoutes(),
-        supportedLocales: AppLocalizations.getSupportedLocales(),
+        child: MaterialApp(
+          title: Strings.appName,
+          navigatorObservers: [routeTracker],
+          navigatorKey: navigatorKey,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            useMaterial3: false,
+            primaryColor: Colors.white,
+            textSelectionTheme: const TextSelectionThemeData(
+              selectionHandleColor: CustomColors.lime,
+              selectionColor: CustomColors.lime80,
+              cursorColor: CustomColors.lime,
+            ),
+            fontFamily: Strings.fontFamily,
+            appBarTheme: const AppBarTheme(
+              systemOverlayStyle: _systemUiOverlayStyle
+            ),
+          ),
+          initialRoute: Routes.splash,
+          routes: Routes.getRoutes(),
+          supportedLocales: AppLocalizations.getSupportedLocales(),
 
-        // Make sure that the localization data for the proper language is loaded.
-        localizationsDelegates: [
-          AppLocalizations.delegate, // A class which loads the translations from JSON files.
-          GlobalMaterialLocalizations.delegate, // Built-in localization of basic text for Material widgets.
-          GlobalCupertinoLocalizations.delegate, // Built-in localization of basic text for Cupertino widgets.
-          GlobalWidgetsLocalizations.delegate, // Built-in localization for text direction LTR/RTL.
-        ],
+          // Make sure that the localization data for the proper language is loaded.
+          localizationsDelegates: [
+            AppLocalizations.delegate, // A class which loads the translations from JSON files.
+            GlobalMaterialLocalizations.delegate, // Built-in localization of basic text for Material widgets.
+            GlobalCupertinoLocalizations.delegate, // Built-in localization of basic text for Cupertino widgets.
+            GlobalWidgetsLocalizations.delegate, // Built-in localization for text direction LTR/RTL.
+          ],
 
-        // Returns a locale which will be used by the app.
-        locale: session.languageCode.isNotEmpty
-          ? AppLocalizations.getLocaleByLanguageCode(session.languageCode)
-          : null,
-        localeListResolutionCallback: _localeListResolutionCallback,
-        builder: (BuildContext context, Widget? child) => MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1)),
-          child: child!,
-        ),
+          // Returns a locale which will be used by the app.
+          locale: session.languageCode.isNotEmpty
+            ? AppLocalizations.getLocaleByLanguageCode(session.languageCode)
+            : null,
+          localeListResolutionCallback: _localeListResolutionCallback,
+          builder: (BuildContext context, Widget? child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1)),
+            child: child!,
+          ),
+        )
       )
     );
   }

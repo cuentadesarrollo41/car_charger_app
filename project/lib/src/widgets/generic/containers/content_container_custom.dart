@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:project/src/models/generic/screen_properties_model.dart';
 
 // Commons.
-import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/commons/constants/strings.dart';
 
 // Widgets.
-import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
 import 'package:project/src/widgets/generic/texts/section_introduction_texts.dart';
 
 class ContentContainerCustom extends StatefulWidget {
@@ -45,15 +43,15 @@ class _ContentContainerCustomState extends State<ContentContainerCustom> {
     _init();
 
     return Container(
+      margin: const EdgeInsets.only(top: Sizes.margin16),
       width: double.infinity,
-      margin: const EdgeInsets.only(top: Sizes.margin10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
          if (widget.title.isNotEmpty || widget.subtitle.isNotEmpty) _createHeader(),
-          SizedBox(height: widget.title.isNotEmpty || widget.subtitle.isNotEmpty ? Sizes.margin12 : 0),
+          SizedBox(height: widget.title.isNotEmpty || widget.subtitle.isNotEmpty ? Sizes.margin30 : 0),
 
           Expanded(child: _createContainer()),
         ],
@@ -67,26 +65,26 @@ class _ContentContainerCustomState extends State<ContentContainerCustom> {
   }
 
   // Method that creates the header.
-  Widget _createHeader() => InkWellCustom(
-    onTap: widget.onTitleClicked,
-    child: SectionIntroductionTexts(
-      title: widget.title,
-      subtitle: widget.subtitle
-    )
+  Widget _createHeader() => SectionIntroductionTexts(
+    title: widget.title,
+    subtitle: widget.subtitle,
+    horizontalPadding: screenProperties.paddingCardHorizontal
   );
 
   // Method that creates container.
   Widget _createContainer() => ClipRRect(
-    borderRadius: BorderRadiusGeometry.only(topLeft: Radius.circular(Sizes.borderRadius20), topRight: Radius.circular(Sizes.borderRadius20)),
+    borderRadius: BorderRadiusGeometry.only(
+      topLeft: Radius.circular(Sizes.borderRadius20),
+      topRight: Radius.circular(Sizes.borderRadius20)
+    ),
     child: Container(
       width: double.infinity,
-      padding: const EdgeInsets.only(
-        top: Sizes.margin20,
-        left: Sizes.margin16,
-        right: Sizes.margin16,
+      padding: EdgeInsets.only(
+        left: screenProperties.paddingCardHorizontal,
+        right: screenProperties.paddingCardHorizontal,
       ),
       decoration: BoxDecoration(
-        color: widget.isWhite ? Colors.white : CustomColors.black,
+        color: widget.isWhite ? Colors.white : Colors.transparent,
         borderRadius: BorderRadius.vertical(top: Radius.circular(Sizes.borderRadius20)),
       ),
       child: widget.isListView

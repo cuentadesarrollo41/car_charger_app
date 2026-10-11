@@ -1,1 +1,2 @@
-export './main_bloc.dart';
+export 'main/index.dart';
+

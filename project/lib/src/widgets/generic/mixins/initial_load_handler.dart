@@ -47,6 +47,9 @@ mixin InitialLoadHandler<T extends RefreshableWidget> on State<T> {
   /// Override to change the loading text key. Defaults to 'loading'.
   String get loadingTextKey => 'loading';
 
+  /// Override to hide the built-in loader (e.g. when the widget draws its own). Defaults to true.
+  bool get showLoader => true;
+
   /// Return BlocProvider.stateBloc(context).
   /// Used internally by changeLoadingText — no need to override it.
   StateBloc get stateBloc;
@@ -94,18 +97,25 @@ mixin InitialLoadHandler<T extends RefreshableWidget> on State<T> {
     Future.microtask(() {
       if (!context.mounted) return;
 
-      MainBloc mainBloc = BlocProvider.mainBloc(context);
+      final MainBloc mainBloc = BlocProvider.mainBloc(context);
+      final bool isMainPage = routeTracker.currentRoute == Routes.main && mainBloc.blocIsInit();
 
-      if (!isAuthorized || routeTracker.currentRoute == Routes.main && mainBloc.blocIsInit() && mainBloc.tab == Tabs.home) {
+      if (!isAuthorized || isMainPage && mainBloc.tab == Tabs.home) {
         return Utils.logout(context: context);
       }
 
       Navigator.pop(context);
 
+      // Error in a main tab other than Home: go back to the Home tab.
+      if (isMainPage) {
+        mainBloc.changeTab(Tabs.home);
+        return;
+      }
+
       if (Navigator.canPop(context)) {
         Navigator.pop(context);
       } else {
-        Utils.navigatorPushAndRemoveUntil(context: context, child: MainPage(), routeName: Routes.main);
+        Utils.navigatorPushAndRemoveUntil(context: context, child: const MainPage(), routeName: Routes.main);
       }
     });
   }
@@ -115,6 +125,7 @@ mixin InitialLoadHandler<T extends RefreshableWidget> on State<T> {
     return FutureLoadingDataContent(
       hasLoaded: hasLoaded,
       loadingText: getLoadingText(),
+      showLoader: showLoader,
       changeLoadingText: changeLoadingText,
       getData: () {
         futureData ??= getData();

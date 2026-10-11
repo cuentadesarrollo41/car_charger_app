@@ -1,16 +1,21 @@
 class Fields {
   static const String bytes = 'bytes';
   static const String callDeletion = 'callDeletion';
+  static const String charger = 'charger';
+  static const String chargerId = 'chargerId';
   static const String chargers = 'chargers';
   static const String checkLatestVersionUnderscore = 'check_latest_version';
   static const String count = 'count';
   static const String country = 'country';
   static const String creationDate = 'creationDate';
+  static const String currentLimit = 'currentLimit';
   static const String data = 'data';
   static const String email = 'email';
   static const String endDate = 'endDate';
+  static const String energyList = 'energyList';
   static const String file = 'file';
   static const String firebaseToken = 'firebaseToken';
+  static const String history = 'history';
   static const String id = 'id';
   static const String item = 'item';
   static const String language = 'language';
@@ -20,12 +25,17 @@ class Fields {
   static const String message = 'message';
   static const String modificationDate = 'modificationDate';
   static const String name = 'name';
+  static const String networkName = 'networkName';
   static const String newPassword = 'newPassword';
+  static const String nextChargeDate = 'nextChargeDate';
   static const String oldPassword = 'oldPassword';
   static const String page = 'page';
   static const String password = 'password';
+  static const String period = 'period';
   static const String results = 'results';
   static const String searcher = 'searcher';
+  static const String selectedChargerId = 'selectedChargerId';
+  static const String serialNumber = 'serialNumber';
   static const String session = 'session';
   static const String startDate = 'startDate';
   static const String state = 'state';
@@ -34,8 +44,10 @@ class Fields {
   static const String title = 'title';
   static const String token = 'token';
   static const String trackViewUrl = 'trackViewUrl';
+  static const String updateChargerLastDate = 'updateChargerLastDate';
   static const String updateUserLastDate = 'updateUserLastDate';
   static const String url = 'url';
   static const String user = 'user';
+  static const String value = 'value';
   static const String version = 'version';
 }

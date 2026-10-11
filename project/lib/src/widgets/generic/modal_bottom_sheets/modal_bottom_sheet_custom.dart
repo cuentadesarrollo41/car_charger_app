@@ -10,7 +10,7 @@ import 'package:project/src/commons/utils/app_localizations.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_ghost.dart';
-import 'package:project/src/widgets/generic/texts/title_section.dart';
+import 'package:project/src/widgets/generic/texts/title_page.dart';
 
 class ModalBottomSheetCustom extends StatefulWidget {
   final String title;
@@ -60,7 +60,7 @@ class _ModalBottomSheetCustomState extends State<ModalBottomSheetCustom> {
               _createHandle(),
               const SizedBox(height: Sizes.margin16),
 
-              TitleSection(text: widget.title),
+              TitlePage(text: widget.title),
               const SizedBox(height: Sizes.margin4),
 
               Flexible(child: _createContent()),

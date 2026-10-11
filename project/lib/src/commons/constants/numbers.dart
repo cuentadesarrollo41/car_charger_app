@@ -9,6 +9,7 @@ class Numbers {
   static const int durationDialogAnimation = 200; // Milliseconds - same as Flutter's default dialog transition.
   static const int firstPage = 1;
   static const int firstYear = 1900;
+  static const int maxTimeDifferenceRefreshCharger = 300; // Seconds.
   static const int maxTimeDifferenceRefreshUser = 5;
   static const int noLimit = -1;
   static const int noValue = -1;

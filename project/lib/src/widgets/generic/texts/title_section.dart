@@ -22,7 +22,7 @@ class TitleSection extends StatelessWidget {
 
     return TextInter(
       text: text,
-      fontSize: screenProperties.fontBigTitle,
+      fontSize: screenProperties.fontSubtitle,
       fontWeight: FontWeight.w700,
       color: color,
     );

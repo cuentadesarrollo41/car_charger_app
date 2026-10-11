@@ -24,6 +24,7 @@ class FutureLoadingDataContent extends StatefulWidget {
   final bool hasLoaded;
   final String loadingText;
   final Color progressBarColor;
+  final bool showLoader;
   final List<String> allowedRouteNames;
 
   final Widget Function() createLoadedContent;
@@ -38,6 +39,7 @@ class FutureLoadingDataContent extends StatefulWidget {
     required this.hasLoaded,
     required this.loadingText,
     this.progressBarColor = CustomColors.lime,
+    this.showLoader = true,
     this.allowedRouteNames = const <String> [],
     required this.createLoadedContent,
     required this.changeLoadingText,
@@ -89,6 +91,10 @@ class _FutureLoadingDataContentState extends State<FutureLoadingDataContent> {
           case ConnectionState.none:
           case ConnectionState.waiting:
           case ConnectionState.active:
+            if (!widget.showLoader) {
+              return const SizedBox.shrink();
+            }
+
             return Container(
               width: screenProperties.size.width,
               height: screenProperties.size.height,
@@ -187,14 +193,17 @@ class _FutureLoadingDataContentState extends State<FutureLoadingDataContent> {
   void _onErrorCancelButtonClicked(BuildContext context) {
     Navigator.pop(this.context);
 
-    MainBloc mainBloc = BlocProvider.mainBloc(context);
+    final MainBloc mainBloc = BlocProvider.mainBloc(context);
+    final bool isMainPage = routeTracker.currentRoute == Routes.main && mainBloc.blocIsInit();
 
-    if (routeTracker.currentRoute == Routes.main && mainBloc.blocIsInit() && mainBloc.tab == Tabs.home) {
+    if (isMainPage && mainBloc.tab == Tabs.home) {
       Utils.logout(context: context);
+    } else if (isMainPage) {
+      mainBloc.changeTab(Tabs.home);
     } else if (Navigator.canPop(context)) {
       Navigator.pop(this.context);
     } else {
-      Utils.navigatorPushAndRemoveUntil(context: context, child: MainPage(), routeName: Routes.main);
+      Utils.navigatorPushAndRemoveUntil(context: context, child: const MainPage(), routeName: Routes.main);
     }
   }
 }

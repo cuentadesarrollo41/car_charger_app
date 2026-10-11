@@ -22,7 +22,7 @@ class TitlePage extends StatelessWidget {
 
     return TextInter(
       text: text,
-      fontSize: screenProperties.fontSubtitle,
+      fontSize: screenProperties.fontBigTitle,
       fontWeight: FontWeight.w700,
       color: color,
     );

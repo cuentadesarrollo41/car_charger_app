@@ -380,6 +380,12 @@ For sub-widgets that load async data, extend `RefreshableWidget` and use `Initia
 // Bloc.
 import 'package:project/src/bloc/bloc_provider.dart';
 
+// Helpers.
+import './helpers/index.dart';
+
+// Widgets.
+import 'package:project/src/widgets/generic/mixins/initial_load_handler.dart';
+
 class XContent extends RefreshableWidget {
   const XContent({ required super.refreshDateTime, super.key });
 
@@ -392,25 +398,39 @@ class _XContentState extends State<XContent> with InitialLoadHandler<XContent> {
   StateBloc get stateBloc => BlocProvider.stateBloc(context);
 
   @override
-  Future<Map<String, dynamic>> getData() async {
-    final session = stateBloc.session;
-    return XService.getX(language: session.languageCode, token: session.token);
-  }
+  Widget build(BuildContext context) => buildInitialDataContent();
 
   @override
-  void handleResponse(Map<String, dynamic> data) {
-    // populate BLoCs with data[Fields.xxx]
-  }
+  Future<Map<String, dynamic>> getData() => HelperInitialData.getData(stateBloc: stateBloc);
+
+  @override
+  void handleResponse(Map<String, dynamic> data) => HelperInitialData.handleGetDataResponse(
+    changeHasLoaded: (bool value) => hasLoaded = value,
+    setState: () => setState(() {})
+  );
 
   @override
   Widget buildContent() {
     // return UI widget tree — data is already loaded
   }
-
-  @override
-  Widget build(BuildContext context) => buildInitialDataContent();
 }
 ```
+
+- The data loading lives in `helpers/helper_initial_data.dart` next to the widget (`abstract class HelperInitialData` with `getData({ required StateBloc stateBloc })`, usually `InitialDataRunner.runTagged(...)`, and `handleGetDataResponse(...)`). The widget only delegates to it
+- The `getData()` and `handleResponse()` overrides have no comment
+- BLoCs and `screenProperties` used by the widget are obtained in `didChangeDependencies()`
+
+---
+
+## Main Tabs
+
+- Each main tab (`lib/src/widgets/app/main/tabs/[tab]/tab.dart`) extends `RefreshableWidget` and builds `MainTabLayout` (`lib/src/widgets/app/main/common/main_tab_layout.dart`), passing `refreshDateTime`, `title`, `subtitle`, `getData`, `handleResponse` and `createContent`. The tab itself does not use `InitialLoadHandler`
+- `MainTabLayout` always shows the title and subtitle, loads the data with `InitialLoadHandler` only in the content area, and shows `createContent` when there is a selected charger or `ContainerChargerNotLinked` otherwise
+- `getData` and `handleResponse` delegate to the tab's `HelperInitialData` (`helpers/helper_initial_data.dart`): `getData: () => HelperInitialData.getData(...)`, `handleResponse: (Map<String, dynamic> data) => HelperInitialData.handleGetDataResponse(data: data, ...)`. `MainTabLayout` only executes them and contains no response logic
+- `handleGetDataResponse` decides what to do with the response (save it in a BLoC or the session, rebuild the tab…). It runs while building, so any `setState` it triggers must be deferred with `SchedulerBinding.instance.addPostFrameCallback`. `hasLoaded` is handled by `InitialLoadHandler`
+- Loading mode: by default `MainTabLayout` shows a progress indicator centred over the tab. Pass `useSkeleton: true` to show, while loading, the same content it will show once loaded (`createContent`, or `ContainerChargerNotLinked` according to the session), rendered with `Skeletonizer`
+- With `useSkeleton: true`, `createContent` must render without errors before the data arrives (first launch, empty session): read data with safe defaults (`?? Strings.emptyString`, default models), never with `!` on values that may be null. Use `BoneMock` texts as fallback only when a placeholder size is needed
+- The skeleton style (dark shimmer with `CustomColors.backgroundCard` / `backgroundInput`) is configured once in `main.dart` (`SkeletonizerConfigData` theme extension). Never configure it per widget
 
 ---
 

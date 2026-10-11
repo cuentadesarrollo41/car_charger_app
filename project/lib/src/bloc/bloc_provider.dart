@@ -18,6 +18,7 @@ class BlocProvider extends InheritedWidget {
   BlocProvider._internal({ super.key, required super.child });
 
   final ForgotPasswordBloc _forgotPasswordBloc = ForgotPasswordBloc();
+  final HistoryBloc _historyBloc = HistoryBloc();
   final LoginBloc _loginBloc = LoginBloc();
   final MainBloc _mainBloc = MainBloc();
   final SignUpBloc _signUpBloc = SignUpBloc();
@@ -27,6 +28,7 @@ class BlocProvider extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) => true;
 
   static ForgotPasswordBloc forgotPasswordBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._forgotPasswordBloc;
+  static HistoryBloc historyBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._historyBloc;
   static LoginBloc loginBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._loginBloc;
   static MainBloc mainBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._mainBloc;
   static SignUpBloc signUpBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._signUpBloc;

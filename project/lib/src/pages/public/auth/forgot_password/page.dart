@@ -116,7 +116,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     children: [
       SectionIntroductionTexts(
         title: AppLocalizations.of(context)!.translate('password_recover'),
-        subtitle: AppLocalizations.of(context)!.translate('password_recover_text')
+        subtitle: AppLocalizations.of(context)!.translate('password_recover_text'),
       ),
       const SizedBox(height: Sizes.margin30),
 

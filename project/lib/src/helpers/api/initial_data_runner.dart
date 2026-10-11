@@ -12,7 +12,7 @@ import 'package:project/src/commons/utils/utils.dart';
 class InitialDataRunner {
   static Future<Map<String, dynamic>> runTagged({
     required StateBloc stateBloc,
-    bool callGetAccount = true,
+    bool callGetAccount = false,
     Map<String, Future<Map<String, dynamic>> Function()> callsByKey = const {},
     bool refreshAccount = false,
     bool checkConnection = true,
@@ -44,6 +44,7 @@ class InitialDataRunner {
 
       // Update account.
       stateBloc.session.user = response[Fields.item];
+      stateBloc.session.updateSelectedCharger();
       stateBloc.session.updateUserLastDate = response[Fields.updateUserLastDate];
       stateBloc.updateSession(stateBloc.session);
     }

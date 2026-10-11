@@ -24,7 +24,7 @@ class ScreenPropertiesModel {
 
   Size size;
 
-  ScreenPropertiesModel({required BuildContext context})
+  ScreenPropertiesModel({ required BuildContext context })
     : isPhone = false,
       isTablet = false,
       isMonitor = false,
@@ -52,8 +52,8 @@ class ScreenPropertiesModel {
     fontTitle = isMonitor ? Sizes.font24 : Sizes.font22;
     fontBigTitle = isMonitor ? Sizes.font28 : Sizes.font24;
     fontExtraTitle = isMonitor ? Sizes.font32 : Sizes.font28;
-    paddingCardHorizontal = isPhone ? Sizes.margin24 : Sizes.margin36;
-    paddingCardVertical = isPhone ? Sizes.margin36 : Sizes.margin40;
+    paddingCardHorizontal = isPhone ? Sizes.margin20 : Sizes.margin36;
+    paddingCardVertical = isPhone ? Sizes.margin24 : Sizes.margin40;
     size = MediaQuery.of(context).size;
   }
 }

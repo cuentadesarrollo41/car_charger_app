@@ -1,8 +1,8 @@
-// Models.
-import 'package:project/src/models/user_model.dart';
-
 // Services.
 import 'package:project/src/services/api_service.dart';
+
+// Models.
+import 'package:project/src/models/user_model.dart';
 
 // Commons.
 import 'package:project/src/commons/constants/backend.dart';

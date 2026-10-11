@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Commons.
+import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 
 // Widgets.
@@ -11,14 +12,16 @@ class CardCustom extends StatelessWidget {
   final double elevation;
   final Color color;
   final double borderRadius;
+  final Color borderColor;
 
   final void Function()? onClicked;
 
   const CardCustom({
     required this.child,
-    this.elevation = Sizes.defaultElevation,
-    this.color = Colors.white,
+    this.elevation = 0,
+    this.color = CustomColors.backgroundCard,
     this.borderRadius = Sizes.borderRadius20,
+    this.borderColor = CustomColors.backgroundLine,
     this.onClicked,
     super.key
   });
@@ -36,7 +39,11 @@ class CardCustom extends StatelessWidget {
     elevation: elevation,
     color: color,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(borderRadius)
+      borderRadius: BorderRadius.circular(borderRadius),
+      side: BorderSide(
+        color: borderColor,
+        width: Sizes.defaultBorderSize
+      )
     ),
     child: child,
   );
