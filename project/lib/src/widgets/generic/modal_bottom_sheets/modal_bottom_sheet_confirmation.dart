@@ -79,7 +79,7 @@ class _ModalBottomSheetConfirmationState extends State<ModalBottomSheetConfirmat
   Widget _createText() => RichText(
     text: TextSpan(
       style: TextStyle(
-        fontSize: screenProperties.fontText,
+        fontSize: screenProperties.fontSmall,
         fontFamily: Strings.fontFamily,
         color: CustomColors.textSecondary
       ),

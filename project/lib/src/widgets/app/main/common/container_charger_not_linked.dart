@@ -68,7 +68,7 @@ class _ContainerChargerNotLinkedState extends State<ContainerChargerNotLinked> {
   Widget _createIcon() => Container(
     padding: const EdgeInsets.all(Sizes.margin22),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(Sizes.borderRadius20),
+      borderRadius: BorderRadius.circular(Sizes.borderRadius16),
       color: CustomColors.lime12
     ),
     child: const FaIcon(

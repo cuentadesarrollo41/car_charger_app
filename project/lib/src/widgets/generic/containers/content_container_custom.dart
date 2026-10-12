@@ -74,8 +74,8 @@ class _ContentContainerCustomState extends State<ContentContainerCustom> {
   // Method that creates container.
   Widget _createContainer() => ClipRRect(
     borderRadius: BorderRadiusGeometry.only(
-      topLeft: Radius.circular(Sizes.borderRadius20),
-      topRight: Radius.circular(Sizes.borderRadius20)
+      topLeft: Radius.circular(Sizes.borderRadius16),
+      topRight: Radius.circular(Sizes.borderRadius16)
     ),
     child: Container(
       width: double.infinity,
@@ -85,7 +85,7 @@ class _ContentContainerCustomState extends State<ContentContainerCustom> {
       ),
       decoration: BoxDecoration(
         color: widget.isWhite ? Colors.white : Colors.transparent,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(Sizes.borderRadius20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(Sizes.borderRadius16)),
       ),
       child: widget.isListView
         ? SingleChildScrollView(

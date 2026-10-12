@@ -1,6 +1,8 @@
 class Fields {
   static const String bytes = 'bytes';
   static const String callDeletion = 'callDeletion';
+  static const String chargePointModel = 'chargePointModel';
+  static const String chargePointVendor = 'chargePointVendor';
   static const String charger = 'charger';
   static const String chargerId = 'chargerId';
   static const String chargers = 'chargers';
@@ -8,19 +10,22 @@ class Fields {
   static const String count = 'count';
   static const String country = 'country';
   static const String creationDate = 'creationDate';
-  static const String currentLimit = 'currentLimit';
+  static const String currentLimitAmps = 'currentLimitAmps';
   static const String data = 'data';
   static const String email = 'email';
   static const String endDate = 'endDate';
   static const String energyList = 'energyList';
   static const String file = 'file';
   static const String firebaseToken = 'firebaseToken';
+  static const String firmwareVersion = 'firmwareVersion';
   static const String history = 'history';
   static const String id = 'id';
   static const String item = 'item';
   static const String language = 'language';
   static const String languageCode = 'languageCode';
+  static const String lastHeartbeat = 'lastHeartbeat';
   static const String limit = 'limit';
+  static const String linkId = 'linkId';
   static const String list = 'list';
   static const String message = 'message';
   static const String modificationDate = 'modificationDate';

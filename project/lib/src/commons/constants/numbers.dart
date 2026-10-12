@@ -10,7 +10,7 @@ class Numbers {
   static const int firstPage = 1;
   static const int firstYear = 1900;
   static const int maxTimeDifferenceRefreshCharger = 300; // Seconds.
-  static const int maxTimeDifferenceRefreshUser = 5;
+  static const int maxTimeDifferenceRefreshUser = 300; // Seconds.
   static const int noLimit = -1;
   static const int noValue = -1;
   static const int one = 1;

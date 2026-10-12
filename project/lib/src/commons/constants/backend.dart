@@ -49,13 +49,14 @@ class Backend {
   static const String signUp = 'api/v1/public/users/register';
 
   // Chargers.
-  static const String getChargerOne = 'api/v1/private/chargers';
+  static const String getChargePointOne = 'api/v1/private/chargepoints';
 
   // History.
   static const String getHistoryData = 'api/v1/private/history/data';
   static const String getHistoryList = 'api/v1/private/history/all';
 
   // Users.
+  static const String deleteOwnUser = 'api/v1/private/users';
   static const String getOwnUser = 'api/v1/private/users/own';
   static const String updatePassword = 'api/v1/private/users/password/update';
 }

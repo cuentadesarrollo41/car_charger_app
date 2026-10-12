@@ -29,7 +29,6 @@ class _TabSettingsState extends State<TabSettings> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     stateBloc = BlocProvider.stateBloc(context);
   }
 

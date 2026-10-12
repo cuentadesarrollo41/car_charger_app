@@ -7,18 +7,21 @@ import 'package:project/src/models/generic/screen_properties_model.dart';
 
 // Commons.
 import 'package:project/src/commons/constants/app_bar_modes.dart';
-import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
+import 'package:project/src/commons/constants/strings.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
+import 'package:project/src/widgets/generic/containers/rounded_container_icon.dart';
 import 'package:project/src/widgets/generic/images/image_logo.dart';
+import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class AppBarCustom extends StatelessWidget implements PreferredSize {
   final GlobalKey<ScaffoldState>? scaffoldKey;
   final bool showMenu;
   final Stream<bool>? endDrawerIsOpenedStream;
   final String appBarMode;
+  final String title;
 
   final void Function()? onBackButtonClicked;
   final void Function()? onProfileButtonClicked;
@@ -28,6 +31,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSize {
     this.showMenu = false,
     this.endDrawerIsOpenedStream,
     required this.appBarMode,
+    this.title = Strings.emptyString,
     this.onBackButtonClicked,
     this.onProfileButtonClicked,
     super.key
@@ -44,6 +48,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSize {
     showMenu: showMenu,
     endDrawerIsOpenedStream: endDrawerIsOpenedStream,
     appBarMode: appBarMode,
+    title: title,
     onBackButtonClicked: onBackButtonClicked,
     onProfileButtonClicked: onProfileButtonClicked,
   );
@@ -54,6 +59,7 @@ class _AppBarContent extends StatefulWidget {
   final bool showMenu;
   final Stream<bool>? endDrawerIsOpenedStream;
   final String appBarMode;
+  final String title;
 
   final void Function()? onBackButtonClicked;
   final void Function()? onProfileButtonClicked;
@@ -63,6 +69,7 @@ class _AppBarContent extends StatefulWidget {
     this.showMenu = true,
     this.endDrawerIsOpenedStream,
     required this.appBarMode,
+    required this.title,
     this.onBackButtonClicked,
     this.onProfileButtonClicked,
   });
@@ -166,34 +173,38 @@ class _AppBarContentState extends State<_AppBarContent> with SingleTickerProvide
   ];
 
   // Method that creates the text app bar.
-  List <Widget> _createTextAppBar() => [];
+  List <Widget> _createTextAppBar() => [
+    _createIconButton(FontAwesomeIcons.chevronLeft, widget.onBackButtonClicked),
+    const SizedBox(width: Sizes.margin10),
+
+    const Spacer(),
+    _createTitle(),
+    const Spacer(),
+
+    SizedBox(width: 49),
+  ];
 
   // Method that creates an icon button.
   Widget _createIconButton(FaIconData icon, void Function()? onClicked) => InkWellCustom(
     onTap: onClicked,
-    child: Container(
+    child: RoundedContainerIcon(
       height: Sizes.appBarHeight,
-      padding: const EdgeInsets.symmetric(horizontal: Sizes.margin13),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: CustomColors.backgroundGhost,
-        border: Border.all(
-          width: Sizes.defaultBorderSize,
-          color: CustomColors.backgroundLine
-        )
-      ),
-      child: FaIcon(
-        icon,
-        size: Sizes.font14,
-        color: Colors.white,
-      )
-    ),
+      horizontalPadding: Sizes.margin13,
+      iconData: icon,
+      iconSize: Sizes.font14,
+    )
   );
 
   // Method that creates the logo.
   Widget _createLogo() => ImageLogo(
     height: Sizes.logoAppBarHeight,
+  );
+
+  // Method that creates the title.
+  Widget _createTitle() => TextInter(
+    text: widget.title,
+    fontSize: screenProperties.fontText,
+    fontWeight: FontWeight.w700,
   );
 
   // Method that creates the menu icon button.

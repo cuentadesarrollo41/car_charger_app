@@ -20,7 +20,7 @@ class CardCustom extends StatelessWidget {
     required this.child,
     this.elevation = 0,
     this.color = CustomColors.backgroundCard,
-    this.borderRadius = Sizes.borderRadius20,
+    this.borderRadius = Sizes.borderRadius16,
     this.borderColor = CustomColors.backgroundLine,
     this.onClicked,
     super.key
@@ -38,6 +38,7 @@ class CardCustom extends StatelessWidget {
   Widget _createCard() => Card(
     elevation: elevation,
     color: color,
+    margin: EdgeInsets.zero,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(borderRadius),
       side: BorderSide(

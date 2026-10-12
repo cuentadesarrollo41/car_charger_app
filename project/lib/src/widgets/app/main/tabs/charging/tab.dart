@@ -29,7 +29,6 @@ class _TabChargingState extends State<TabCharging> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     stateBloc = BlocProvider.stateBloc(context);
   }
 

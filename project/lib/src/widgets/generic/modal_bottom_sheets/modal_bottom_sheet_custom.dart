@@ -40,7 +40,7 @@ class _ModalBottomSheetCustomState extends State<ModalBottomSheetCustom> {
     _init();
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(Sizes.borderRadius20),
+      borderRadius: BorderRadius.circular(Sizes.borderRadius16),
       child: SafeArea(
         bottom: false,
         child: Container(

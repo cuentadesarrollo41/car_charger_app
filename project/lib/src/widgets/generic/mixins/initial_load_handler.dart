@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 // Bloc.
 import 'package:project/src/bloc/bloc_provider.dart';
@@ -14,6 +15,7 @@ import 'package:project/src/commons/utils/utils.dart';
 import 'package:project/src/pages/index.dart';
 
 // Widgets.
+import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/future_loading_data_content.dart';
 
 /// Base class for all StatefulWidgets that use InitialLoadHandler.
@@ -49,6 +51,10 @@ mixin InitialLoadHandler<T extends RefreshableWidget> on State<T> {
 
   /// Override to hide the built-in loader (e.g. when the widget draws its own). Defaults to true.
   bool get showLoader => true;
+
+  /// Override to show, while loading, a skeleton of the loaded content (buildContent) instead of the loader. Defaults to false.
+  /// buildContent must render without errors before the data arrives (safe defaults, never `!` on values that may be null).
+  bool get useSkeleton => false;
 
   /// Return BlocProvider.stateBloc(context).
   /// Used internally by changeLoadingText — no need to override it.
@@ -122,10 +128,10 @@ mixin InitialLoadHandler<T extends RefreshableWidget> on State<T> {
 
   /// Main entry point — call this from build().
   Widget buildInitialDataContent() {
-    return FutureLoadingDataContent(
+    final Widget content = FutureLoadingDataContent(
       hasLoaded: hasLoaded,
       loadingText: getLoadingText(),
-      showLoader: showLoader,
+      showLoader: showLoader && !useSkeleton,
       changeLoadingText: changeLoadingText,
       getData: () {
         futureData ??= getData();
@@ -145,6 +151,26 @@ mixin InitialLoadHandler<T extends RefreshableWidget> on State<T> {
         onCancelPressed(context, isAuthorized);
       },
       createLoadedContent: buildContent,
+    );
+
+    if (!useSkeleton) {
+      return content;
+    }
+
+    return Stack(
+      children: [
+        content,
+
+        Positioned.fill(
+          child: ConditionalWidget(
+            showChild: !hasLoaded,
+            createChild: () => Skeletonizer(
+              enabled: true,
+              child: buildContent()
+            )
+          )
+        )
+      ]
     );
   }
 }

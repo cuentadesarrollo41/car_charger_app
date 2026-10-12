@@ -29,7 +29,7 @@ class SnackBarCustom extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: CustomColors.backgroundCard,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(Sizes.borderRadius20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(Sizes.borderRadius16)),
         border: Border.all(color: CustomColors.backgroundLine, width: Sizes.inputBorderSize)
       ),
       child: Column(

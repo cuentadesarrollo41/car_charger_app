@@ -105,7 +105,6 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
     }
 
     mainBloc.reset();
-    BlocProvider.historyBloc(context).reset();
     hasLoaded = true;
 
     // Subscriptions.

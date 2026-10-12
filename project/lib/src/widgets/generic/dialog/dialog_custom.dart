@@ -28,7 +28,7 @@ class DialogCustom extends StatelessWidget {
             width: Sizes.defaultBorderSize,
             color: CustomColors.backgroundLine
           ),
-          borderRadius: BorderRadius.circular(Sizes.borderRadius20),
+          borderRadius: BorderRadius.circular(Sizes.borderRadius16),
         ),
         width: ScreenPropertiesModel(context: context).isPhone ? double.infinity : Sizes.maxWidthScreenPhone - 2 * Sizes.margin20,
         child: child

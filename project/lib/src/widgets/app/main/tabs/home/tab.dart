@@ -31,7 +31,6 @@ class _TabHomeState extends State<TabHome> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     stateBloc = BlocProvider.stateBloc(context);
   }
 

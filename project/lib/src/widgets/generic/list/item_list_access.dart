@@ -24,6 +24,7 @@ class ItemListAccess extends StatefulWidget {
   final FontWeight fontWeight;
   final bool isLast;
   final Widget? expandedContent;
+  final Color primaryColor;
 
   final void Function() onItemClicked;
 
@@ -35,9 +36,10 @@ class ItemListAccess extends StatefulWidget {
     this.rightIconData,
     this.rightWidget,
     required this.isSelected,
-    this.fontWeight = FontWeight.w500,
+    this.fontWeight = FontWeight.w700,
     required this.isLast,
     this.expandedContent,
+    this.primaryColor = Colors.white,
     required this.onItemClicked,
     super.key
   });
@@ -59,19 +61,18 @@ class _ItemListAccessState extends State<ItemListAccess> {
       marginTop: 0,
       marginLeft: 0,
       marginRight: 0,
-      marginBottom: Sizes.margin6,
+      marginBottom: Sizes.margin12,
       onClicked: widget.onItemClicked,
       child: CardContainer(
         verticalPadding: 0,
         horizontalPadding: 0,
-        borderRadius: Sizes.borderRadius10,
+        borderColor: Colors.transparent,
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: Sizes.margin12),
+          padding: const EdgeInsets.symmetric(vertical: Sizes.margin16),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(Sizes.borderRadius10),
+            borderRadius: BorderRadius.circular(Sizes.borderRadius16),
             border: Border.all(
-              color: widget.isSelected ? CustomColors.lime : Colors.white,
+              color: widget.isSelected ? CustomColors.lime : CustomColors.backgroundLine,
               width: Sizes.defaultBorderSize
             )
           ),
@@ -99,13 +100,13 @@ class _ItemListAccessState extends State<ItemListAccess> {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
-      spacing: Sizes.margin16,
+      spacing: Sizes.margin12,
       children: [
-        _createIcon(widget.leftIconData, CustomColors.lime, Sizes.font20),
+        _createIcon(widget.leftIconData, widget.primaryColor, Sizes.font16),
 
         Expanded(child: widget.content ?? _createText()),
 
-        if (widget.rightIconData != null) _createIcon(widget.rightIconData!, Colors.black, Sizes.font14),
+        if (widget.rightIconData != null) _createIcon(widget.rightIconData!, widget.primaryColor, Sizes.font12),
         if (widget.rightWidget != null) widget.rightWidget!
       ],
     ),
@@ -122,7 +123,7 @@ class _ItemListAccessState extends State<ItemListAccess> {
   Widget _createText() => TextInter(
     text: widget.text,
     fontSize: screenProperties.fontSmall,
-    color: Colors.black,
+    color: widget.primaryColor,
     fontWeight: widget.fontWeight,
   );
 }

@@ -27,12 +27,27 @@ class _TabHistoryState extends State<TabHistory> {
   late StateBloc stateBloc;
   late HistoryBloc historyBloc;
 
+  late bool hasLoaded;
+
+  @override
+  void initState() {
+    hasLoaded = false;
+    super.initState();
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     stateBloc = BlocProvider.stateBloc(context);
     historyBloc = BlocProvider.historyBloc(context);
+
+    if (hasLoaded) {
+      return;
+    }
+
+    historyBloc.reset();
+    hasLoaded = true;
   }
 
   @override

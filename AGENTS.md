@@ -419,6 +419,7 @@ class _XContentState extends State<XContent> with InitialLoadHandler<XContent> {
 - The data loading lives in `helpers/helper_initial_data.dart` next to the widget (`abstract class HelperInitialData` with `getData({ required StateBloc stateBloc })`, usually `InitialDataRunner.runTagged(...)`, and `handleGetDataResponse(...)`). The widget only delegates to it
 - The `getData()` and `handleResponse()` overrides have no comment
 - BLoCs and `screenProperties` used by the widget are obtained in `didChangeDependencies()`
+- To show a skeleton instead of the loader while loading, override `bool get useSkeleton => true;`: `InitialLoadHandler` hides the loader and renders `buildContent()` with `Skeletonizer` until `hasLoaded`. `buildContent()` must render without errors before the data arrives (safe defaults, never `!` on values that may be null). Main tabs use `MainTabLayout(useSkeleton: true)` instead
 
 ---
 

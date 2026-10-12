@@ -8,11 +8,11 @@ import 'package:project/src/models/charger_model.dart';
 import 'package:project/src/commons/constants/backend.dart';
 import 'package:project/src/commons/constants/fields.dart';
 
-abstract class ChargerService {
+abstract class ChargePointService {
   // Method that gets a charger.
   static Future<Map<String, dynamic>> getOne({ required String id, required String language, required String token }) => ApiService.requestJson(
     method: Backend.get,
-    endpoint: '${ Backend.getChargerOne }/$id',
+    endpoint: '${ Backend.getChargePointOne }/$id',
     language: language,
     token: token,
     mapData: (Map<String, dynamic> data) => {

@@ -25,7 +25,7 @@ class CardContainer extends StatelessWidget {
     this.verticalPadding = Sizes.margin20,
     this.horizontalPadding = Sizes.margin20,
     required this.child,
-    this.borderRadius = Sizes.borderRadius20,
+    this.borderRadius = Sizes.borderRadius16,
     this.elevation = 0,
     this.color = CustomColors.backgroundCard,
     this.borderColor = CustomColors.backgroundLine,
@@ -47,7 +47,7 @@ class CardContainer extends StatelessWidget {
         options: RoundedRectDottedBorderOptions(
           radius: Radius.circular(borderRadius),
           color: borderColor,
-          strokeWidth: Sizes.inputBorderSize,
+          strokeWidth: Sizes.defaultBorderSize,
           dashPattern: const [ Sizes.dashLength, Sizes.dashGap ],
           padding: EdgeInsets.zero
         ),

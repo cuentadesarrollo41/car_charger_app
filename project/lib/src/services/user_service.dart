@@ -21,6 +21,14 @@ abstract class UserService {
     }
   );
 
+  // Method that deletes own user.
+  static Future<Map<String, dynamic>> deleteOwnUser({ required String language, required String token }) => ApiService.requestJson(
+    method: Backend.delete,
+    endpoint: Backend.deleteOwnUser,
+    language: language,
+    token: token
+  );
+
   // Method that updates the password.
   static Future<Map<String, dynamic>> updatePassword({ required String token, required String id, required String oldPassword, required String newPassword, required String language }) => ApiService.requestJson(
     method: Backend.patch,

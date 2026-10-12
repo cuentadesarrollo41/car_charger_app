@@ -3,7 +3,7 @@ class Sizes {
   static const double appBarHeight = 68;
   static const double borderRadius5 = 5;
   static const double borderRadius10 = 10;
-  static const double borderRadius20 = 20;
+  static const double borderRadius16 = 16;
   static const double borderRadius30 = 30;
   static const double borderRadiusPdf = 13;
   static const double bottomBarHeight = 60;
@@ -15,7 +15,7 @@ class Sizes {
   static const double buttonHeightDialog = 38;
   static const double dashGap = 2;
   static const double dashLength = 4;
-  static const double defaultBorderSize = 2;
+  static const double defaultBorderSize = 1;
   static const double defaultElevation = 2;
   static const double defaultBottomMargin = 60;
   static const double defaultSizeCheckBox = 18;

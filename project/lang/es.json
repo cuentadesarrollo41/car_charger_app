@@ -33,6 +33,7 @@
   "login_text": "Accede para gestionar tus cargadores.",
   "logout": "Cerrar sesión",
   "logout_text": "¿Quieres salir de tu cuenta en este dispositivo?",
+  "my_profile": "Mi perfil",
   "no": "No",
   "ok": "Ok",
   "password": "Contraseña",
@@ -54,7 +55,7 @@
   "terms_2": "términos de uso ",
   "terms_3": "y la ",
   "terms_4": "política de privacidad.",
-  "user_name": "Nombre de usuario.",
+  "user_name": "Nombre de usuario",
   "user_name_text": "Elige el nombre que aparecerá dentro de la aplicación.",
   "yes": "Sí",
 

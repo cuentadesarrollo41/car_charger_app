@@ -4,7 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:project/src/bloc/bloc_provider.dart';
 
 // Services.
-import 'package:project/src/services/charger_service.dart';
+import 'package:project/src/services/charge_point_service.dart';
 
 // Helpers.
 import 'package:project/src/helpers/api/initial_data_runner.dart';
@@ -40,7 +40,7 @@ abstract class HelperInitialData {
   // Pure API calls.
   // ***************************************************************************
   // Method that fetches the charger data from the API.
-  static Future<Map<String, dynamic>> _getCharger(StateBloc stateBloc) async => ChargerService.getOne(
+  static Future<Map<String, dynamic>> _getCharger(StateBloc stateBloc) async => ChargePointService.getOne(
     id: stateBloc.session.selectedChargerId,
     language: stateBloc.session.languageCode,
     token: stateBloc.session.token

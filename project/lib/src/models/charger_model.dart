@@ -11,22 +11,32 @@ String chargerModelToJson(ChargerModel data) => json.encode(data.toJson());
 
 class ChargerModel {
   String id;
-  String serialNumber;
+  String linkId;
   String name;
-  int currentLimit;
-  DateTime? nextChargeDate;
+  String serialNumber;
+  String chargePointModel;
+  String chargePointVendor;
+  String firmwareVersion;
   String networkName;
+  DateTime? lastHeartbeat;
+  int currentLimitAmps;
+  DateTime? nextChargeDate;
   String state;
   DateTime creationDate;
   DateTime modificationDate;
 
   ChargerModel({
     this.id = Strings.emptyString,
-    this.serialNumber = Strings.emptyString,
+    this.linkId = Strings.emptyString,
     this.name = Strings.emptyString,
-    this.currentLimit = 0,
-    this.nextChargeDate,
+    this.serialNumber = Strings.emptyString,
+    this.chargePointModel = Strings.emptyString,
+    this.chargePointVendor = Strings.emptyString,
+    this.firmwareVersion = Strings.emptyString,
     this.networkName = Strings.emptyString,
+    this.lastHeartbeat,
+    this.currentLimitAmps = 0,
+    this.nextChargeDate,
     this.state = States.ok,
     DateTime? creationDate,
     DateTime? modificationDate,
@@ -37,11 +47,16 @@ class ChargerModel {
 
   factory ChargerModel.fromJson(Map<String, dynamic> json) => ChargerModel(
     id: json[Fields.id] ?? Strings.emptyString,
-    serialNumber: json[Fields.serialNumber] ?? Strings.emptyString,
+    linkId: json[Fields.linkId] ?? Strings.emptyString,
     name: json[Fields.name] ?? Strings.emptyString,
-    currentLimit: json[Fields.currentLimit] ?? 0,
-    nextChargeDate: json[Fields.nextChargeDate] == null ? null : DateTime.parse(json[Fields.nextChargeDate]),
+    serialNumber: json[Fields.serialNumber] ?? Strings.emptyString,
+    chargePointModel: json[Fields.chargePointModel] ?? Strings.emptyString,
+    chargePointVendor: json[Fields.chargePointVendor] ?? Strings.emptyString,
+    firmwareVersion: json[Fields.firmwareVersion] ?? Strings.emptyString,
     networkName: json[Fields.networkName] ?? Strings.emptyString,
+    lastHeartbeat: json[Fields.lastHeartbeat] == null ? null : DateTime.parse(json[Fields.lastHeartbeat]),
+    currentLimitAmps: json[Fields.currentLimitAmps] ?? 0,
+    nextChargeDate: json[Fields.nextChargeDate] == null ? null : DateTime.parse(json[Fields.nextChargeDate]),
     state: json[Fields.state] ?? States.ok,
     creationDate: json[Fields.creationDate] == null ? DateTime.now() : DateTime.parse(json[Fields.creationDate]),
     modificationDate: json[Fields.modificationDate] == null ? DateTime.now() : DateTime.parse(json[Fields.modificationDate]),
@@ -49,11 +64,16 @@ class ChargerModel {
 
   Map<String, dynamic> toJson() => {
     Fields.id: id,
-    Fields.serialNumber: serialNumber,
+    Fields.linkId: linkId,
     Fields.name: name,
-    Fields.currentLimit: currentLimit,
-    Fields.nextChargeDate: nextChargeDate?.toString(),
+    Fields.serialNumber: serialNumber,
+    Fields.chargePointModel: chargePointModel,
+    Fields.chargePointVendor: chargePointVendor,
+    Fields.firmwareVersion: firmwareVersion,
     Fields.networkName: networkName,
+    Fields.lastHeartbeat: lastHeartbeat?.toString(),
+    Fields.currentLimitAmps: currentLimitAmps,
+    Fields.nextChargeDate: nextChargeDate?.toString(),
     Fields.state: state,
     Fields.creationDate: creationDate.toString(),
     Fields.modificationDate: modificationDate.toString(),
