@@ -24,6 +24,8 @@ class BlocProvider extends InheritedWidget {
   final MyProfileBloc _myProfileBloc = MyProfileBloc();
   final SignUpBloc _signUpBloc = SignUpBloc();
   final StateBloc _stateBloc = StateBloc();
+  final UpdatePasswordBloc _updatePasswordBloc = UpdatePasswordBloc();
+  final UserNameBloc _userNameBloc = UserNameBloc();
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => true;
@@ -35,4 +37,6 @@ class BlocProvider extends InheritedWidget {
   static MyProfileBloc myProfileBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._myProfileBloc;
   static SignUpBloc signUpBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._signUpBloc;
   static StateBloc stateBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._stateBloc;
+  static UpdatePasswordBloc updatePasswordBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._updatePasswordBloc;
+  static UserNameBloc userNameBloc(BuildContext context) => context.dependOnInheritedWidgetOfExactType<BlocProvider>()!._userNameBloc;
 }

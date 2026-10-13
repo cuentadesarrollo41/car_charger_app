@@ -17,6 +17,7 @@ class ContentContainerCustom extends StatefulWidget {
   final bool isListView;
   final bool isWhite;
   final Widget? titleExtraWidget;
+  final double marginTop;
 
   final void Function()? onTitleClicked;
 
@@ -27,6 +28,7 @@ class ContentContainerCustom extends StatefulWidget {
     this.isListView = true,
     this.isWhite = false,
     this.titleExtraWidget,
+    this.marginTop = Sizes.margin30,
     this.onTitleClicked,
     super.key
   });
@@ -50,8 +52,8 @@ class _ContentContainerCustomState extends State<ContentContainerCustom> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-         if (widget.title.isNotEmpty || widget.subtitle.isNotEmpty) _createHeader(),
-          SizedBox(height: widget.title.isNotEmpty || widget.subtitle.isNotEmpty ? Sizes.margin30 : 0),
+          if (widget.title.isNotEmpty || widget.subtitle.isNotEmpty) _createHeader(),
+          SizedBox(height: widget.title.isNotEmpty || widget.subtitle.isNotEmpty ? widget.marginTop : 0),
 
           Expanded(child: _createContainer()),
         ],

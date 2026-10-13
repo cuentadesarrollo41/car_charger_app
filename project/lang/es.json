@@ -61,8 +61,8 @@
 
   "_success": "|-------------------------------------------------------------------------------|",
   "success_account_deleted": "Cuenta eliminada correctamente.",
-  "success_password_updated": "Perfil actualizado correctamente.",
-  "success_user_name_updated": "Contraseña actualizada correctamente.",
+  "success_password_updated": "Contraseña actualizada correctamente.",
+  "success_user_name_updated": "Perfil actualizado correctamente.",
   "success_password_recovered": "Contraseña temporal enviada.",
 
   "_languages": "|-------------------------------------------------------------------------------|",

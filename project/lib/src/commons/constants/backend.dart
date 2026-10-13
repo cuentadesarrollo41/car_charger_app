@@ -58,5 +58,6 @@ class Backend {
   // Users.
   static const String deleteOwnUser = 'api/v1/private/users';
   static const String getOwnUser = 'api/v1/private/users/own';
+  static const String updateOwnUser = 'api/v1/private/users';
   static const String updatePassword = 'api/v1/private/users/password/update';
 }
