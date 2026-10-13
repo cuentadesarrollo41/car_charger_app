@@ -61,19 +61,17 @@ abstract class DialogHelper {
       builder: (BuildContext context) {
         snackBarContext = context;
 
-        return SafeArea(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Dismissible(
-              key: ValueKey<String>(text),
-              direction: DismissDirection.down,
-              resizeDuration: null,
-              onDismissed: (DismissDirection direction) {
-                Navigator.pop(context);
-                onDismiss?.call();
-              },
-              child: SnackBarCustom(text: text)
-            )
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: Dismissible(
+            key: ValueKey<String>(text),
+            direction: DismissDirection.down,
+            resizeDuration: null,
+            onDismissed: (DismissDirection direction) {
+              Navigator.pop(context);
+              onDismiss?.call();
+            },
+            child: SnackBarCustom(text: text)
           )
         );
       }

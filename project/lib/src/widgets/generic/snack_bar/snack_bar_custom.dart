@@ -5,6 +5,7 @@ import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 
 // Widgets.
+import 'package:project/src/widgets/generic/containers/bottom_sheet_container_custom.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class SnackBarCustom extends StatelessWidget {
@@ -18,26 +19,11 @@ class SnackBarCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Material(
     color: Colors.transparent,
-    child: Container(
-      width: double.infinity,
-      margin: const EdgeInsets.fromLTRB(Sizes.margin7, 0, Sizes.margin7, Sizes.margin20),
-      padding: const EdgeInsets.only(
-        left: Sizes.margin16,
-        top: Sizes.margin16,
-        right: Sizes.margin16,
-        bottom: Sizes.margin32
-      ),
-      decoration: BoxDecoration(
-        color: CustomColors.backgroundCard,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(Sizes.borderRadius16)),
-        border: Border.all(color: CustomColors.backgroundLine, width: Sizes.inputBorderSize)
-      ),
+    child: BottomSheetContainerCustom(
+      crossAxisAlignment: CrossAxisAlignment.center,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _createHandle(),
-          const SizedBox(height: Sizes.margin32),
-
           _createIcon(),
           const SizedBox(height: Sizes.margin12),
 
@@ -49,16 +35,6 @@ class SnackBarCustom extends StatelessWidget {
           )
         ]
       )
-    )
-  );
-
-  // Method that creates the handle of the card.
-  Widget _createHandle() => Container(
-    width: Sizes.margin52,
-    height: Sizes.margin6,
-    decoration: BoxDecoration(
-      color: CustomColors.backgroundLine,
-      borderRadius: BorderRadius.circular(Sizes.borderRadius5)
     )
   );
 

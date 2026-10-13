@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:project/src/models/generic/screen_properties_model.dart';
 
 // Commons.
-import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 import 'package:project/src/commons/utils/app_localizations.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_ghost.dart';
+import 'package:project/src/widgets/generic/containers/bottom_sheet_container_custom.dart';
 import 'package:project/src/widgets/generic/texts/title_page.dart';
 
 class ModalBottomSheetCustom extends StatefulWidget {
@@ -39,35 +39,18 @@ class _ModalBottomSheetCustomState extends State<ModalBottomSheetCustom> {
   Widget build(BuildContext context) {
     _init();
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(Sizes.borderRadius16),
-      child: SafeArea(
-        bottom: false,
-        child: Container(
-          width: double.infinity,
-          color: CustomColors.backgroundCard,
-          padding: EdgeInsets.only(
-            left: screenProperties.paddingCardHorizontal,
-            top: Sizes.margin16,
-            right: screenProperties.paddingCardHorizontal,
-            bottom: Sizes.margin32
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _createHandle(),
-              const SizedBox(height: Sizes.margin16),
+    return BottomSheetContainerCustom(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TitlePage(text: widget.title),
+          const SizedBox(height: Sizes.margin4),
 
-              TitlePage(text: widget.title),
-              const SizedBox(height: Sizes.margin4),
-
-              Flexible(child: _createContent()),
-            ],
-          )
-        ),
-      ),
+          Flexible(child: _createContent())
+        ]
+      )
     );
   }
 
@@ -75,19 +58,6 @@ class _ModalBottomSheetCustomState extends State<ModalBottomSheetCustom> {
   void _init() {
     screenProperties = ScreenPropertiesModel(context: context);
   }
-
-  // Method that creates the line.
-  Widget _createHandle() => Align(
-    alignment: Alignment.center,
-    child: Container(
-      width: Sizes.margin52,
-      height: Sizes.margin6,
-      decoration: BoxDecoration(
-        color: CustomColors.backgroundLine,
-        borderRadius: BorderRadius.circular(Sizes.borderRadius5)
-      )
-    ),
-  );
 
   // Method that creates the content.
   Widget _createContent() => ListView(

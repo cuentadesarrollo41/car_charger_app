@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:project/src/models/generic/screen_properties_model.dart';
 
 // Commons.
-import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/numbers.dart';
 import 'package:project/src/commons/constants/sizes.dart';
 
@@ -20,11 +19,8 @@ abstract class BottomSheetHelper {
       capturedThemes: InheritedTheme.capture(from: context, to: navigator.context),
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       modalBarrierColor: Colors.black54,
-      backgroundColor: CustomColors.backgroundCard,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(Sizes.borderRadius16)),
-        side: BorderSide(color: CustomColors.backgroundLine, width: Sizes.inputBorderSize)
-      ),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
       constraints: BoxConstraints(maxHeight: ScreenPropertiesModel(context: context).size.height - Sizes.bottomSheetMaxHeight),
       isScrollControlled: true
     ));
@@ -46,7 +42,7 @@ class _BlurredModalBottomSheetRoute<T> extends ModalBottomSheetRoute<T> {
     super.barrierLabel,
     super.modalBarrierColor,
     super.backgroundColor,
-    super.shape,
+    super.elevation,
     super.constraints
   });
 
