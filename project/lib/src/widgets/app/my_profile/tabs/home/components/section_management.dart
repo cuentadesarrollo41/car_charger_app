@@ -54,12 +54,7 @@ class _SectionManagementState extends State<SectionManagement> {
         _createItem(FontAwesomeIcons.lock, 'password_change', _onChangePasswordItemClicked),
         const SizedBox(height: Sizes.margin4),
 
-        Line(
-          height: Sizes.defaultBorderSize,
-          width: double.infinity,
-          color: CustomColors.backgroundLine,
-          verticalMargin: 0
-        ),
+        _createLine(),
         const SizedBox(height: Sizes.margin16),
 
         _createItem(FontAwesomeIcons.rightFromBracket, 'logout', _onLogoutItemClicked),
@@ -83,6 +78,14 @@ class _SectionManagementState extends State<SectionManagement> {
     rightIconData: FontAwesomeIcons.chevronRight,
     primaryColor: color,
     onItemClicked: onClicked
+  );
+
+  // Method that creates a line.
+  Widget _createLine() => Line(
+    height: Sizes.defaultBorderSize,
+    width: double.infinity,
+    color: CustomColors.backgroundLine,
+    verticalMargin: 0
   );
 
   // ***************************************************************************

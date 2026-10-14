@@ -1,11 +1,13 @@
 class Numbers {
+  static const int currentLimitAmpsMax = 32;
+  static const int currentLimitAmpsMin = 1;
   static const int defaultLimit25 = 25;
   static const int delayAnimation = 500;
   static const int delaySearcher = 500;
   static const int delayScroll = 400;
   static const int delayWaitScroll = 100;
   static const int delaySplash = 2800;
-  static const int delaySnackBar = 2000;
+  static const int delaySnackBar = 1200;
   static const int durationDialogAnimation = 200; // Milliseconds - same as Flutter's default dialog transition.
   static const int firstPage = 1;
   static const int firstYear = 1900;

@@ -83,6 +83,12 @@ class SessionModel {
     }
   }
 
+  // Method that returns the selected charger (a default one if there is none, so widgets never fail).
+  ChargerModel get selectedCharger => user.chargers.firstWhere(
+    (ChargerModel charger) => charger.id == selectedChargerId,
+    orElse: () => ChargerModel()
+  );
+
   // Method that checks of refresh is needed.
   bool allowRefresh() {
     final DateTime now = DateTime.now();

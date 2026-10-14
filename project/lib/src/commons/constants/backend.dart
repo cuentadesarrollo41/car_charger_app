@@ -50,6 +50,8 @@ class Backend {
 
   // Chargers.
   static const String getChargePointOne = 'api/v1/private/chargepoints';
+  static const String unlinkChargePoint = 'api/v1/private/chargepoints/unlink';
+  static const String updateChargePoint = 'api/v1/private/chargepoints';
 
   // History.
   static const String getHistoryData = 'api/v1/private/history/data';

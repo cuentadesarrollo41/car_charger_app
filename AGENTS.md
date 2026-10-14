@@ -444,6 +444,13 @@ class _XContentState extends State<XContent> with InitialLoadHandler<XContent> {
 - Inputs read their error from the BLoC inside a `StreamBuilder` on `fieldErrorsStream`: `errorText: bloc.fieldErrors[Fields.x] ?? Strings.emptyString`
 - Validation and the submit action live in a `HelperX` class (e.g. `HelperLogin`) placed next to the screen that uses it (see Helpers location). The helper's `validateFields` sets the first error in the BLoC and returns its field; pass it to `ActionHelper.exec` as `validateInlineFields`, together with `focusNodes`, so `ActionHelper` hides the keyboard, focuses the failing input and stops. `ActionHelper.validateFields` (optional) is only for the rare cases where an error must be shown in a dialog
 - Error texts come from existing translation keys: `error_<screen>_<field>_validation` (e.g. `error_login_email_validation`)
+- `ActionHelper.exec(onError: …)` is called whenever the action fails: server error or no connection. Use it to roll back optimistic UI values (e.g. a slider)
+
+---
+
+## Helpers location
+
+- Actions that need a confirmation before calling a service: the widget only calls a helper method (e.g. `HelperUnlinkCharger.onUnlinkButtonClicked(context: context)`). The helper shows the confirmation bottom sheet or dialog (`Utils.showModalBottomSheetCustom` + `ModalBottomSheetConfirmation`) and, on confirm, closes it and runs its private method with `ActionHelper.exec` and the service. The widget never builds the confirmation itself. Reference: `lib/src/widgets/app/my_profile/tabs/home/helpers/helper_delete_account.dart`
 
 ---
 
@@ -458,6 +465,7 @@ class _XContentState extends State<XContent> with InitialLoadHandler<XContent> {
 | `CardCustom` / `CardContainer` | `Card` |
 | `ConditionalWidget` | inline `if` in widget tree |
 | `InputTextField` | `TextField`, `TextFormField` |
+| `SliderCustom` | `Slider` |
 | `ImageLogo` | raw SVG logo |
 | `WebImage` | `Image.network`, `CachedNetworkImage` directly |
 | `LoaderDots` | `CircularProgressIndicator` (for animated dot loader) |

@@ -63,6 +63,8 @@ abstract class ActionHelper {
     final bool isConnected = await Utils.deviceIsConnected();
 
     if (checkConnection && !isConnected) {
+      onError?.call();
+
       if (!context.mounted) {
         return;
       }

@@ -27,11 +27,13 @@ abstract class HelperInitialData {
   }
 
   // Method that handles the get data response: replaces the charger in the session's list with the one received.
-  static void handleGetDataResponse({ required StateBloc stateBloc, required Map<String, dynamic> data, required void Function() setState }) {
+  static void handleGetDataResponse({ required StateBloc stateBloc, required SettingsBloc settingsBloc, required Map<String, dynamic> data, required void Function() setState }) {
     try {
       stateBloc.session.updateCharger(data[Fields.charger][Fields.item]);
       stateBloc.updateSession(stateBloc.session);
     } catch(e) { /* Empty */ }
+
+    settingsBloc.fillFromCharger(stateBloc.session.selectedCharger);
 
     SchedulerBinding.instance.addPostFrameCallback((Duration timeStamp) => setState());
   }

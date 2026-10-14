@@ -1,4 +1,5 @@
 class Strings {
+  static const String ampsUnit = 'A';
   static const String appName = 'GRACO';
   static const String fontFamily = 'Inter';
   static const String asterisk = '*';

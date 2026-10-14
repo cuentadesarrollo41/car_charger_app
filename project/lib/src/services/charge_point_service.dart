@@ -15,8 +15,24 @@ abstract class ChargePointService {
     endpoint: '${ Backend.getChargePointOne }/$id',
     language: language,
     token: token,
-    mapData: (Map<String, dynamic> data) => {
-      Fields.item: ChargerModel.fromJson(data[Fields.charger] ?? {}),
-    }
+    mapData: (Map<String, dynamic> data) => { Fields.item: ChargerModel.fromJson(data[Fields.charger] ?? {}) }
+  );
+
+  // Method that updates a charger.
+  static Future<Map<String, dynamic>> updateOne({ required String id, required String name, required int currentLimitAmps, required String language, required String token }) => ApiService.requestJson(
+    method: Backend.patch,
+    endpoint: '${ Backend.updateChargePoint }/$id',
+    language: language,
+    token: token,
+    body: { Fields.name: name, Fields.currentLimitAmps: currentLimitAmps },
+    mapData: (Map<String, dynamic> data) => { Fields.item: ChargerModel.fromJson(data[Fields.charger] ?? {}) }
+  );
+
+  // Method that unlinks a charger from the user.
+  static Future<Map<String, dynamic>> unlink({ required String id, required String language, required String token }) => ApiService.requestJson(
+    method: Backend.patch,
+    endpoint: '${ Backend.unlinkChargePoint }/$id',
+    language: language,
+    token: token
   );
 }
