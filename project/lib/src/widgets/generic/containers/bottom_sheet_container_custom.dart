@@ -18,9 +18,9 @@ class BottomSheetContainerCustom extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     width: double.infinity,
     padding: EdgeInsets.fromLTRB(
-      Sizes.margin16,
-      Sizes.margin16,
-      Sizes.margin16,
+      Sizes.margin20,
+      Sizes.margin24,
+      Sizes.margin20,
       Sizes.margin24 + MediaQuery.of(context).padding.bottom
     ),
     decoration: BoxDecoration(
@@ -45,8 +45,8 @@ class BottomSheetContainerCustom extends StatelessWidget {
 
   // Method that creates the handle.
   Widget _createHandle() => Container(
-    width: Sizes.margin40,
-    height: Sizes.margin4,
+    width: Sizes.margin52,
+    height: Sizes.margin5,
     decoration: BoxDecoration(
       color: CustomColors.backgroundLine,
       borderRadius: BorderRadius.circular(Sizes.borderRadius5)

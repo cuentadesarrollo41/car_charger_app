@@ -80,7 +80,7 @@ class _TabSettingsState extends State<TabSettings> {
   // Method that creates the content when there is a linked charger.
   Widget _createContent() => Column(
     mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.stretch,
+    crossAxisAlignment: CrossAxisAlignment.start,
     spacing: Sizes.margin16,
     children: [
       const SectionChargerName(),

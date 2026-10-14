@@ -18,6 +18,8 @@ class Numbers {
   static const int one = 1;
   static const int passwordLengthMin = 6;
   static const int pictureMaxBytes = 5242880; // 5MB in Bytes
+  static const int skeletonListLength = 3; // Placeholder items shown while a list loads as skeleton.
+  static const int whPerKwh = 1000;
   static const int zero = 0;
 
   static const int intFalse = 0;

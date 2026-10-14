@@ -67,11 +67,29 @@ class _ContentContainerCustomState extends State<ContentContainerCustom> {
   }
 
   // Method that creates the header.
-  Widget _createHeader() => SectionIntroductionTexts(
-    title: widget.title,
-    subtitle: widget.subtitle,
-    horizontalPadding: screenProperties.paddingCardHorizontal
-  );
+  Widget _createHeader() => widget.titleExtraWidget == null
+    ? SectionIntroductionTexts(
+      title: widget.title,
+      subtitle: widget.subtitle,
+      horizontalPadding: screenProperties.paddingCardHorizontal
+    )
+    : Padding(
+      padding: EdgeInsets.symmetric(horizontal: screenProperties.paddingCardHorizontal),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: SectionIntroductionTexts(
+              title: widget.title,
+              subtitle: widget.subtitle
+            )
+          ),
+          const SizedBox(width: Sizes.margin12),
+
+          widget.titleExtraWidget!
+        ]
+      )
+    );
 
   // Method that creates container.
   Widget _createContainer() => ClipRRect(

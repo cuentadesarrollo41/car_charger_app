@@ -13,8 +13,9 @@ class Fields {
   static const String currentLimitAmps = 'currentLimitAmps';
   static const String data = 'data';
   static const String email = 'email';
-  static const String endDate = 'endDate';
+  static const String endTime = 'endTime';
   static const String energyList = 'energyList';
+  static const String energyWh = 'energyWh';
   static const String file = 'file';
   static const String firebaseToken = 'firebaseToken';
   static const String firmwareVersion = 'firmwareVersion';
@@ -23,6 +24,7 @@ class Fields {
   static const String item = 'item';
   static const String language = 'language';
   static const String languageCode = 'languageCode';
+  static const String lastCharges = 'lastCharges';
   static const String lastHeartbeat = 'lastHeartbeat';
   static const String limit = 'limit';
   static const String linkId = 'linkId';
@@ -42,7 +44,7 @@ class Fields {
   static const String selectedChargerId = 'selectedChargerId';
   static const String serialNumber = 'serialNumber';
   static const String session = 'session';
-  static const String startDate = 'startDate';
+  static const String startTime = 'startTime';
   static const String state = 'state';
   static const String statusCode = 'statusCode';
   static const String text = 'text';
@@ -53,6 +55,5 @@ class Fields {
   static const String updateUserLastDate = 'updateUserLastDate';
   static const String url = 'url';
   static const String user = 'user';
-  static const String value = 'value';
   static const String version = 'version';
 }

@@ -10,15 +10,18 @@ import 'package:project/src/commons/constants/sizes.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/containers/card/card_container.dart';
+import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/list/item_list.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class ItemListAccess extends StatefulWidget {
   final int index;
-  final FaIconData leftIconData;
+  final FaIconData? leftIconData;
+  final Widget? leftWidget;
   final String text;
   final Widget? content;
   final FaIconData? rightIconData;
+  final Color? rightIconColor;
   final Widget? rightWidget;
   final bool isSelected;
   final FontWeight fontWeight;
@@ -30,10 +33,12 @@ class ItemListAccess extends StatefulWidget {
 
   const ItemListAccess({
     required this.index,
-    required this.leftIconData,
+    this.leftIconData,
+    this.leftWidget,
     required this.text,
     this.content,
     this.rightIconData,
+    this.rightIconColor,
     this.rightWidget,
     required this.isSelected,
     this.fontWeight = FontWeight.w700,
@@ -102,11 +107,14 @@ class _ItemListAccessState extends State<ItemListAccess> {
       crossAxisAlignment: CrossAxisAlignment.center,
       spacing: Sizes.margin12,
       children: [
-        _createIcon(widget.leftIconData, widget.primaryColor, Sizes.font16),
+        ConditionalWidget(
+          showChild: widget.leftWidget != null || widget.leftIconData != null,
+          createChild: () => widget.leftWidget ?? _createIcon(widget.leftIconData!, widget.primaryColor, Sizes.font16)
+        ),
 
         Expanded(child: widget.content ?? _createText()),
 
-        if (widget.rightIconData != null) _createIcon(widget.rightIconData!, widget.primaryColor, Sizes.font12),
+        if (widget.rightIconData != null) _createIcon(widget.rightIconData!, widget.rightIconColor ?? widget.primaryColor, Sizes.font12),
         if (widget.rightWidget != null) widget.rightWidget!
       ],
     ),

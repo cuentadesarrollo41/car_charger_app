@@ -5,6 +5,7 @@ import 'package:project/src/pages/index.dart';
 
 class Routes {
   static const String forgotPassword = 'forgotPassword';
+  static const String history = 'history';
   static const String login = 'login';
   static const String linkCharger = 'linkCharger';
   static const String main = 'main';
@@ -14,6 +15,7 @@ class Routes {
 
   static Map<String, Widget Function(BuildContext)> getRoutes() => {
     forgotPassword: (BuildContext context) => const ForgotPasswordPage(),
+    history: (BuildContext context) => const HistoryPage(),
     login: (BuildContext context) => const LoginPage(),
     linkCharger: (BuildContext context) => const LinkChargerPage(),
     main: (BuildContext context) => const MainPage(),

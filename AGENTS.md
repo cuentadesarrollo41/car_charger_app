@@ -531,7 +531,7 @@ Before creating a new widget, check `lib/src/widgets/generic/` for an existing o
 | `screenProperties.paddingCardVertical` | adaptive vertical padding |
 
 In pages using `PageHandler`, `screenProperties` is already available as a mixin property.
-Elsewhere, instantiate: `final screenProperties = ScreenPropertiesModel(context: context);`
+Elsewhere, widgets (except very simple ones) are `StatefulWidget`s with `late ScreenPropertiesModel screenProperties;` set in a private `_init()` method, called as the first line of `build()`: `void _init() { screenProperties = ScreenPropertiesModel(context: context); }`. Never pass `screenProperties` as a parameter between methods; read the state field.
 
 ---
 

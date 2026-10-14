@@ -18,6 +18,7 @@ import 'package:project/src/widgets/generic/mixins/initial_load_handler.dart';
 class MainTabLayout extends RefreshableWidget {
   final String title;
   final String subtitle;
+  final Widget? titleExtraWidget;
   final Future<Map<String, dynamic>> Function() getData;
   final Widget Function() createContent;
   final void Function(Map<String, dynamic> data) handleResponse;
@@ -27,6 +28,7 @@ class MainTabLayout extends RefreshableWidget {
     required super.refreshDateTime,
     required this.title,
     required this.subtitle,
+    this.titleExtraWidget,
     required this.getData,
     required this.createContent,
     required this.handleResponse,
@@ -51,6 +53,7 @@ class _MainTabLayoutState extends State<MainTabLayout> with InitialLoadHandler<M
       ContentContainerCustom(
         title: widget.title,
         subtitle: widget.subtitle,
+        titleExtraWidget: widget.titleExtraWidget,
         isListView: false,
         child: Stack(
           children: [

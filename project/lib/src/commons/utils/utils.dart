@@ -32,6 +32,7 @@ abstract class Utils {
   // Data operations.
   // ***************************************************************************
   static String capitalize({ required String text }) => DataOperationsHelper.capitalize(text: text);
+  static String formatEnergyKwh({ required int energyWh, required String languageCode }) => DataOperationsHelper.formatEnergyKwh(energyWh: energyWh, languageCode: languageCode);
 
   // ***************************************************************************
   // Loaders.

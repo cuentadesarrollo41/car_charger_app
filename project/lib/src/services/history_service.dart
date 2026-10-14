@@ -20,8 +20,8 @@ abstract class HistoryService {
       Fields.period: historyPeriod
     },
     mapData: (Map<String, dynamic> data) => {
-      Fields.list: (data[Fields.list] ?? []).map((dynamic element) => ChargingSessionModel.fromJson(element)).toList(),
-      Fields.energyList: (data[Fields.energyList] ?? []).map((dynamic element) => element as int).toList()
+      Fields.list: List<ChargingSessionModel>.from((data[Fields.lastCharges] as List? ?? []).map((dynamic element) => ChargingSessionModel.fromJson(element))),
+      Fields.energyList: List<int>.from((data[Fields.history] as List? ?? []).map((dynamic element) => (element as num).toInt()))
     }
   );
 }

@@ -20,6 +20,7 @@ class Sizes {
   static const double defaultBottomMargin = 60;
   static const double defaultSizeCheckBox = 18;
   static const double defaultSizeRadioButton = 18;
+  static const double historyChartHeight = 150;
   static const double inputBorderSize = 1;
   static const double inputHeight = 44;
   static const double liquidPullToRefreshHeight = 100;
@@ -34,6 +35,7 @@ class Sizes {
   static const double margin2 = 2;
   static const double margin3 = 3;
   static const double margin4 = 4;
+  static const double margin5 = 5;
   static const double margin6 = 6;
   static const double margin7 = 7;
   static const double margin8 = 8;
