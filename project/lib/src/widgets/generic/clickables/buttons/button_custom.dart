@@ -8,6 +8,7 @@ import 'package:project/src/commons/constants/sizes.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
+import 'package:project/src/widgets/generic/loaders/skeleton_custom.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class ButtonCustom extends StatefulWidget {
@@ -79,26 +80,28 @@ class _ButtonCustomState extends State<ButtonCustom> {
   }
 
   @override
-  Widget build(BuildContext context) => InkWellCustom(
-    onTap: widget.onClicked,
-    onHover: (bool isHovering) => setState(() => this.isHovering = isHovering),
-    onPressedChanged: (bool isPressed) => setState(() => this.isPressed = isPressed),
-    child: AnimatedContainer(
-      height: widget.height,
-      width: widget.width,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.decelerate,
-      padding: EdgeInsets.symmetric(horizontal: widget.horizontalPadding),
-      decoration: BoxDecoration(
-        color: isHovering || isPressed ? widget.overlayColor : widget.backgroundColor,
-        border: Border.all(
-          width: widget.borderSize,
-          color: isHovering || isPressed ? widget.overlayBorderColor : widget.borderColor
+  Widget build(BuildContext context) => SkeletonCustom.leaf(
+    child: InkWellCustom(
+      onTap: widget.onClicked,
+      onHover: (bool isHovering) => setState(() => this.isHovering = isHovering),
+      onPressedChanged: (bool isPressed) => setState(() => this.isPressed = isPressed),
+      child: AnimatedContainer(
+        height: widget.height,
+        width: widget.width,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.decelerate,
+        padding: EdgeInsets.symmetric(horizontal: widget.horizontalPadding),
+        decoration: BoxDecoration(
+          color: isHovering || isPressed ? widget.overlayColor : widget.backgroundColor,
+          border: Border.all(
+            width: widget.borderSize,
+            color: isHovering || isPressed ? widget.overlayBorderColor : widget.borderColor
+          ),
+          borderRadius: BorderRadius.circular(widget.borderRadius),
         ),
-        borderRadius: BorderRadius.circular(widget.borderRadius),
+        child: _createContent(),
       ),
-      child: _createContent(),
-    ),
+    )
   );
 
   // Method that creates the content.

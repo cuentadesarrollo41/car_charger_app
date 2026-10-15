@@ -24,4 +24,7 @@ class SkeletonCustom extends StatelessWidget {
   static List<T> getItems<T>({ required BuildContext context, required List<T> items, required int length, required T Function() createPlaceholder }) => items.isNotEmpty || !isEnabled(context)
     ? items
     : List<T>.generate(length, (int index) => createPlaceholder());
+
+  // Method that draws the whole child as a single skeleton piece (background included) while drawn as skeleton.
+  static Widget leaf({ required Widget child }) => Skeleton.leaf(child: child);
 }

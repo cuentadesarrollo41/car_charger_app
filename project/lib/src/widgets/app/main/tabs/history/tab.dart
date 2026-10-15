@@ -70,7 +70,8 @@ class _TabHistoryState extends State<TabHistory> {
         setState: () => setState(() {})
       ),
       createContent: _createContent,
-      useSkeleton: true
+      useSkeleton: true,
+      scrollHeader: true
     )
   );
 

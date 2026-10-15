@@ -70,7 +70,8 @@ class _SectionConnectivityState extends State<SectionConnectivity> {
       children: [
         TextInter(
           text: AppLocalizations.of(context)!.translate('wifi_network'),
-          fontSize: screenProperties.fontExtraSmall
+          fontSize: screenProperties.fontExtraSmall,
+          color: CustomColors.textSecondary,
         ),
         TextInter(
           text: networkName.isEmpty ? Strings.hyphen : networkName,

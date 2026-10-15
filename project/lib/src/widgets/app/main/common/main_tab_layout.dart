@@ -7,12 +7,14 @@ import 'package:project/src/bloc/bloc_provider.dart';
 // Commons.
 import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
+import 'package:project/src/commons/constants/strings.dart';
 
 // Widgets.
 import 'package:project/src/widgets/app/main/common/container_charger_not_linked.dart';
 import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/containers/content_container_custom.dart';
 import 'package:project/src/widgets/generic/mixins/initial_load_handler.dart';
+import 'package:project/src/widgets/generic/texts/section_introduction_texts.dart';
 
 class MainTabLayout extends RefreshableWidget {
   final String title;
@@ -22,6 +24,7 @@ class MainTabLayout extends RefreshableWidget {
   final Widget Function() createContent;
   final void Function(Map<String, dynamic> data) handleResponse;
   final bool useSkeleton;
+  final bool scrollHeader;
 
   const MainTabLayout({
     required super.refreshDateTime,
@@ -32,6 +35,7 @@ class MainTabLayout extends RefreshableWidget {
     required this.createContent,
     required this.handleResponse,
     this.useSkeleton = false,
+    this.scrollHeader = false,
     super.key
   });
 
@@ -53,9 +57,9 @@ class _MainTabLayoutState extends State<MainTabLayout> with InitialLoadHandler<M
   Widget build(BuildContext context) => Stack(
     children: [
       ContentContainerCustom(
-        title: widget.title,
-        subtitle: widget.subtitle,
-        titleExtraWidget: widget.titleExtraWidget,
+        title: widget.scrollHeader ? Strings.emptyString : widget.title,
+        subtitle: widget.scrollHeader ? Strings.emptyString : widget.subtitle,
+        titleExtraWidget: widget.scrollHeader ? null : widget.titleExtraWidget,
         isListView: false,
         child: buildInitialDataContent()
       ),
@@ -93,6 +97,8 @@ class _MainTabLayoutState extends State<MainTabLayout> with InitialLoadHandler<M
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        ConditionalWidget(showChild: widget.scrollHeader, createChild: _createHeader),
+
         ConditionalWidget(
           showChild: !hasLoaded || stateBloc.session.selectedChargerId.isNotEmpty,
           createChild: widget.createContent,
@@ -100,6 +106,16 @@ class _MainTabLayoutState extends State<MainTabLayout> with InitialLoadHandler<M
         ),
         const SizedBox(height: Sizes.defaultBottomMargin)
       ]
+    )
+  );
+
+  // Method that creates the header inside the scroll: title, subtitle and the extra widget.
+  Widget _createHeader() => Padding(
+    padding: const EdgeInsets.only(bottom: Sizes.margin30),
+    child: SectionIntroductionTexts(
+      title: widget.title,
+      subtitle: widget.subtitle,
+      extraWidget: widget.titleExtraWidget
     )
   );
 }

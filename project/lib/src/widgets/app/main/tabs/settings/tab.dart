@@ -74,7 +74,8 @@ class _TabSettingsState extends State<TabSettings> {
       setState: () => setState(() {})
     ),
     createContent: _createContent,
-    useSkeleton: true
+    useSkeleton: true,
+    scrollHeader: true
   );
 
   // Method that creates the content when there is a linked charger.
