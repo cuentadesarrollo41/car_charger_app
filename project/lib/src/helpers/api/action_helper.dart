@@ -99,6 +99,7 @@ abstract class ActionHelper {
       call: call,
       changeLoadingText: setLoadingText,
       successCodes: successCodes,
+      closeProgressDialog: showDialog,
     );
 
     if (response == null) {

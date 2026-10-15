@@ -21,6 +21,8 @@
   "charger_unlink_question_text": "Dejará de aparecer en tu cuenta. El historial no se borrará.",
   "charger_unlinking": "Desvinculando cargador",
   "charging": "Carga",
+  "charging_activity": "Actividad de carga",
+  "charging_activity_text": "Consulta la energía y duración de todas las cargas realizadas.",
   "charging_last": "Últimas cargas",
   "charging_session_detail": "Detalle de la carga",
   "close": "Cerrar",

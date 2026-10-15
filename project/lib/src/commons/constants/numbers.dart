@@ -19,6 +19,7 @@ class Numbers {
   static const int passwordLengthMin = 6;
   static const int pictureMaxBytes = 5242880; // 5MB in Bytes
   static const int skeletonListLength = 3; // Placeholder items shown while a list loads as skeleton.
+  static const int skeletonPageListLength = 20; // Placeholder items shown while a full page list loads as skeleton.
   static const int whPerKwh = 1000;
   static const int zero = 0;
 
