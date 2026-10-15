@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 // Bloc.
 import 'package:project/src/bloc/bloc_provider.dart';
@@ -23,6 +22,7 @@ import 'package:project/src/pages/index.dart';
 import 'package:project/src/widgets/app/common/item_charging_session.dart';
 import 'package:project/src/widgets/app/common/modal_bottom_sheet_charging_session.dart';
 import 'package:project/src/widgets/generic/clickables/text_clickable.dart';
+import 'package:project/src/widgets/generic/loaders/skeleton_custom.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
 class SectionLastCharges extends StatefulWidget {
@@ -91,15 +91,12 @@ class _SectionLastChargesState extends State<SectionLastCharges> {
   );
 
   // Method that returns the charging sessions to draw: the real ones or, while loading as skeleton with no data yet, placeholder ones.
-  List<ChargingSessionModel> _getChargingSessions() {
-    final bool isSkeleton = Skeletonizer.maybeOf(context)?.enabled ?? false;
-
-    if (historyBloc.list.isNotEmpty || !isSkeleton) {
-      return historyBloc.list;
-    }
-
-    return List<ChargingSessionModel>.generate(Numbers.skeletonListLength, (int index) => ChargingSessionModel());
-  }
+  List<ChargingSessionModel> _getChargingSessions() => SkeletonCustom.getItems<ChargingSessionModel>(
+    context: context,
+    items: historyBloc.list,
+    length: Numbers.skeletonListLength,
+    createPlaceholder: () => ChargingSessionModel()
+  );
 
   // ***************************************************************************
   // On clicked.

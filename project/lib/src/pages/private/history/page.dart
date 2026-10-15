@@ -10,7 +10,6 @@ import 'package:project/src/commons/utils/app_localizations.dart';
 // Widgets.
 import './content.dart';
 import 'package:project/src/widgets/generic/app_bar/app_bar_custom.dart';
-import 'package:project/src/widgets/generic/containers/content_container_custom.dart';
 import 'package:project/src/widgets/generic/containers/scaffold_custom.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -46,7 +45,10 @@ class _HistoryPageState extends State<HistoryPage> {
         onBackButtonClicked: _onBackButtonClicked
       ),
       showBackgroundLogo: false,
-      createBody: _createContent
+      createBody: () => StreamBuilder<DateTime>(
+        stream: historyListBloc.refreshDateTimeStream,
+        builder: (BuildContext context, AsyncSnapshot<DateTime> snapshot) => HistoryContent(refreshDateTime: historyListBloc.refreshDateTime)
+      )
     );
   }
 
@@ -61,17 +63,6 @@ class _HistoryPageState extends State<HistoryPage> {
     historyListBloc.reset();
     hasLoaded = true;
   }
-
-  // Method that creates the content: the fixed header and the list of charging sessions.
-  Widget _createContent() => ContentContainerCustom(
-    title: AppLocalizations.of(context)!.translate('charging_activity'),
-    subtitle: AppLocalizations.of(context)!.translate('charging_activity_text'),
-    isListView: false,
-    child: StreamBuilder<DateTime>(
-      stream: historyListBloc.refreshDateTimeStream,
-      builder: (BuildContext context, AsyncSnapshot<DateTime> snapshot) => HistoryContent(refreshDateTime: historyListBloc.refreshDateTime)
-    )
-  );
 
   // ***************************************************************************
   // On clicked.

@@ -15,7 +15,7 @@ import 'package:project/src/commons/constants/numbers.dart';
 
 abstract class HelperGetChargingSessions {
   // Method that loads the next page of charging sessions and appends it to the list.
-  static Future<void> getNextPage({ required BuildContext context, required void Function() onFinished }) {
+  static Future<void> getNextPage({ required BuildContext context }) {
     final HistoryListBloc historyListBloc = BlocProvider.historyListBloc(context);
     final StateBloc stateBloc = BlocProvider.stateBloc(context);
 
@@ -37,9 +37,7 @@ abstract class HelperGetChargingSessions {
         historyListBloc.changePage(historyListBloc.page + 1);
         historyListBloc.changeCount(response[Fields.count]);
         historyListBloc.changeList([ ...historyListBloc.list, ...response[Fields.list] ]);
-        onFinished();
-      },
-      onError: onFinished
+      }
     );
   }
 }

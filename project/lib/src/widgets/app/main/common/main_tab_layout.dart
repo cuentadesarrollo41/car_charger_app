@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 // Bloc.
 import 'package:project/src/bloc/bloc_provider.dart';
@@ -48,6 +47,9 @@ class _MainTabLayoutState extends State<MainTabLayout> with InitialLoadHandler<M
   bool get showLoader => false;
 
   @override
+  bool get useSkeleton => widget.useSkeleton;
+
+  @override
   Widget build(BuildContext context) => Stack(
     children: [
       ContentContainerCustom(
@@ -55,18 +57,7 @@ class _MainTabLayoutState extends State<MainTabLayout> with InitialLoadHandler<M
         subtitle: widget.subtitle,
         titleExtraWidget: widget.titleExtraWidget,
         isListView: false,
-        child: Stack(
-          children: [
-            buildInitialDataContent(),
-
-            Positioned.fill(
-              child: ConditionalWidget(
-                showChild: !hasLoaded && widget.useSkeleton,
-                createChild: _createSkeleton
-              )
-            )
-          ]
-        )
+        child: buildInitialDataContent()
       ),
 
       Positioned.fill(
@@ -78,12 +69,6 @@ class _MainTabLayoutState extends State<MainTabLayout> with InitialLoadHandler<M
         )
       )
     ]
-  );
-
-  // Method that creates the skeleton shown while loading: the same content as once loaded, rendered as a skeleton.
-  Widget _createSkeleton() => Skeletonizer(
-    enabled: true,
-    child: buildContent()
   );
 
   @override
