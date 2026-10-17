@@ -35,7 +35,7 @@ class TextNotFound extends StatelessWidget {
       margin: EdgeInsets.only(top: topMargin),
       child: TextInter(
         text: text ?? AppLocalizations.of(context)!.translate('results_not_found'),
-        fontSize: fontSize ?? screenProperties.fontText,
+        fontSize: fontSize ?? screenProperties.fontSmall,
         color: CustomColors.textPlaceholder,
         fontStyle: FontStyle.italic,
         textAlign: TextAlign.center,

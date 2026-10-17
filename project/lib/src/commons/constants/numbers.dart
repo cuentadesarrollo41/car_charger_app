@@ -1,4 +1,6 @@
 class Numbers {
+  static const int bluetoothAdapterTimeout = 3; // Seconds.
+  static const int bluetoothScanTimeout = 6; // Seconds.
   static const int currentLimitAmpsMax = 32;
   static const int currentLimitAmpsMin = 1;
   static const int defaultLimit25 = 25;
@@ -9,8 +11,11 @@ class Numbers {
   static const int delaySplash = 2800;
   static const int delaySnackBar = 1200;
   static const int durationDialogAnimation = 200; // Milliseconds - same as Flutter's default dialog transition.
+  static const int durationRadarAnimation = 2000; // Milliseconds of a full radar turn.
   static const int firstPage = 1;
   static const int firstYear = 1900;
+  static const int flexPrimaryButton = 3;
+  static const int flexSecondaryButton = 2;
   static const int maxTimeDifferenceRefreshCharger = 300; // Seconds.
   static const int maxTimeDifferenceRefreshUser = 300; // Seconds.
   static const int noLimit = -1;
@@ -29,4 +34,5 @@ class Numbers {
   static const double dialogBlurSigma = 3;
   static const double noValueDouble = -1;
   static const double liquidPullToRefreshAnimSpeed = 4.0;
+  static const double radarScreenWidthFactor = 0.35; // Radar size relative to the screen width.
 }

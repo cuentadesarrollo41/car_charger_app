@@ -8,6 +8,12 @@ import 'package:project/src/bloc/bloc_provider.dart';
 // Models.
 import 'package:project/src/models/generic/screen_properties_model.dart';
 
+// Services.
+import 'package:project/src/services/ble_service.dart';
+
+// Helpers.
+import './helpers/index.dart';
+
 // Commons.
 import 'package:project/src/commons/constants/app_bar_modes.dart';
 import 'package:project/src/commons/constants/custom_colors.dart';
@@ -21,6 +27,7 @@ import 'package:project/src/commons/utils/app_localizations.dart';
 import 'package:project/src/widgets/app/link_charger/tabs/index.dart';
 import 'package:project/src/widgets/generic/app_bar/app_bar_custom.dart';
 import 'package:project/src/widgets/generic/clickables/buttons/button_custom.dart';
+import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_ghost.dart';
 import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/containers/scaffold_custom.dart';
 import 'package:project/src/widgets/generic/loaders/progress_line_custom.dart';
@@ -62,6 +69,7 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
   void dispose() {
     changeTabSubscription?.cancel();
     tabController.dispose();
+    BleService.stopScan();
 
     super.dispose();
   }
@@ -75,21 +83,24 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
       onPopInvokedWithResult: _onPopInvokedWithResult,
       child: StreamBuilder<int>(
         stream: linkChargerBloc.tabStream,
-        builder: (BuildContext context, AsyncSnapshot<int> snapshot) => ScaffoldCustom(
-          scaffoldKey: scaffoldKey,
-          appBar: linkChargerBloc.tab == Tabs.linkConnected
-            ? null
-            : AppBarCustom(
-              scaffoldKey: scaffoldKey,
-              appBarMode: AppBarModes.text,
-              showMenu: false,
-              title: AppLocalizations.of(context)!.translate(Tabs.linkTabsKeys[linkChargerBloc.tab]),
-              onBackButtonClicked: _onBackButtonClicked
-            ),
-          contentIsList: false,
-          showBackgroundLogo: false,
-          safeBottom: true,
-          createBody: _createContent
+        builder: (BuildContext context, AsyncSnapshot<int> tabSnapshot) => StreamBuilder<bool>(
+          stream: linkChargerBloc.isSearchingStream,
+          builder: (BuildContext context, AsyncSnapshot<bool> searchingSnapshot) => ScaffoldCustom(
+            scaffoldKey: scaffoldKey,
+            appBar: linkChargerBloc.tab == Tabs.linkConnected
+              ? null
+              : AppBarCustom(
+                scaffoldKey: scaffoldKey,
+                appBarMode: AppBarModes.text,
+                showMenu: false,
+                title: AppLocalizations.of(context)!.translate(_getTitleKey()),
+                onBackButtonClicked: _onBackButtonClicked
+              ),
+            contentIsList: false,
+            showBackgroundLogo: false,
+            safeBottom: true,
+            createBody: _createContent
+          )
         )
       )
     );
@@ -131,7 +142,7 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
       ),
 
       ConditionalWidget(
-        showChild: Tabs.linkStepTabs.contains(linkChargerBloc.tab) && linkChargerBloc.tab != Tabs.linkConnecting,
+        showChild: _showStep(),
         createChild: _createStep
       ),
 
@@ -182,12 +193,28 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
     )
   );
 
+  // Method that checks whether the select charger tab is searching for chargers.
+  bool _isSearching() => linkChargerBloc.tab == Tabs.linkSelectCharger && linkChargerBloc.isSearching;
+
+  // Method that returns the key of the app bar title of the current tab.
+  String _getTitleKey() => _isSearching() ? 'searching' : Tabs.linkTabsKeys[linkChargerBloc.tab];
+
+  // Method that checks whether the step label must be shown for the current tab.
+  bool _showStep() => Tabs.linkStepTabs.contains(linkChargerBloc.tab)
+    && linkChargerBloc.tab != Tabs.linkConnecting
+    && !_isSearching();
+
   // Method that creates the fixed bottom buttons of the current tab.
   Widget _createButtons() {
+    if (_isSearching()) {
+      return const SizedBox.shrink();
+    }
+
     final Widget buttons;
 
     switch (linkChargerBloc.tab) {
       case Tabs.linkStart: buttons = _createStartButton(); break;
+      case Tabs.linkSelectCharger: buttons = _createChargerSelectionButtons(); break;
       default: return const SizedBox.shrink();
     }
 
@@ -209,17 +236,66 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
     onClicked: _onStartButtonClicked
   );
 
+  // Method that creates the charger selection buttons.
+  Widget _createChargerSelectionButtons() => StreamBuilder<String>(
+    stream: linkChargerBloc.selectedChargerIdStream,
+    builder: (BuildContext context, AsyncSnapshot<String> snapshot) => _createBackAndPrimaryButtons(
+      'continue',
+      (snapshot.data ?? linkChargerBloc.selectedChargerId).isNotEmpty,
+      _onContinueButtonClicked
+    )
+  );
+
+  // Method that creates the back button and the primary button of the tab.
+  Widget _createBackAndPrimaryButtons(String textKey, bool isEnabled, void Function() onClicked) => Row(
+    children: [
+      Expanded(
+        flex: Numbers.flexSecondaryButton,
+        child: ButtonColoredGhost(
+          text: AppLocalizations.of(context)!.translate('back'),
+          fontSize: screenProperties.fontExtraSmall,
+          mainAxisSize: MainAxisSize.max,
+          onClicked: _onBackButtonClicked
+        )
+      ),
+      const SizedBox(width: Sizes.margin12),
+
+      Expanded(
+        flex: Numbers.flexPrimaryButton,
+        child: _createPrimaryButton(textKey, isEnabled, onClicked)
+      )
+    ]
+  );
+
+  // Method that creates the primary button of the tab, which stays disabled while it is not allowed.
+  Widget _createPrimaryButton(String textKey, bool isEnabled, void Function() onClicked) => ButtonCustom(
+    text: AppLocalizations.of(context)!.translate(textKey),
+    fontSize: screenProperties.fontExtraSmall,
+    backgroundColor: isEnabled ? CustomColors.lime : CustomColors.lime36,
+    borderColor: isEnabled ? CustomColors.lime : CustomColors.lime36,
+    overlayColor: isEnabled ? CustomColors.lime80 : CustomColors.lime36,
+    overlayBorderColor: isEnabled ? CustomColors.lime80 : CustomColors.lime36,
+    onClicked: isEnabled ? onClicked : null
+  );
+
   // ***************************************************************************
   // On clicked.
   // ***************************************************************************
   // Method that is called when the user clicks the start button.
-  void _onStartButtonClicked() => linkChargerBloc.changeTab(Tabs.linkSelectCharger);
+  void _onStartButtonClicked() => HelperBluetooth.searchChargers(context: context);
+
+  // Method that is called when the user clicks the continue button.
+  void _onContinueButtonClicked() => linkChargerBloc.changeTab(Tabs.linkSelectNetwork);
 
   // Method that is called when the user clicks the back button.
   void _onBackButtonClicked() {
     if (linkChargerBloc.tab == Tabs.linkStart || linkChargerBloc.tab == Tabs.linkConnected) {
       Navigator.pop(context);
     } else {
+      if (linkChargerBloc.tab == Tabs.linkSelectCharger) {
+        BleService.stopScan();
+      }
+
       linkChargerBloc.changeTab(Tabs.linkStart);
     }
   }

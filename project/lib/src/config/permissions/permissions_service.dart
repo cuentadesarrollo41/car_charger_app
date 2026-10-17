@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Helpers.
+import 'package:project/src/config/permissions/helpers/permission_bluetooth.dart';
 import 'package:project/src/config/permissions/helpers/permission_camera.dart';
 import 'package:project/src/config/permissions/helpers/permission_storage.dart';
 import 'package:project/src/config/permissions/helpers/request_permissions.dart';
@@ -16,6 +17,8 @@ abstract class PermissionsService {
   static RequestPermissionManager requestPermissionManager({ required PermissionTypes permissionType, required void Function()? askForPermission, required void Function()? onPermissionDenied, required void Function()? onPermissionPermanentlyDenied, required void Function()? onPermissionGranted })
     => RequestPermissionManager(permissionType).askForPermission(askForPermission).onPermissionDenied(onPermissionDenied).onPermissionPermanentlyDenied(onPermissionPermanentlyDenied).onPermissionGranted(onPermissionGranted);
 
+  static Future<String> requestBluetoothPermission() => PermissionBluetooth.request();
+  static Future<bool> openSettings() => openAppSettings();
   static Future<bool> checkStoragePermission(BuildContext context) => PermissionStorage.check(context: context);
   static Future<bool> checkCameraPermission(BuildContext context) => PermissionCamera.check(context: context);
   static Future<bool> requestPermissions(List<Permission> permissionsToCheck) => RequestPermissions.run(permissionsToCheck);
