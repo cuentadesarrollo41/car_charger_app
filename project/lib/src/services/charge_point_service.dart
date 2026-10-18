@@ -9,6 +9,16 @@ import 'package:project/src/commons/constants/backend.dart';
 import 'package:project/src/commons/constants/fields.dart';
 
 abstract class ChargePointService {
+  // Method that registers a charger for the user.
+  static Future<Map<String, dynamic>> create({ required String serialNumber, required String networkName, required String language, required String token }) => ApiService.requestJson(
+    method: Backend.post,
+    endpoint: Backend.createChargePoint,
+    language: language,
+    token: token,
+    body: { Fields.serialNumber: serialNumber, Fields.networkName: networkName },
+    mapData: (Map<String, dynamic> data) => { Fields.item: ChargerModel.fromJson(data[Fields.charger] ?? {}) }
+  );
+
   // Method that gets a charger.
   static Future<Map<String, dynamic>> getOne({ required String id, required String language, required String token }) => ApiService.requestJson(
     method: Backend.get,

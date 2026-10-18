@@ -1,6 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 
 // Models.
+import 'package:project/src/models/charger_model.dart';
 import 'package:project/src/models/link_charger/bluetooth_charger_model.dart';
 import 'package:project/src/models/link_charger/wifi_network_model.dart';
 
@@ -22,6 +23,7 @@ class LinkChargerBloc {
   final _isOtherNetworkController = BehaviorSubject<bool>();
   final _otherNetworkNameController = BehaviorSubject<String>();
   final _networkPasswordController = BehaviorSubject<String>();
+  final _linkedChargerController = BehaviorSubject<ChargerModel>();
 
   // Get values from Stream.
   Stream<int> get tabStream => _tabController.stream;
@@ -37,6 +39,7 @@ class LinkChargerBloc {
   Stream<bool> get isOtherNetworkStream => _isOtherNetworkController.stream;
   Stream<String> get otherNetworkNameStream => _otherNetworkNameController.stream;
   Stream<String> get networkPasswordStream => _networkPasswordController.stream;
+  Stream<ChargerModel> get linkedChargerStream => _linkedChargerController.stream;
 
   // Merged streams: they emit whenever any of their values changes, so a single StreamBuilder can rebuild a widget that depends on several values. They are broadcast, so several StreamBuilders (or the same one recreated) can listen to them.
   late final Stream<void> pageChangesStream = Rx.merge<void>([ tabStream, isSearchingStream ]).asBroadcastStream();
@@ -63,6 +66,7 @@ class LinkChargerBloc {
   Function(bool) get changeIsOtherNetwork => _isOtherNetworkController.sink.add;
   Function(String) get changeOtherNetworkName => _otherNetworkNameController.sink.add;
   Function(String) get changeNetworkPassword => _networkPasswordController.sink.add;
+  Function(ChargerModel) get changeLinkedCharger => _linkedChargerController.sink.add;
 
   // Get last values of the streams.
   int get tab => _tabController.value;
@@ -78,6 +82,7 @@ class LinkChargerBloc {
   bool get isOtherNetwork => _isOtherNetworkController.value;
   String get otherNetworkName => _otherNetworkNameController.value;
   String get networkPassword => _networkPasswordController.value;
+  ChargerModel get linkedCharger => _linkedChargerController.value;
 
   // Get the ssid of the network chosen in the select network tab.
   String get networkSsid => isOtherNetwork ? otherNetworkName.trim() : selectedNetworkSsid;
@@ -124,6 +129,7 @@ class LinkChargerBloc {
     _isOtherNetworkController.close();
     _otherNetworkNameController.close();
     _networkPasswordController.close();
+    _linkedChargerController.close();
   }
 
   // Reset fields.
@@ -141,6 +147,7 @@ class LinkChargerBloc {
     changeIsOtherNetwork(false);
     changeOtherNetworkName(Strings.emptyString);
     changeNetworkPassword(Strings.emptyString);
+    changeLinkedCharger(ChargerModel());
   }
 
   // Check if bloc is initialized.

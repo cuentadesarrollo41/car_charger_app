@@ -287,15 +287,19 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
   // Method that is called when the user clicks the continue button.
   void _onContinueButtonClicked() => HelperWifi.searchNetworks(context: context);
 
-  // Method that is called when the user clicks the connect button. The API call and the Bluetooth configuration will be added with the connecting tab.
+  // Method that is called when the user clicks the connect button: registers the charger and starts its configuration.
   void _onConnectButtonClicked() {
     FocusScope.of(context).unfocus();
-
-    linkChargerBloc.changeTab(Tabs.linkConnecting);
+    HelperConnectCharger.connect(context: context);
   }
 
   // Method that is called when the user clicks the back button.
   void _onBackButtonClicked() {
+    // While the charger is being connected nothing is done: the process must not be left half done. On error the helper goes back to the select network tab by itself. This applies to the app bar back and to the system back.
+    if (linkChargerBloc.tab == Tabs.linkConnecting) {
+      return;
+    }
+
     if (linkChargerBloc.tab == Tabs.linkStart || linkChargerBloc.tab == Tabs.linkConnected) {
       Navigator.pop(context);
     } else if (linkChargerBloc.tab == Tabs.linkSelectNetwork) {

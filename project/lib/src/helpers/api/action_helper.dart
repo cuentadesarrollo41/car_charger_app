@@ -24,7 +24,7 @@ abstract class ActionHelper {
     String successTitleKey = 'information',
     void Function(Map<String, dynamic> response)? onSuccess,
     void Function()? onError,
-    Set<int> successCodes = const {Backend.code200},
+    Set<int> successCodes = const { Backend.code200, Backend.code201 },
     bool showDialog = true,
     bool checkConnection = true,
     bool useSnackBar = false,
