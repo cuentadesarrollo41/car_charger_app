@@ -45,16 +45,28 @@ abstract class HelperConnectCharger {
       ),
       onSuccess: (Map<String, dynamic> response) {
         linkChargerBloc.changeLinkedCharger(response[Fields.item]);
+        linkChargerBloc.changeChargerProvisioning(response[Fields.provisioning]);
         _configureCharger(context: context);
       },
       onError: () => linkChargerBloc.changeTab(Tabs.linkSelectNetwork)
     );
   }
 
+  // Method that finishes the link flow: closes the page and shows the Home tab, refreshing the main tabs so they show the new charger.
+  static void finish({ required BuildContext context }) {
+    final MainBloc mainBloc = BlocProvider.mainBloc(context);
+
+    Navigator.pop(context);
+
+    mainBloc.changeRefreshDateTime(DateTime.now());
+    mainBloc.changeTab(Tabs.home);
+  }
+
   // Method that configures the charger through Bluetooth with the registered charger data and the Wi-Fi credentials.
   // TODO: pending steps: 1) connect to selectedCharger.device; 2) subscribe to the charger response characteristic;
-  // 3) write the configuration (fields pending: data of linkedCharger, networkSsid, networkPassword); 4) wait for the charger result with a timeout;
-  // 5) disconnect; 6) on success call _onChargerConfigured, on error show the message and go back to Tabs.linkSelectNetwork.
+  // 3) write the configuration: chargerProvisioning (authorizationKey, ocppHost, ocppPort, ocppPath) + networkSsid + networkPassword (message format pending);
+  // 4) wait for the charger result with a timeout; 5) disconnect;
+  // 6) on success call _onChargerConfigured, on error show the message and go back to Tabs.linkSelectNetwork.
   // The Bluetooth connection is not used yet: its license for commercial use is pending a decision.
   static Future<void> _configureCharger({ required BuildContext context }) async {
     if (context.mounted) {

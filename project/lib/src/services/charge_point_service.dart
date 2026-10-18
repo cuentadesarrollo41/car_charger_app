@@ -3,6 +3,7 @@ import 'package:project/src/services/api_service.dart';
 
 // Models.
 import 'package:project/src/models/charger_model.dart';
+import 'package:project/src/models/link_charger/charger_provisioning_model.dart';
 
 // Commons.
 import 'package:project/src/commons/constants/backend.dart';
@@ -16,7 +17,10 @@ abstract class ChargePointService {
     language: language,
     token: token,
     body: { Fields.serialNumber: serialNumber, Fields.networkName: networkName },
-    mapData: (Map<String, dynamic> data) => { Fields.item: ChargerModel.fromJson(data[Fields.charger] ?? {}) }
+    mapData: (Map<String, dynamic> data) => {
+      Fields.item: ChargerModel.fromJson(data[Fields.charger] ?? {}),
+      Fields.provisioning: ChargerProvisioningModel.fromJson(data)
+    }
   );
 
   // Method that gets a charger.
@@ -40,7 +44,7 @@ abstract class ChargePointService {
 
   // Method that unlinks a charger from the user.
   static Future<Map<String, dynamic>> unlink({ required String id, required String language, required String token }) => ApiService.requestJson(
-    method: Backend.patch,
+    method: Backend.delete,
     endpoint: '${ Backend.unlinkChargePoint }/$id',
     language: language,
     token: token

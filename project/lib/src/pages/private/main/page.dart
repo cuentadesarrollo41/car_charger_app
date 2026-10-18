@@ -53,6 +53,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
     hasLoaded = false;
 
     tabController = TabController(length: Tabs.defaultList.length, vsync: this, initialIndex: Tabs.home);
+    tabController.addListener(_onTabControllerChanged);
     scaffoldKey = GlobalKey<ScaffoldState>();
 
     super.initState();
@@ -61,6 +62,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
   @override
   void dispose() {
     changeTabSubscription?.cancel();
+    tabController.removeListener(_onTabControllerChanged);
     tabController.dispose();
 
     super.dispose();
@@ -120,6 +122,15 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
     SchedulerBinding.instance.addPostFrameCallback((Duration timeStamp) => setState(() {}));
   }
 
+  // Method that is called when the tab controller changes: when a swipe ends on another tab, it updates the bloc so the bottom tabs follow it.
+  void _onTabControllerChanged() {
+    if (tabController.indexIsChanging || tabController.index == mainBloc.tab) {
+      return;
+    }
+
+    mainBloc.changeTab(tabController.index);
+  }
+
   // Method that creates the content.
   Widget _createContent() => Column(
     mainAxisAlignment: MainAxisAlignment.start,
@@ -132,7 +143,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
 
   // Method that creates the tabs content.
   Widget _createTabsContent() => TabBarView(
-    physics: const NeverScrollableScrollPhysics(),
+    physics: const BouncingScrollPhysics(),
     controller: tabController,
     children: [
       TabHome(refreshDateTime: mainBloc.refreshDateTime),

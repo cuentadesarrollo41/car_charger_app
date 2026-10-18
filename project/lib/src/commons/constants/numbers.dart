@@ -36,4 +36,5 @@ class Numbers {
   static const double noValueDouble = -1;
   static const double liquidPullToRefreshAnimSpeed = 4.0;
   static const double radarScreenWidthFactor = 0.35; // Radar size relative to the screen width.
+  static const double successIconScreenWidthFactor = 0.2; // Success icon size relative to the screen width.
 }

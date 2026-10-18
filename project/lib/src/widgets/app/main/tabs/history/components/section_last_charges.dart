@@ -24,6 +24,7 @@ import 'package:project/src/widgets/app/common/modal_bottom_sheet_charging_sessi
 import 'package:project/src/widgets/generic/clickables/text_clickable.dart';
 import 'package:project/src/widgets/generic/loaders/skeleton_custom.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
+import 'package:project/src/widgets/generic/texts/text_not_found.dart';
 
 class SectionLastCharges extends StatefulWidget {
   const SectionLastCharges({
@@ -79,16 +80,22 @@ class _SectionLastChargesState extends State<SectionLastCharges> {
     ]
   );
 
-  // Method that creates the list of charging sessions.
-  Widget _createList() => Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: _getChargingSessions().asMap().entries.map((MapEntry<int, ChargingSessionModel> entry) => ItemChargingSession(
-      index: entry.key,
-      isLast: false,
-      chargingSession: entry.value,
-      onClicked: () => _onChargingSessionClicked(entry.value)
-    )).toList()
-  );
+  // Method that creates the list of charging sessions, or the not found text when there are none.
+  Widget _createList() {
+    final List<ChargingSessionModel> chargingSessions = _getChargingSessions();
+
+    return chargingSessions.isEmpty
+      ? const TextNotFound()
+      : Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: chargingSessions.asMap().entries.map((MapEntry<int, ChargingSessionModel> entry) => ItemChargingSession(
+          index: entry.key,
+          isLast: false,
+          chargingSession: entry.value,
+          onClicked: () => _onChargingSessionClicked(entry.value)
+        )).toList()
+      );
+  }
 
   // Method that returns the charging sessions to draw: the real ones or, while loading as skeleton with no data yet, placeholder ones.
   List<ChargingSessionModel> _getChargingSessions() => SkeletonCustom.getItems<ChargingSessionModel>(

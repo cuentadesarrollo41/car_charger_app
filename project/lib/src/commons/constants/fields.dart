@@ -1,4 +1,5 @@
 class Fields {
+  static const String authorizationKey = 'authorizationKey';
   static const String bytes = 'bytes';
   static const String callDeletion = 'callDeletion';
   static const String chargePointModel = 'chargePointModel';
@@ -35,10 +36,14 @@ class Fields {
   static const String networkName = 'networkName';
   static const String newPassword = 'newPassword';
   static const String nextChargeDate = 'nextChargeDate';
+  static const String ocppHost = 'ocppHost';
+  static const String ocppPath = 'ocppPath';
+  static const String ocppPort = 'ocppPort';
   static const String oldPassword = 'oldPassword';
   static const String page = 'page';
   static const String password = 'password';
   static const String period = 'period';
+  static const String provisioning = 'provisioning';
   static const String results = 'results';
   static const String searcher = 'searcher';
   static const String selectedChargerId = 'selectedChargerId';

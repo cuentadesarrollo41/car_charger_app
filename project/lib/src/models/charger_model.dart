@@ -2,6 +2,7 @@ import 'dart:convert';
 
 // Commons.
 import 'package:project/src/commons/constants/fields.dart';
+import 'package:project/src/commons/constants/numbers.dart';
 import 'package:project/src/commons/constants/states.dart';
 import 'package:project/src/commons/constants/strings.dart';
 
@@ -35,7 +36,7 @@ class ChargerModel {
     this.firmwareVersion = Strings.emptyString,
     this.networkName = Strings.emptyString,
     this.lastHeartbeat,
-    this.currentLimitAmps = 0,
+    this.currentLimitAmps = Numbers.currentLimitAmpsMax,
     this.nextChargeDate,
     this.state = States.ok,
     DateTime? creationDate,
@@ -55,7 +56,7 @@ class ChargerModel {
     firmwareVersion: json[Fields.firmwareVersion] ?? Strings.emptyString,
     networkName: json[Fields.networkName] ?? Strings.emptyString,
     lastHeartbeat: json[Fields.lastHeartbeat] == null ? null : DateTime.parse(json[Fields.lastHeartbeat]),
-    currentLimitAmps: json[Fields.currentLimitAmps] ?? 0,
+    currentLimitAmps: json[Fields.currentLimitAmps] ?? Numbers.currentLimitAmpsMax,
     nextChargeDate: json[Fields.nextChargeDate] == null ? null : DateTime.parse(json[Fields.nextChargeDate]),
     state: json[Fields.state] ?? States.ok,
     creationDate: json[Fields.creationDate] == null ? DateTime.now() : DateTime.parse(json[Fields.creationDate]),

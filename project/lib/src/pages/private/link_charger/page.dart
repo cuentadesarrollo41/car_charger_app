@@ -295,22 +295,16 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
 
   // Method that is called when the user clicks the back button.
   void _onBackButtonClicked() {
-    // While the charger is being connected nothing is done: the process must not be left half done. On error the helper goes back to the select network tab by itself. This applies to the app bar back and to the system back.
-    if (linkChargerBloc.tab == Tabs.linkConnecting) {
-      return;
-    }
-
-    if (linkChargerBloc.tab == Tabs.linkStart || linkChargerBloc.tab == Tabs.linkConnected) {
-      Navigator.pop(context);
-    } else if (linkChargerBloc.tab == Tabs.linkSelectNetwork) {
-      // The chargers and the selection are kept, so no new scan is started.
-      linkChargerBloc.changeTab(Tabs.linkSelectCharger);
-    } else {
-      if (linkChargerBloc.tab == Tabs.linkSelectCharger) {
+    switch (linkChargerBloc.tab) {
+      case Tabs.linkStart: return Navigator.pop(context);
+      case Tabs.linkConnecting: return;
+      case Tabs.linkConnected: return HelperConnectCharger.finish(context: context);
+      case Tabs.linkSelectNetwork: linkChargerBloc.changeTab(Tabs.linkSelectCharger); return;
+      case Tabs.linkSelectCharger:
         BleService.stopScan();
-      }
-
-      linkChargerBloc.changeTab(Tabs.linkStart);
+        linkChargerBloc.changeTab(Tabs.linkStart);
+        return;
+      default: break;
     }
   }
 
