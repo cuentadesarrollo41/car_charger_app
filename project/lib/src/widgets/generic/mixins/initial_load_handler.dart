@@ -14,7 +14,6 @@ import 'package:project/src/commons/utils/utils.dart';
 import 'package:project/src/pages/index.dart';
 
 // Widgets.
-import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/future_loading_data_content.dart';
 import 'package:project/src/widgets/generic/loaders/skeleton_custom.dart';
 
@@ -161,11 +160,8 @@ mixin InitialLoadHandler<T extends RefreshableWidget> on State<T> {
       children: [
         content,
 
-        ConditionalWidget(
-          showChild: !hasLoaded,
-          createChild: () => SkeletonCustom(
-            child: buildContent()
-          )
+        if (!hasLoaded) SkeletonCustom(
+          child: buildContent()
         )
       ]
     );

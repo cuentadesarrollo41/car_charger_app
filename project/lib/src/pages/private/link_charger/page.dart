@@ -28,7 +28,6 @@ import 'package:project/src/widgets/app/link_charger/tabs/index.dart';
 import 'package:project/src/widgets/generic/app_bar/app_bar_custom.dart';
 import 'package:project/src/widgets/generic/clickables/buttons/button_custom.dart';
 import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_ghost.dart';
-import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/containers/scaffold_custom.dart';
 import 'package:project/src/widgets/generic/loaders/progress_line_custom.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
@@ -81,26 +80,23 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: _onPopInvokedWithResult,
-      child: StreamBuilder<int>(
-        stream: linkChargerBloc.tabStream,
-        builder: (BuildContext context, AsyncSnapshot<int> tabSnapshot) => StreamBuilder<bool>(
-          stream: linkChargerBloc.isSearchingStream,
-          builder: (BuildContext context, AsyncSnapshot<bool> searchingSnapshot) => ScaffoldCustom(
-            scaffoldKey: scaffoldKey,
-            appBar: linkChargerBloc.tab == Tabs.linkConnected
-              ? null
-              : AppBarCustom(
-                scaffoldKey: scaffoldKey,
-                appBarMode: AppBarModes.text,
-                showMenu: false,
-                title: AppLocalizations.of(context)!.translate(_getTitleKey()),
-                onBackButtonClicked: _onBackButtonClicked
-              ),
-            contentIsList: false,
-            showBackgroundLogo: false,
-            safeBottom: true,
-            createBody: _createContent
-          )
+      child: StreamBuilder<void>(
+        stream: linkChargerBloc.pageChangesStream,
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) => ScaffoldCustom(
+          scaffoldKey: scaffoldKey,
+          appBar: linkChargerBloc.tab == Tabs.linkConnected
+            ? null
+            : AppBarCustom(
+              scaffoldKey: scaffoldKey,
+              appBarMode: AppBarModes.text,
+              showMenu: false,
+              title: AppLocalizations.of(context)!.translate(_getTitleKey()),
+              onBackButtonClicked: _onBackButtonClicked
+            ),
+          contentIsList: false,
+          showBackgroundLogo: false,
+          safeBottom: true,
+          createBody: _createContent
         )
       )
     );
@@ -136,15 +132,8 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      ConditionalWidget(
-        showChild: linkChargerBloc.tab != Tabs.linkConnected,
-        createChild: _createProgressLine
-      ),
-
-      ConditionalWidget(
-        showChild: _showStep(),
-        createChild: _createStep
-      ),
+      if (linkChargerBloc.tab != Tabs.linkConnected) _createProgressLine(),
+      if (_showStep()) _createStep(),
 
       Expanded(
         child: TabBarView(
@@ -215,6 +204,7 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
     switch (linkChargerBloc.tab) {
       case Tabs.linkStart: buttons = _createStartButton(); break;
       case Tabs.linkSelectCharger: buttons = _createChargerSelectionButtons(); break;
+      case Tabs.linkSelectNetwork: buttons = _createNetworkSelectionButtons(); break;
       default: return const SizedBox.shrink();
     }
 
@@ -241,8 +231,18 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
     stream: linkChargerBloc.selectedChargerIdStream,
     builder: (BuildContext context, AsyncSnapshot<String> snapshot) => _createBackAndPrimaryButtons(
       'continue',
-      (snapshot.data ?? linkChargerBloc.selectedChargerId).isNotEmpty,
+      linkChargerBloc.selectedChargerId.isNotEmpty,
       _onContinueButtonClicked
+    )
+  );
+
+  // Method that creates the network selection buttons.
+  Widget _createNetworkSelectionButtons() => StreamBuilder<bool>(
+    stream: linkChargerBloc.canConnectStream,
+    builder: (BuildContext context, AsyncSnapshot<bool> snapshot) => _createBackAndPrimaryButtons(
+      'connect',
+      snapshot.data ?? linkChargerBloc.canConnect,
+      _onConnectButtonClicked
     )
   );
 
@@ -285,12 +285,22 @@ class _LinkChargerPageState extends State<LinkChargerPage> with SingleTickerProv
   void _onStartButtonClicked() => HelperBluetooth.searchChargers(context: context);
 
   // Method that is called when the user clicks the continue button.
-  void _onContinueButtonClicked() => linkChargerBloc.changeTab(Tabs.linkSelectNetwork);
+  void _onContinueButtonClicked() => HelperWifi.searchNetworks(context: context);
+
+  // Method that is called when the user clicks the connect button. The API call and the Bluetooth configuration will be added with the connecting tab.
+  void _onConnectButtonClicked() {
+    FocusScope.of(context).unfocus();
+
+    linkChargerBloc.changeTab(Tabs.linkConnecting);
+  }
 
   // Method that is called when the user clicks the back button.
   void _onBackButtonClicked() {
     if (linkChargerBloc.tab == Tabs.linkStart || linkChargerBloc.tab == Tabs.linkConnected) {
       Navigator.pop(context);
+    } else if (linkChargerBloc.tab == Tabs.linkSelectNetwork) {
+      // The chargers and the selection are kept, so no new scan is started.
+      linkChargerBloc.changeTab(Tabs.linkSelectCharger);
     } else {
       if (linkChargerBloc.tab == Tabs.linkSelectCharger) {
         BleService.stopScan();

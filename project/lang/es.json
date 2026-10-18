@@ -35,6 +35,8 @@
   "charger_link_step": "Paso {--&!||.;.||!&--} de {--&!||.;.||!&--}",
   "charger_link_title": "Añadir cargador",
   "charger_link_wifi": "Conecta a Wi-Fi",
+  "charger_link_wifi_name": "Nombre de la red",
+  "charger_link_wifi_other": "Otra red",
   "charger_link_wifi_password": "Contraseña de {--&!||.;.||!&--}",
   "charger_link_wifi_text": "Elige la red a la que se conectará tu cargador.",
   "charger_name": "Nombre del cargador",
@@ -179,6 +181,8 @@
   "error_forgot_password_email_format_validation": "Introduce un email válido.",
   "error_generic": "Se ha producido un error",
   "error_generic_text": "Hubo un problema al conectar con el servidor. Inténtalo de nuevo.",
+  "error_location_off": "Ubicación desactivada",
+  "error_location_off_text": "Activa la ubicación del móvil para buscar las redes Wi-Fi.",
   "error_login_password_validation": "Introduce la contraseña.",
   "error_login_password_format_validation": "La contraseña debe tener al menos {--&!||.;.||!&--} caracteres.",
   "error_login_email_validation": "Introduce el email.",
@@ -195,5 +199,6 @@
   "error_unauthorized": "Sesión expirada o acceso no autorizado",
   "error_unauthorized_text": "Tu sesión ha expirado o no tienes permiso para acceder a esta sección. Vuelve a iniciar sesión.",
   "error_validation": "Error de validación",
+  "error_wifi_permission_text": "Permite el acceso para buscar las redes Wi-Fi cercanas.",
   "": ""
 }

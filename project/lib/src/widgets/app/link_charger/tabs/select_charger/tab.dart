@@ -18,10 +18,6 @@ import 'package:project/src/commons/utils/app_localizations.dart';
 
 // Widgets.
 import 'package:project/src/widgets/app/link_charger/common/index.dart';
-import 'package:project/src/widgets/app/link_charger/tabs/select_charger/components/index.dart';
-import 'package:project/src/widgets/generic/clickables/ink_well_custom.dart';
-import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
-import 'package:project/src/widgets/generic/texts/icon_text.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
 import 'package:project/src/widgets/generic/texts/text_not_found.dart';
 
@@ -47,83 +43,54 @@ class _TabLinkChargerSelectChargerState extends State<TabLinkChargerSelectCharge
   }
 
   @override
-  Widget build(BuildContext context) => StreamBuilder<bool>(
-    stream: linkChargerBloc.isSearchingStream,
-    builder: (BuildContext context, AsyncSnapshot<bool> snapshot) => (snapshot.data ?? linkChargerBloc.isSearching)
+  Widget build(BuildContext context) => StreamBuilder<void>(
+    stream: linkChargerBloc.selectChargerChangesStream,
+    builder: (BuildContext context, AsyncSnapshot<void> snapshot) => linkChargerBloc.isSearching
       ? LinkChargerWaiting(
         title: AppLocalizations.of(context)!.translate('charger_link_searching'),
         text: AppLocalizations.of(context)!.translate('charger_link_searching_text')
       )
-      : _createList()
-  );
-
-  // Method that creates the list of found chargers.
-  Widget _createList() => StreamBuilder<List<BluetoothChargerModel>>(
-    stream: linkChargerBloc.chargersStream,
-    builder: (BuildContext context, AsyncSnapshot<List<BluetoothChargerModel>> snapshot) => StreamBuilder<String>(
-      stream: linkChargerBloc.selectedChargerIdStream,
-      builder: (BuildContext context, AsyncSnapshot<String> selectedSnapshot) => LinkChargerTabLayout(
-        child: _createContent(
-          snapshot.data ?? linkChargerBloc.chargers,
-          selectedSnapshot.data ?? linkChargerBloc.selectedChargerId
-        )
-      )
-    )
+      : _createContent()
   );
 
   // Method that creates the content of the list: the results and the search again link.
-  Widget _createContent(List<BluetoothChargerModel> chargers, String selectedChargerId) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      ConditionalWidget(
-        showChild: chargers.isEmpty,
-        createChild: () => const TextNotFound(topMargin: Sizes.margin20),
-        createFallbackChild: () => _createChargers(chargers, selectedChargerId)
-      ),
-
-      const SizedBox(height: Sizes.margin16),
-      _createSearchAgain()
-    ]
+  Widget _createContent() => LinkChargerTabLayout(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: Sizes.margin16,
+      children: [
+        linkChargerBloc.chargers.isEmpty
+          ? const TextNotFound(topMargin: Sizes.margin20)
+          : _createChargers(),
+        LinkChargerSearchAgain(onClicked: _onSearchAgainClicked)
+      ]
+    ),
   );
 
-  // Method that creates the text and the items of the found chargers.
-  Widget _createChargers(List<BluetoothChargerModel> chargers, String selectedChargerId) => Column(
+  // Method that creates the items of the found chargers.
+  Widget _createChargers() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
+    spacing: Sizes.margin16,
     children: [
-      TextInter(
-        text: AppLocalizations.of(context)!.translate('charger_link_select_text'),
-        fontSize: screenProperties.fontSmall,
-        color: CustomColors.textSecondary,
-        fontWeight: FontWeight.w400
-      ),
-      const SizedBox(height: Sizes.margin16),
-
-      ...chargers.asMap().entries.map((MapEntry<int, BluetoothChargerModel> entry) => ItemBluetoothCharger(
+      _createDescription(),
+      ...linkChargerBloc.chargers.asMap().entries.map((MapEntry<int, BluetoothChargerModel> entry) => ItemLinkChargerOption(
         index: entry.key,
-        isLast: entry.key == chargers.length - 1,
-        isSelected: entry.value.id == selectedChargerId,
-        charger: entry.value,
+        isLast: false,
+        iconData: FontAwesomeIcons.plug,
+        title: entry.value.name,
+        subtitle: entry.value.model,
+        isSelected: entry.value.id == linkChargerBloc.selectedChargerId,
         onClicked: () => _onChargerClicked(entry.value)
       ))
     ]
   );
 
-  // Method that creates the link that starts a new search.
-  Widget _createSearchAgain() => Center(
-    child: InkWellCustom(
-      onTap: _onSearchAgainClicked,
-      child: Padding(
-        padding: const EdgeInsets.all(Sizes.margin8),
-        child: IconText(
-          iconData: FontAwesomeIcons.arrowRotateRight,
-          iconSize: Sizes.font14,
-          text: AppLocalizations.of(context)!.translate('charger_link_search_again'),
-          fontSize: screenProperties.fontExtraSmall,
-          fontWeight: FontWeight.w700,
-          spacing: Sizes.margin8
-        )
-      )
-    )
+  // Method that creates the chargers description.
+  Widget _createDescription() => TextInter(
+    text: AppLocalizations.of(context)!.translate('charger_link_select_text'),
+    fontSize: screenProperties.fontSmall,
+    color: CustomColors.textSecondary,
+    fontWeight: FontWeight.w400
   );
 
   // ***************************************************************************

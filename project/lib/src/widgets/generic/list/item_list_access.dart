@@ -10,7 +10,6 @@ import 'package:project/src/commons/constants/sizes.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/containers/card/card_container.dart';
-import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/list/item_list.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
@@ -107,10 +106,7 @@ class _ItemListAccessState extends State<ItemListAccess> {
       crossAxisAlignment: CrossAxisAlignment.center,
       spacing: Sizes.margin12,
       children: [
-        ConditionalWidget(
-          showChild: widget.leftWidget != null || widget.leftIconData != null,
-          createChild: () => widget.leftWidget ?? _createIcon(widget.leftIconData!, widget.primaryColor, Sizes.font16)
-        ),
+        if (widget.leftWidget != null || widget.leftIconData != null) widget.leftWidget ?? _createIcon(widget.leftIconData!, widget.primaryColor, Sizes.font16),
 
         Expanded(child: widget.content ?? _createText()),
 

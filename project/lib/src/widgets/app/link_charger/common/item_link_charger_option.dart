@@ -3,39 +3,42 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Models.
 import 'package:project/src/models/generic/screen_properties_model.dart';
-import 'package:project/src/models/link_charger/bluetooth_charger_model.dart';
 
 // Commons.
 import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/sizes.dart';
+import 'package:project/src/commons/constants/strings.dart';
 
 // Widgets.
-import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/list/item_list_access.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
-class ItemBluetoothCharger extends StatefulWidget {
+class ItemLinkChargerOption extends StatefulWidget {
   final int index;
   final bool isLast;
+  final FaIconData iconData;
+  final String title;
+  final String subtitle;
   final bool isSelected;
-  final BluetoothChargerModel charger;
 
   final void Function() onClicked;
 
-  const ItemBluetoothCharger({
+  const ItemLinkChargerOption({
     required this.index,
     required this.isLast,
+    required this.iconData,
+    required this.title,
+    this.subtitle = Strings.emptyString,
     required this.isSelected,
-    required this.charger,
     required this.onClicked,
     super.key
   });
 
   @override
-  State<ItemBluetoothCharger> createState() => _ItemBluetoothChargerState();
+  State<ItemLinkChargerOption> createState() => _ItemLinkChargerOptionState();
 }
 
-class _ItemBluetoothChargerState extends State<ItemBluetoothCharger> {
+class _ItemLinkChargerOptionState extends State<ItemLinkChargerOption> {
   late ScreenPropertiesModel screenProperties;
 
   @override
@@ -46,13 +49,12 @@ class _ItemBluetoothChargerState extends State<ItemBluetoothCharger> {
       index: widget.index,
       isLast: widget.isLast,
       isSelected: false,
-      text: widget.charger.name,
-      leftWidget: _createIcon(),
+      text: widget.title,
+      leftWidget: _createLeftIcon(),
       content: _createContent(),
-      rightWidget: ConditionalWidget(
-        showChild: widget.isSelected,
-        createChild: () => const FaIcon(FontAwesomeIcons.solidCircleCheck, color: CustomColors.lime, size: Sizes.font18)
-      ),
+      rightWidget: widget.isSelected
+        ? _createRightIcon()
+        : null,
       onItemClicked: widget.onClicked
     );
   }
@@ -67,16 +69,22 @@ class _ItemBluetoothChargerState extends State<ItemBluetoothCharger> {
     crossAxisAlignment: CrossAxisAlignment.start,
     spacing: Sizes.margin4,
     children: [
-      TextInter(text: widget.charger.name, fontSize: screenProperties.fontSmall, fontWeight: FontWeight.w700),
-      ConditionalWidget(
-        showChild: widget.charger.model.isNotEmpty,
-        createChild: () => TextInter(text: widget.charger.model, fontSize: screenProperties.fontSmallest, color: CustomColors.textSecondary)
+      TextInter(
+        text: widget.title,
+        fontSize: screenProperties.fontSmall,
+        fontWeight: FontWeight.w700
+      ),
+
+      if (widget.subtitle.isNotEmpty) TextInter(
+        text: widget.subtitle,
+        fontSize: screenProperties.fontSmallest,
+        color: CustomColors.textSecondary
       )
     ]
   );
 
-  // Method that creates the icon.
-  Widget _createIcon() => Container(
+  // Method that creates the left icon.
+  Widget _createLeftIcon() => Container(
     width: Sizes.margin40,
     height: Sizes.margin40,
     alignment: Alignment.center,
@@ -84,6 +92,17 @@ class _ItemBluetoothChargerState extends State<ItemBluetoothCharger> {
       color: CustomColors.lime12,
       borderRadius: BorderRadius.circular(Sizes.borderRadius10)
     ),
-    child: const FaIcon(FontAwesomeIcons.plug, color: CustomColors.lime, size: Sizes.font16)
+    child: FaIcon(
+      widget.iconData,
+      color: CustomColors.lime,
+      size: Sizes.font16
+    )
+  );
+
+  // Method that creates the right icon.
+  Widget _createRightIcon() => FaIcon(
+    FontAwesomeIcons.solidCircleCheck,
+    color: CustomColors.lime,
+    size: Sizes.font18
   );
 }

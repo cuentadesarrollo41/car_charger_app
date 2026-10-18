@@ -6,7 +6,6 @@ import 'package:project/src/commons/constants/custom_colors.dart';
 import 'package:project/src/commons/constants/numbers.dart';
 
 // Widgets.
-import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/scrollable/page_indicators.dart';
 
 class PageViewCustom extends StatefulWidget {
@@ -92,17 +91,14 @@ class _PageViewCustomState extends State<PageViewCustom> {
           ),
         ),
 
-        ConditionalWidget(
-          showChild: widget.pageIndicatorHeight > 0 && widget.pageIndicatorWidth > 0,
-          createChild: () => PageIndicators(
-            currentPage: page,
-            totalPages: widget.slides.length,
-            pageIndicatorWidth: widget.pageIndicatorWidth,
-            pageIndicatorHeight: widget.pageIndicatorHeight,
-            activeIndicatorColor: widget.activeIndicatorColor,
-            inactiveIndicatorColor: widget.inactiveIndicatorColor,
-            maxVisibleIndicators: 5,
-          )
+        if (widget.pageIndicatorHeight > 0 && widget.pageIndicatorWidth > 0) PageIndicators(
+          currentPage: page,
+          totalPages: widget.slides.length,
+          pageIndicatorWidth: widget.pageIndicatorWidth,
+          pageIndicatorHeight: widget.pageIndicatorHeight,
+          activeIndicatorColor: widget.activeIndicatorColor,
+          inactiveIndicatorColor: widget.inactiveIndicatorColor,
+          maxVisibleIndicators: 5,
         )
       ],
     );

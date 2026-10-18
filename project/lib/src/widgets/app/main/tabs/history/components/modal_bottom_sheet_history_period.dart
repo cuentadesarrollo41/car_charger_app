@@ -16,7 +16,6 @@ import 'package:project/src/commons/utils/app_localizations.dart';
 
 // Widgets.
 import 'package:project/src/widgets/generic/clickables/buttons/colored/button_colored_ghost.dart';
-import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/modal_bottom_sheets/modal_bottom_sheet_custom.dart';
 import 'package:project/src/widgets/generic/texts/text_inter.dart';
 
@@ -89,13 +88,10 @@ class _ModalBottomSheetHistoryPeriodState extends State<ModalBottomSheetHistoryP
           fontSize: screenProperties.fontSmall
         ),
 
-        ConditionalWidget(
-          showChild: period == widget.selectedPeriod,
-          createChild: () => const FaIcon(
-            FontAwesomeIcons.solidCircleCheck,
-            color: CustomColors.lime,
-            size: Sizes.font18
-          )
+        if (period == widget.selectedPeriod) const FaIcon(
+          FontAwesomeIcons.solidCircleCheck,
+          color: CustomColors.lime,
+          size: Sizes.font18
         )
       ]
     )

@@ -11,7 +11,6 @@ import 'package:project/src/commons/constants/strings.dart';
 
 // Widgets.
 import 'package:project/src/widgets/app/main/common/container_charger_not_linked.dart';
-import 'package:project/src/widgets/generic/containers/conditional_widget.dart';
 import 'package:project/src/widgets/generic/containers/content_container_custom.dart';
 import 'package:project/src/widgets/generic/mixins/initial_load_handler.dart';
 import 'package:project/src/widgets/generic/texts/section_introduction_texts.dart';
@@ -64,12 +63,9 @@ class _MainTabLayoutState extends State<MainTabLayout> with InitialLoadHandler<M
         child: buildInitialDataContent()
       ),
 
-      Positioned.fill(
-        child: ConditionalWidget(
-          showChild: !hasLoaded && !widget.useSkeleton,
-          createChild: () => const Center(
-            child: CircularProgressIndicator(color: CustomColors.lime)
-          )
+      if (!hasLoaded && !widget.useSkeleton) Positioned.fill(
+        child: const Center(
+          child: CircularProgressIndicator(color: CustomColors.lime)
         )
       )
     ]
@@ -97,13 +93,12 @@ class _MainTabLayoutState extends State<MainTabLayout> with InitialLoadHandler<M
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ConditionalWidget(showChild: widget.scrollHeader, createChild: _createHeader),
+        if (widget.scrollHeader) _createHeader(),
 
-        ConditionalWidget(
-          showChild: !hasLoaded || stateBloc.session.selectedChargerId.isNotEmpty,
-          createChild: widget.createContent,
-          createFallbackChild: () => const ContainerChargerNotLinked()
-        ),
+        !hasLoaded || stateBloc.session.selectedChargerId.isNotEmpty
+          ? widget.createContent()
+          : const ContainerChargerNotLinked(),
+
         const SizedBox(height: Sizes.defaultBottomMargin)
       ]
     )

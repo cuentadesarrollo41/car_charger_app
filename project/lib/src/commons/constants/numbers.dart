@@ -26,6 +26,7 @@ class Numbers {
   static const int skeletonListLength = 3; // Placeholder items shown while a list loads as skeleton.
   static const int skeletonPageListLength = 20; // Placeholder items shown while a full page list loads as skeleton.
   static const int whPerKwh = 1000;
+  static const int wifiScanTimeout = 6; // Seconds.
   static const int zero = 0;
 
   static const int intFalse = 0;

@@ -28,6 +28,8 @@
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>GRACO usa el Bluetooth para encontrar y configurar tu cargador.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>GRACO usa tu ubicación para identificar la red Wi-Fi a la que está conectado el móvil.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

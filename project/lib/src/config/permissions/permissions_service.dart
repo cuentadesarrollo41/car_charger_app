@@ -5,6 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:project/src/config/permissions/helpers/permission_bluetooth.dart';
 import 'package:project/src/config/permissions/helpers/permission_camera.dart';
 import 'package:project/src/config/permissions/helpers/permission_storage.dart';
+import 'package:project/src/config/permissions/helpers/permission_wifi.dart';
 import 'package:project/src/config/permissions/helpers/request_permissions.dart';
 import 'package:project/src/config/permissions/manager/request_permission_manager.dart';
 
@@ -18,6 +19,7 @@ abstract class PermissionsService {
     => RequestPermissionManager(permissionType).askForPermission(askForPermission).onPermissionDenied(onPermissionDenied).onPermissionPermanentlyDenied(onPermissionPermanentlyDenied).onPermissionGranted(onPermissionGranted);
 
   static Future<String> requestBluetoothPermission() => PermissionBluetooth.request();
+  static Future<String> requestWifiPermission() => PermissionWifi.request();
   static Future<bool> openSettings() => openAppSettings();
   static Future<bool> checkStoragePermission(BuildContext context) => PermissionStorage.check(context: context);
   static Future<bool> checkCameraPermission(BuildContext context) => PermissionCamera.check(context: context);
